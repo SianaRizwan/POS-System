@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="" />
+    <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DbCommands.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DbCommands.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/CreateInvoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/CreateInvoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/CreateInvoice$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/CreateInvoice$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/CreateInvoice.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/CreateInvoice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$productName.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$productName.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +31,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -33,10 +51,17 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="265" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="OracleConnection" />
+    </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn install:install-file -Dfile=D:\\Spl(1)\\ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0 -Dpackaging=jar" />
+      <command value="mvn install:install-file -Dfile=D:\\Spl(1)\\jgoodies-forms-1.8.0.jar" />
     </option>
   </component>
   <component name="RunManager" selected="Application.LoginPage">
@@ -129,33 +154,41 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="623" y="255" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1586019503293" />
-    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1586017116566">
+    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1586604507703">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1586017116566" />
-    <state width="1864" height="3" key="GridCell.Tab.0.bottom" timestamp="1586527660225">
+    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1586604507703" />
+    <state width="1864" height="217" key="GridCell.Tab.0.bottom" timestamp="1586605281725">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="3" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1586527660225" />
-    <state width="1864" height="3" key="GridCell.Tab.0.center" timestamp="1586527660224">
+    <state width="1864" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1586605281725" />
+    <state width="1864" height="217" key="GridCell.Tab.0.center" timestamp="1586605281724">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="3" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1586527660224" />
-    <state width="1864" height="3" key="GridCell.Tab.0.left" timestamp="1586527660224">
+    <state width="1864" height="217" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1586605281724" />
+    <state width="1864" height="217" key="GridCell.Tab.0.left" timestamp="1586605281723">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="3" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1586527660224" />
-    <state width="1864" height="3" key="GridCell.Tab.0.right" timestamp="1586527660224">
+    <state width="1864" height="217" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1586605281723" />
+    <state width="1864" height="217" key="GridCell.Tab.0.right" timestamp="1586605281725">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="3" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1586527660224" />
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1586526995582">
+    <state width="1864" height="217" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1586605281725" />
+    <state x="373" y="86" key="Maven.ArtifactSearchDialog" timestamp="1586604497841">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1586526995582" />
-    <state x="531" y="226" width="840" height="1034" key="run.anything.popup" timestamp="1586520076900">
+    <state x="373" y="86" key="Maven.ArtifactSearchDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1586604497841" />
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1586582596695">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="531" y="226" width="840" height="1034" key="run.anything.popup/0.0.1920.1030@0.0.1920.1030" timestamp="1586520076900" />
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1586582596695" />
+    <state x="638" y="62" key="refactoring.ChangeSignatureDialog" timestamp="1586590786343">
+      <screen x="0" y="0" width="1920" height="1030" />
+    </state>
+    <state x="638" y="62" key="refactoring.ChangeSignatureDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1586590786343" />
+    <state x="531" y="226" width="840" height="1034" key="run.anything.popup" timestamp="1586605153177">
+      <screen x="0" y="0" width="1920" height="1030" />
+    </state>
+    <state x="531" y="226" width="840" height="1034" key="run.anything.popup/0.0.1920.1030@0.0.1920.1030" timestamp="1586605153177" />
   </component>
 </project>

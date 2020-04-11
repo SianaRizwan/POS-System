@@ -2,6 +2,7 @@ package OracleConnection;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,12 +34,12 @@ public class Dashboard {
     private JLabel sellQuantityLabel;
     private JLabel sellDateLabel;
     private JTextField sellQuantityTextField, sellDateTextField;//sell
-    private JButton invoiceButton, sellSaveButton;//sell
+    private JButton invoiceButton, sellSaveButton,sellAddButton;//sell
 
     private JComboBox expenseComboBox;
     private JLabel expId, purpose, amount, date, description;//expense Paybills
     private JTextField tfExpId, tfAmount, tfDate, tfDescription;//expense Paybills
-    private JButton expSaveButton,expDelButton;
+    private JButton expSaveButton,expDelButton,expAddButton;
     private static String[] purposes = {"Select an option", "Employee Salary", "Rent", "Utility Bills", "Others"};//expense list.
 
     private JButton inventoryDeleteButton;//inventory
@@ -48,10 +49,10 @@ public class Dashboard {
     private JScrollPane inventoryScrollPane,sellScrollPane,expScrollPane;
 
 
-    private String[] inventoryColumns = {"Name", "Id", "MRP","Quantity"};
+    private String[] inventoryColumns = {"Id", "Name", "MRP","Quantity"};
     private String[] inventoryRows = new String[4];
-    private String[] sellColumns = {"Name", "Id", "MRP"};
-    private String[] sellRows = new String[3];
+    private String[] sellColumns = {"Name", "Id", "MRP","Quantity","Date"};
+    private String[] sellRows = new String[5];
     private String[] expenseColumns = {"Purpose", "Id", "Amount","Date","Description"};
     private String[] expenseRows = new String[5];
 
@@ -136,6 +137,40 @@ public class Dashboard {
             inventoryDeleteButton.setBackground(Color.cyan);
             inventoryDeleteButton.setFont(f2);
             panelInventory.add(inventoryDeleteButton);
+            inventoryDeleteButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    DefaultTableModel d = (DefaultTableModel) inventoryTable.getModel();
+                    int selectRow = inventoryTable.getSelectedRow();
+                    String name = d.getValueAt(selectRow, 1).toString();
+                    int warningMsg = JOptionPane.showConfirmDialog(frame, "Do you want to delete the product?", "DELETE", JOptionPane.YES_NO_OPTION);
+
+                    if (warningMsg == JOptionPane.YES_OPTION) {
+                        try {
+                            String sql1 = "delete from PRODUCT where NAME=?";
+                            OracleConnection oc1 = new OracleConnection();
+                            PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
+
+                            ps1.setString(1, name);
+                            ps1.executeUpdate();
+
+                            String sql2 = "delete from SUPPLY_ORDER where S_NAME=?";
+                            OracleConnection oc2 = new OracleConnection();
+                            PreparedStatement ps2 = oc.conn.prepareStatement(sql2);
+
+                            ps2.setString(1, name);
+                            ps2.executeUpdate();
+
+                            table_update_inventory();
+
+                        } catch (Exception ex) {
+                            System.out.println(ex + " inventory delete");
+                        }
+                    }
+
+                }
+            });
+
 
             inventoryTable = new JTable();
             inventoryModel = new DefaultTableModel();
@@ -395,6 +430,45 @@ public class Dashboard {
             sellDateTextField.setFont(f1);
             panelSell.add(sellDateTextField);
 
+            sellAddButton = new JButton("Add");
+            sellAddButton.setFont(f2);
+            sellAddButton.setBounds(500, 450, 100, 30);
+            sellAddButton.setBackground(new Color(0x7E0AB5));
+            sellAddButton.setForeground(new Color(0xFEFEFE));
+            sellAddButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID) values(?,?)";
+                        PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
+                        ps1.setInt(1, Integer.parseInt(sellQuantityTextField.getText()));
+                        ps1.setInt(2,Integer.parseInt(sellIdTextField.getText()));
+                        ps1.executeUpdate();
+
+                        String sellDate = sellDateTextField.getText();
+                        Date date = Date.valueOf(sellDate);
+                        OracleConnection oc1 = new OracleConnection();
+                        String sql2 = "insert into SALES (SALE_DATE) values(?)";
+                        PreparedStatement ps2 = oc1.conn.prepareStatement(sql2);
+                        ps2.setDate(1, date);
+                        ps2.executeUpdate();
+
+
+                        DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
+                        d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
+                                Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), date});
+                        sellQuantityTextField.setText("");
+
+
+                    } catch (Exception ex) {
+                        System.out.println(ex + " sellAddButton");
+                    }
+
+                }
+            });
+
+            panelSell.add(sellAddButton);
+
 
             sellSaveButton = new JButton("Save");
             sellSaveButton.setBounds(650, 450, 100, 30);
@@ -403,6 +477,17 @@ public class Dashboard {
 
             sellSaveButton.setFont(f2);
             panelSell.add(sellSaveButton);
+            sellSaveButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+
+
+                    } catch (Exception ex) {
+                        System.out.println(ex + " sell save");
+                    }
+                }
+            });
 
             invoiceButton = new JButton("Invoice");
             invoiceButton.setBounds(800, 450, 100, 30);
@@ -415,7 +500,20 @@ public class Dashboard {
             invoiceButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new CreateInvoice(frame);
+                    //    new CreateInvoice(frame);
+                    TableModel tm = sellTable.getModel();
+                    int rowNum = sellTable.getRowCount();
+                    Object[] ob = new Object[4];
+                    CreateInvoice createInvoice = new CreateInvoice(frame);
+                    DefaultTableModel d = (DefaultTableModel) createInvoice.table.getModel();
+                    for (int i = 0; i < rowNum; i++) {
+                        ob[0] = i;
+                        ob[1] = tm.getValueAt(i, 0);
+                        ob[2] = tm.getValueAt(i, 2);
+                        ob[3] = tm.getValueAt(i, 3);
+                        // ob[4] = tm.getValueAt(i, 4);
+                        d.addRow(ob);
+                    }
                     mainPanel.setVisible(false);
                 }
             });
@@ -494,7 +592,15 @@ public class Dashboard {
             expSaveButton.setBackground(new Color(0x7E0AB5));
             expSaveButton.setBounds(600, 500, 100, 30);
             panelPayBills.add(expSaveButton);
-            expSaveButton.addActionListener(new ActionListener() {
+
+            expAddButton = new JButton("Add");
+            expAddButton.setFont(f2);
+            expAddButton.setForeground(new Color(0xFEFEFE));
+
+            expAddButton.setBackground(new Color(0x7E0AB5));
+            expAddButton.setBounds(450, 500, 100, 30);
+            panelPayBills.add(expAddButton);
+            expAddButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
@@ -514,8 +620,11 @@ public class Dashboard {
                         ps.setDate(3, sqlExpDate);
                         ps.setString(4, tfDescription.getText());
                         ps.setInt(5, Integer.parseInt(tfAmount.getText()));
-
                         ps.executeUpdate();
+
+                        DefaultTableModel d = (DefaultTableModel) expTable.getModel();
+                        d.addRow(new Object[]{expenseComboBox.getSelectedItem().toString(), Integer.parseInt(tfExpId.getText()),
+                                Integer.parseInt(tfAmount.getText()), sqlExpDate, tfDescription.getText()});
                         tfExpId.setText("");
                         tfDate.setText("");
                         tfDescription.setText("");
@@ -537,6 +646,33 @@ public class Dashboard {
             expDelButton.setBounds(750, 500, 100, 30);
             expDelButton.setBackground(new Color(0x7E0AB5));
             expDelButton.setForeground(new Color(0xFEFEFE));
+            expDelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    DefaultTableModel d = (DefaultTableModel) expTable.getModel();
+                    int selectRow = expTable.getSelectedRow();
+                    int id = Integer.parseInt(d.getValueAt(selectRow, 1).toString());
+                    int warningMsg = JOptionPane.showConfirmDialog(frame, "Do you want to delete the selected item?", "DELETE", JOptionPane.YES_NO_OPTION);
+
+                    if (warningMsg == JOptionPane.YES_OPTION) {
+                        try {
+                            String sql1 = "delete from EXPENSES where E_ID=?";
+                            OracleConnection oc1 = new OracleConnection();
+                            PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
+
+                            ps1.setInt(1, id);
+                            ps1.executeUpdate();
+
+                            d.removeRow(selectRow);
+
+                        } catch (Exception ex) {
+                            System.out.println(ex + " expense delete");
+                        }
+                    }
+
+                }
+            });
+
 
             expDelButton.setFont(f2);
             panelPayBills.add(expDelButton);
@@ -551,7 +687,7 @@ public class Dashboard {
             expTable.setSelectionBackground(Color.GRAY);
             expTable.setRowHeight(30);
 
-            expScrollPane.setBounds(150,610,1000,300);
+            expScrollPane.setBounds(150, 610, 1000, 300);
             panelPayBills.add(expScrollPane);
         }
 
@@ -595,6 +731,7 @@ public class Dashboard {
             }
         }
     }
+
     private void table_update_inventory() {
         int n;
         try {
@@ -603,25 +740,33 @@ public class Dashboard {
             rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();
             n = rsd.getColumnCount();
+
             DefaultTableModel d = (DefaultTableModel) inventoryTable.getModel();
             d.setRowCount(0);
+
             while (rs.next()) {
                 Vector v = new Vector();
+
                 for (int i = 1; i <= n; i++) {
+
                     v.add(rs.getInt("P_ID"));
                     v.add(rs.getString("NAME"));
                     v.add(rs.getInt("MRP"));
                     v.add(rs.getInt("S_QUANTITY"));
+
+
                 }
                 d.addRow(v);
             }
+
+
         } catch (Exception e) {
             System.out.println("table_update_inventory");
-        }
-        finally {
+        } finally {
             try {
                 rs.close();
                 ps.close();
+
             } catch (SQLException e) {
                 System.out.println("table_update_inventory");
             }
