@@ -1,20 +1,24 @@
 package OracleConnection;
 
-import javax.imageio.ImageIO;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Font;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
-import java.io.File;
-import java.io.IOException;
+import java.awt.print.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CreateInvoice {
 
@@ -110,25 +114,99 @@ public class CreateInvoice {
         invsave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               JFrame win = (JFrame)SwingUtilities.getWindowAncestor(mainpanel);
-                Dimension size = win.getSize();
-                //BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
-                BufferedImage image = (BufferedImage)win.createImage(size.width, size.height);
-                Graphics g = image.getGraphics();
-                win.paint(g);
-                g.dispose();
+                String invoice="_invoice_.pdf";
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+                System.out.println(dateFormat.format(date));
+                Document document = new Document();
+
                 try
                 {
-                    ImageIO.write(image, "jpg", new File("D:\\Spl(1)\\MyFrame2.jpg"));
-                }
-                catch (IOException e1)
+                    PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Invoice.pdf"));
+                    document.open();
+
+                    Paragraph p1= new Paragraph("Company Name");
+
+                    Paragraph p2= new Paragraph("Address");
+                    Paragraph p3= new Paragraph("042-35712296\n\n\n");
+
+                    Paragraph p4= new Paragraph("\n\nGrand Total: ");
+                    Paragraph p5= new Paragraph("\nThank you for visiting us…!!\nReturn/Exchange not possible with-out bill.");
+
+                    p1.setAlignment(Element.ALIGN_CENTER);
+                    p3.setAlignment(Element.ALIGN_CENTER);
+                    p2.setAlignment(Element.ALIGN_CENTER);
+                    document.add(p1);
+                    document.add(p2);
+                    document.add(p3);
+
+                    Phrase phrase = new Phrase("Time/Date: "+dateFormat.format(date));
+                    PdfContentByte canvas = writer.getDirectContent();
+                    ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase, 40, 740, 0);
+                    Phrase invNo = new Phrase("Invoice No: " );
+                    PdfContentByte canv = writer.getDirectContent();
+                    ColumnText.showTextAligned(canv, Element.ALIGN_LEFT, invNo, 510, 785, 0);
+
+
+
+                    PdfPTable tab = new PdfPTable(5);
+                    float[] columnWidths = new float[] {15f, 30f, 10f, 10f,15f};
+                    tab.setWidths(columnWidths);
+                    tab.addCell("Serial");
+
+                    tab.addCell("Product name");
+                    tab.addCell("Mrp");
+                    tab.addCell("Quantity");
+                    tab.addCell("Total Price");
+
+
+
+                    for (int i=0;i<(table.getRowCount());i++){
+
+                        String serial = table.getValueAt(i,0).toString();
+                        String p_name = table.getValueAt(i,1).toString();
+                        String mrp = table.getValueAt(i,2).toString();
+                        String qty = table.getValueAt(i,3).toString();
+                        //String price = table1.getValueAt(i,4).toString();
+                        tab.addCell(serial);
+                        tab.addCell(p_name);
+                        tab.addCell(mrp);
+                        tab.addCell(qty);
+                        //tab.addCell(price);
+
+
+
+
+                    }
+
+
+
+
+
+
+                    document.add(tab);
+                    document.add(p4);
+                    document.add(p5);
+                    // writer.close();
+                    document.close();
+                } catch (DocumentException e1)
                 {
-                    e1.printStackTrace();
+                    Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE,null,e1);
+                    //e1.printStackTrace();
+                } catch (FileNotFoundException e1)
+                {
+                    Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE,null,e1);
+                    //e1.printStackTrace();
                 }
+
+
             }
 
 
-            });
+
+
+
+        });
         invprint = new JButton("Print");
         invprint.setBounds(350, 750, 120, 40);
         invprint.setBackground(Color.cyan);
@@ -138,8 +216,10 @@ public class CreateInvoice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
+
                 PrinterJob job = PrinterJob.getPrinterJob();
                 job.setJobName("Print Data");
+                
 
                 job.setPrintable(new Printable(){
                     public int print(Graphics pg, PageFormat pf, int pageNum){
@@ -153,7 +233,7 @@ public class CreateInvoice {
                         g2.scale(0.24,0.24);
 
                         mainpanel.paint(g2);
-//
+
 
                         return Printable.PAGE_EXISTS;
 
