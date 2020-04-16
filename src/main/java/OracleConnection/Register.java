@@ -11,7 +11,7 @@ public class Register {
 
     private JFrame frame;
     private JPanel registerPanel;
-    private Font font1, font2, font3,f1;
+    private Font font1, font2, font3, f1;
     private JLabel signupLabel;
     private JLabel userLabel;
     private JTextField userTextField;
@@ -22,7 +22,7 @@ public class Register {
     private JLabel passwordLabel;
     private JLabel retypePasswordLabel;
     private JPasswordField retypePasswordField;
-    private JButton registerButton,backButton;
+    private JButton registerButton, backButton;
     private JLabel pokpokLabel;
     private JPasswordField passwordField;
 
@@ -36,7 +36,7 @@ public class Register {
 
         registerPanel = new JPanel();
         registerPanel.setLayout(null);
-        registerPanel.setBackground(Color.lightGray);
+        registerPanel.setBackground(new Color(0xD9B9F2));
 
         font1 = new Font("Arial", Font.BOLD, 15);
         f1 = new Font("Arial", Font.BOLD, 15);
@@ -130,27 +130,35 @@ public class Register {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    OracleConnection oc = new OracleConnection();
-
-                    String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL) values(?, ?, ?, ?)";
-
-                    PreparedStatement ps = oc.conn.prepareStatement(sql);
-
-                    ps.setInt(1, Integer.parseInt(userTextField.getText().trim()));
-                    ps.setString(2, nameTextField.getText().trim());
-                    ps.setString(3, passwordField.getText());
-                    ps.setString(4, emailTextField.getText().trim());
-
-                    int x=ps.executeUpdate() ;
-                    if (x> 0) {
+                    Emailvalidator emailValidator = new Emailvalidator();
+                    if (emailValidator.validate(emailTextField.getText().trim())) {
                         if ((passwordField.getText()).equals(retypePasswordField.getText())) {
-                            new Dashboard(frame);
-                            registerPanel.setVisible(false);
+
+                            OracleConnection oc = new OracleConnection();
+
+                            String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL) values(?, ?, ?, ?)";
+
+                            PreparedStatement ps = oc.conn.prepareStatement(sql);
+
+                            ps.setInt(1, Integer.parseInt(userTextField.getText().trim()));
+                            ps.setString(2, nameTextField.getText().trim());
+                            ps.setString(3, passwordField.getText());
+                            ps.setString(4, emailTextField.getText().trim());
+
+                            int x = ps.executeUpdate();
+                            if (x > 0) {
+                                new Dashboard(frame);
+                                registerPanel.setVisible(false);
+                            } else {
+                                JOptionPane.showMessageDialog(frame, "insert failed");
+                            }
                         } else {
                             JOptionPane.showMessageDialog(frame, "Both password does not match");
+
                         }
+
                     } else {
-                        JOptionPane.showMessageDialog(frame, "insert failed");
+                        JOptionPane.showMessageDialog(frame, "invalid email id");
                     }
 
                 } catch (Exception e1) {
@@ -174,6 +182,6 @@ public class Register {
         int ysize = (int) toolkit.getScreenSize().getHeight();
         frame.setSize(xsize, ysize);
 
+    }
 
-}
 }

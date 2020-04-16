@@ -114,6 +114,7 @@ public class CreateInvoice {
         invsave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 String invoice="_invoice_.pdf";
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
@@ -219,11 +220,11 @@ public class CreateInvoice {
 
                 PrinterJob job = PrinterJob.getPrinterJob();
                 job.setJobName("Print Data");
-                
+
 
                 job.setPrintable(new Printable(){
                     public int print(Graphics pg, PageFormat pf, int pageNum){
-                        pf.setOrientation(PageFormat.PORTRAIT);
+                        pf.setOrientation(PageFormat.LANDSCAPE);
                         if(pageNum>0){
                             return Printable.NO_SUCH_PAGE;
                         }
