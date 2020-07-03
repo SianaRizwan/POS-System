@@ -20,7 +20,7 @@ public class LoginPage {
     private JButton loginButton, registerButton;
 
     LoginPage(JFrame frame) {
-        this.frame=frame;
+        this.frame = frame;
         initComponents();
     }
 
@@ -33,6 +33,7 @@ public class LoginPage {
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
+        panel.setBackground(new Color(0xD9B9F2));
 
         userLabel = new JLabel();
         userLabel.setText("Username : ");
@@ -59,8 +60,10 @@ public class LoginPage {
 
         loginButton = new JButton("Login");
         loginButton.setBounds(630, 360, 80, 30);
-        loginButton.setBackground(Color.cyan);
+        loginButton.setBackground(new Color(0x7E0AB5));
         loginButton.setFont(f2);
+        loginButton.setForeground(new Color(0xFEFEFE));
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,6 +80,9 @@ public class LoginPage {
                     } else {
 
                         JOptionPane.showMessageDialog(frame, "invalid user id or password");
+                        userNameField.setText("");
+                        passwordField.setText("");
+                        userNameField.requestFocus();
                     }
                 } catch (Exception e1) {
                     System.out.println(e1);
@@ -92,6 +98,8 @@ public class LoginPage {
         panel.add(regLabel);
         registerButton = new JButton("Register");
         registerButton.setBounds(670, 435, 82, 20);
+        registerButton.setBackground(new Color(0x7E0AB5));
+        registerButton.setForeground(new Color(0xFEFEFE));
         registerButton.setFont(f2);
         panel.add(registerButton);
         registerButton.addActionListener(new ActionListener() {
@@ -122,5 +130,4 @@ public class LoginPage {
         new LoginPage(frame);
     }
 }
-
 

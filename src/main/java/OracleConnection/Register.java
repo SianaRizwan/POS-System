@@ -112,6 +112,8 @@ public class Register {
 
         backButton = new JButton("Back");
         backButton.setBounds(580, 490, 100, 20);
+        backButton.setBackground(new Color(0x7E0AB5));
+        backButton.setForeground(new Color(0xFEFEFE));
         backButton.setFont(f1);
         registerPanel.add(backButton);
         backButton.addActionListener(new ActionListener() {
@@ -125,6 +127,8 @@ public class Register {
         registerButton = new JButton("Register");
         registerButton.setBounds(700, 490, 100, 20);
         registerButton.setFont(f1);
+        registerButton.setBackground(new Color(0x7E0AB5));
+        registerButton.setForeground(new Color(0xFEFEFE));
         registerPanel.add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -135,17 +139,21 @@ public class Register {
                         if ((passwordField.getText()).equals(retypePasswordField.getText())) {
 
                             OracleConnection oc = new OracleConnection();
-
                             String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL) values(?, ?, ?, ?)";
-
                             PreparedStatement ps = oc.conn.prepareStatement(sql);
-
                             ps.setInt(1, Integer.parseInt(userTextField.getText().trim()));
                             ps.setString(2, nameTextField.getText().trim());
                             ps.setString(3, passwordField.getText());
                             ps.setString(4, emailTextField.getText().trim());
-
                             int x = ps.executeUpdate();
+
+                            OracleConnection oc1 = new OracleConnection();
+                            String sql1 = "insert into SALES (U_ID) values(?)";
+                            PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
+                            ps1.setInt(1, Integer.parseInt(userTextField.getText().trim()));
+                            ps1.executeUpdate();
+
+
                             if (x > 0) {
                                 new Dashboard(frame);
                                 registerPanel.setVisible(false);
@@ -164,6 +172,7 @@ public class Register {
                 } catch (Exception e1) {
                     System.out.println(e1);
                 }
+
 
 
             }

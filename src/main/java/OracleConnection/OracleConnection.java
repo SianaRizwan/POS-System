@@ -18,9 +18,9 @@ public class OracleConnection {
 
         try {
             Class.forName(JDBC_DRIVER);
-            System.out.println("Connecting to database...");
+            // System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            System.out.println("Creating statement...");
+            // System.out.println("Creating statement...");
             stmt = conn.createStatement();
 
         } catch (SQLException se) {

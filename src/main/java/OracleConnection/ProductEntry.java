@@ -93,6 +93,8 @@ public class ProductEntry {
                     tfProductId.setText("");
                     tfProductName.setText("");
 
+                    tfProductId.requestFocus();
+
                     if (x < 0) {
 
                         JOptionPane.showMessageDialog(frame, "input valid info");
