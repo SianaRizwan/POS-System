@@ -78,7 +78,7 @@ public class LoginPage {
                     if (rs.next()) {
                         uID = String.valueOf(rs.getInt("U_ID"));
                         // System.out.println(uID);
-                        if (uID.charAt(0) == '0' && uID.charAt(1) == '1' && uID.charAt(2) == '2') {
+                        if (uID.charAt(0) == '1' && uID.charAt(1) == '2' && uID.charAt(2) == '3') {
                             new AdminDashboard(frame);
                             panel.setVisible(false);
                         } else {

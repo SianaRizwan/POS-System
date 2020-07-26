@@ -25,6 +25,7 @@ public class Register {
     private JButton registerButton, backButton;
     private JLabel pokpokLabel;
     private JPasswordField passwordField;
+    private String uID;
 
     Register(JFrame frame) {
         this.frame = frame;
@@ -141,6 +142,7 @@ public class Register {
                             OracleConnection oc = new OracleConnection();
                             String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL) values(?, ?, ?, ?)";
                             PreparedStatement ps = oc.conn.prepareStatement(sql);
+                            uID=(userTextField.getText().trim());
                             ps.setInt(1, Integer.parseInt(userTextField.getText().trim()));
                             ps.setString(2, nameTextField.getText().trim());
                             ps.setString(3, passwordField.getText());
@@ -155,8 +157,13 @@ public class Register {
 
 
                             if (x > 0) {
-                                new Dashboard(frame);
-                                registerPanel.setVisible(false);
+                                if (uID.charAt(0) == '1' && uID.charAt(1) == '2' && uID.charAt(2) == '3') {
+                                    new AdminDashboard(frame);
+                                    registerPanel.setVisible(false);
+                                } else {
+                                    new Dashboard(frame);
+                                    registerPanel.setVisible(false);
+                                }
                             } else {
                                 JOptionPane.showMessageDialog(frame, "insert failed");
                             }
