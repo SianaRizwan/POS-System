@@ -24,7 +24,7 @@ public class Buy {
     ResultSet rs;
     Inventory inv = new Inventory(frame);
 
-    public Buy(JFrame frame) {
+    public Buy(JFrame frame,Inventory i) {
         this.frame = frame;
         inv.table_update_inventory();
 

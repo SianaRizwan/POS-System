@@ -3,17 +3,15 @@ package OracleConnection;
 import javax.swing.*;
 import java.awt.*;
 
-public class Dashboard {
+public class AdminDashboard {
 
     private JFrame frame;
     private JPanel mainPanel, panelReport;
     private Font f1, f2;
     private JTabbedPane tabbedPane;
 
-    LoginPage loginPage;
 
-
-    Dashboard(JFrame frame) {
+    AdminDashboard(JFrame frame) {
         this.frame = frame;
         initComponents();
 
@@ -21,7 +19,6 @@ public class Dashboard {
 
 
     private void initComponents() {
-
 
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
@@ -42,15 +39,19 @@ public class Dashboard {
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         mainPanel.add(tabbedPane);
 
-        Inventory inventory = new Inventory(frame);
-        Buy buy = new Buy(frame, inventory);
-        Sell sell = new Sell(frame, inventory);
-        Paybills paybills = new Paybills(frame);
+        panelReport = new JPanel();
+        panelReport.setLayout(null);
+        panelReport.setBackground(new Color(0xD9B9F2));
+
+        AdminInventory inventory = new AdminInventory(frame);
+        //Salary salary = new Buy(frame, inventory);
+        //Expenditure expenditure = new Expenditure(frame);
+        //Report report = new Report(frame);
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
-        tabbedPane.addTab("Buy", buy.initComponents(mainPanel));
-        tabbedPane.addTab("Sell", sell.initComponents(mainPanel));
-        tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
+        //tabbedPane.addTab("Salary", salary.initComponents(mainPanel));
+        //tabbedPane.addTab("Expenditure", expenditure.initComponents(mainPanel));
+        tabbedPane.addTab("Report", panelReport);
 
 
         frame.add(mainPanel);
@@ -58,10 +59,9 @@ public class Dashboard {
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Inventory Management");
+        frame.setTitle("Inventory Management - Admin");
 
 
     }
-
 
 }

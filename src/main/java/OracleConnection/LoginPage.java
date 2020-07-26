@@ -18,6 +18,8 @@ public class LoginPage {
     private JTextField userNameField;
     private JPasswordField passwordField;
     private JButton loginButton, registerButton;
+    private static String uID;
+
 
     LoginPage(JFrame frame) {
         this.frame = frame;
@@ -70,12 +72,19 @@ public class LoginPage {
                 try {
                     OracleConnection oc = new OracleConnection();
 
-                    String sql = "select NAME,PASSWORD FROM USERS where NAME='" + userNameField.getText().trim() + "'and PASSWORD ='" + passwordField.getText() + "'";
+                    String sql = "select U_ID,NAME,PASSWORD FROM USERS where NAME='" + userNameField.getText().trim() + "'and PASSWORD ='" + passwordField.getText() + "'";
                     PreparedStatement ps = oc.conn.prepareStatement(sql);
                     ResultSet rs = ps.executeQuery();
                     if (rs.next()) {
-                        new Dashboard(frame);
-                        panel.setVisible(false);
+                        uID = String.valueOf(rs.getInt("U_ID"));
+                        // System.out.println(uID);
+                        if (uID.charAt(0) == '0' && uID.charAt(1) == '1' && uID.charAt(2) == '2') {
+                            new AdminDashboard(frame);
+                            panel.setVisible(false);
+                        } else {
+                            new Dashboard(frame);
+                            panel.setVisible(false);
+                        }
 
                     } else {
 
@@ -124,10 +133,14 @@ public class LoginPage {
         frame.setSize(xsize, ysize);
     }
 
+    public static String getUID() {
+        System.out.println(uID);
+        return uID;
+
+    }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         new LoginPage(frame);
     }
 }
-

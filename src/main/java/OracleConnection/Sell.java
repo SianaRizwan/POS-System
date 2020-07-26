@@ -35,6 +35,9 @@ public class Sell {
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
     ResultSet rs;
+    Inventory inv;
+    LoginPage loginPage;
+
 
     public class productName {
         int id;
@@ -51,8 +54,9 @@ public class Sell {
     }
 
 
-    Sell(JFrame frame) {
+    Sell(JFrame frame, Inventory i) {
         this.frame = frame;
+        inv = i;
     }
 
     public JPanel initComponents(final JPanel mainPanel) {
@@ -65,6 +69,7 @@ public class Sell {
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
+
 
         {
             ///Sell Tab
@@ -112,7 +117,9 @@ public class Sell {
                     try {
                         OracleConnection oc = new OracleConnection();
                         Statement st = oc.conn.createStatement();
-                        String sql = "select P_ID,NAME,MRP from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME and NAME='" + sellComboBox.getSelectedItem() + "'";
+                        String sql = "select P_ID,SUPPLY_ORDER.S_ID,SUPPLY_ORDER.S_NAME,MRP FROM PRODUCT,SUPPLY_ORDER where SUPPLY_ORDER.S_ID=PRODUCT.S_ID and " +
+                                "SUPPLY_ORDER.S_NAME='" + sellComboBox.getSelectedItem().toString() + "'";
+
                         ResultSet rs = st.executeQuery(sql);
 
                         while (rs.next()) {
@@ -177,86 +184,12 @@ public class Sell {
                         sellScrollPane.setViewportView(sellTable);
 
                     } catch (Exception c) {
-                        System.out.println(c + "sell qty ");
+                        System.out.println(c + " sell qty ");
                     }
                 }
             });
             panelSell.add(sellAddButton);
 
-
-            sellSaveButton = new JButton("Save");
-            sellSaveButton.setBounds(650, 450, 100, 30);
-            sellSaveButton.setBackground(new Color(0x7E0AB5));
-            sellSaveButton.setForeground(new Color(0xFEFEFE));
-            sellSaveButton.setFont(f2);
-            panelSell.add(sellSaveButton);
-            sellSaveButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-
-                        OracleConnection oc1 = new OracleConnection();
-                        String sql2 = "insert into SALES (SALE_DATE) values(?)";
-                        String[] colName = new String[]{"SALE_ID"};
-                        PreparedStatement ps2 = oc1.conn.prepareStatement(sql2, colName);
-
-
-                        Date d = (Date) sellTable.getValueAt(0, 5);
-
-                        ps2.setDate(1, d);
-                        // ps2.setInt(2, Integer.parseInt(reg.userTextField.getText()));
-                        ps2.executeUpdate();
-
-
-                        int lastInsertId = 0;
-
-                        ResultSet lastId = ps2.getGeneratedKeys();
-                        if (lastId.next()) {
-                            lastInsertId = lastId.getInt(1);
-                        }
-                        System.out.println(lastInsertId);
-
-                        {
-                            OracleConnection oc = new OracleConnection();
-                            String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID,SALE_ID) values(?,?,?)";
-                            PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
-                            String qty = "", id = "";
-                            for (int i = 0; i < sellTable.getRowCount(); i++) {
-                                qty =  sellTable.getValueAt(i, 3).toString();
-                                id =  sellTable.getValueAt(i, 1).toString();
-
-                                ps1.setInt(1, Integer.parseInt(qty));
-                                ps1.setInt(2, Integer.parseInt(id));
-                                ps1.setInt(3, lastInsertId);
-
-                                ps1.executeUpdate();
-                            }
-                            ps1.addBatch();
-                        }
-
-                        {
-                            //qty minus
-                            String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY -? WHERE S_NAME = ? and S_QUANTITY > 0";
-                            OracleConnection oc3 = new OracleConnection();
-                            PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
-                            String qty = "";
-                            for (int i=0;i<sellTable.getRowCount();i++){
-                                String name=  sellTable.getValueAt(i,0).toString();
-                                qty= sellTable.getValueAt(i,3).toString();
-
-                                ps3.setString(2,name);
-                                ps3.setInt(1, Integer.parseInt(qty));
-                                ps3.execute();
-                            }
-                            ps3.addBatch();
-                        }
-
-
-                    } catch (Exception ex) {
-                        System.out.println(ex + " sell save");
-                    }
-                }
-            });
 
             invoiceButton = new JButton("Invoice");
             invoiceButton.setBounds(800, 450, 100, 30);
@@ -269,7 +202,75 @@ public class Sell {
             invoiceButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //    new CreateInvoice(frame);
+                    //save data in db
+                    try {
+
+                        OracleConnection oc1 = new OracleConnection();
+                        String sql2 = "insert into SALES (SALE_DATE,U_ID) values(?,?)";
+                        String[] colName = new String[]{"SALE_ID"};
+                        PreparedStatement ps2 = oc1.conn.prepareStatement(sql2, colName);
+
+
+                        Date d = (Date) sellTable.getValueAt(0, 5);
+
+                        ps2.setDate(1, d);
+                        ps2.setString(2, loginPage.getUID());
+                        // ps2.setInt(2, Integer.parseInt(reg.userTextField.getText()));
+                        ps2.executeUpdate();
+
+
+                        int lastInsertId = 0;
+
+                        //get the last sales_id
+                        ResultSet lastId = ps2.getGeneratedKeys();
+                        if (lastId.next()) {
+                            lastInsertId = lastId.getInt(1);
+                        }
+                        System.out.println(lastInsertId);
+
+                        {
+                            OracleConnection oc = new OracleConnection();
+                            String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID,SALE_ID) values(?,?,?)";
+                            PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
+                            String qty = "", id = "";
+                            for (int i = 0; i < sellTable.getRowCount(); i++) {
+                                qty = sellTable.getValueAt(i, 3).toString();
+                                id = sellTable.getValueAt(i, 1).toString();
+                                System.out.println(id);
+
+                                ps1.setInt(1, Integer.parseInt(qty));
+                                ps1.setString(2, (id));
+                                ps1.setInt(3, lastInsertId);
+                                // System.out.println("k  "+lastInsertId);
+
+                                ps1.executeUpdate();
+                            }
+                            ps1.addBatch();
+                        }
+
+                        {
+                            //qty minus
+                            String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY -? WHERE S_NAME = ? and S_QUANTITY > 0";
+                            OracleConnection oc3 = new OracleConnection();
+                            PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
+                            String qty = "";
+                            for (int i = 0; i < sellTable.getRowCount(); i++) {
+                                String name = sellTable.getValueAt(i, 0).toString();
+                                qty = sellTable.getValueAt(i, 3).toString();
+
+                                ps3.setString(2, name);
+                                ps3.setInt(1, Integer.parseInt(qty));
+                                ps3.executeUpdate();
+                            }
+                            ps3.addBatch();
+                            oc3.conn.commit();
+                            inv.table_update_inventory();
+                        }
+
+
+                    } catch (Exception ex) {
+                        System.out.println(ex + " sell save");
+                    }
                     TableModel tm = sellTable.getModel();
                     int rowNum = sellTable.getRowCount();
                     Object[] ob = new Object[5];
@@ -308,13 +309,11 @@ public class Sell {
 
     private void prodName() {
         try {
-            String sql = "select * from PRODUCT";
+            String sql = "select * from SUPPLY_ORDER ";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            //buyComboBox.removeAllItems();
             sellComboBox.removeAllItems();
             while (rs.next()) {
-                //buyComboBox.addItem(new Dashboard.productName(rs.getInt(1), rs.getString(2)));
                 sellComboBox.addItem(new Sell.productName(rs.getInt(1), rs.getString(2)));
             }
 
