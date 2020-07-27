@@ -18,14 +18,17 @@ public class Report {
     private DefaultTableModel buyModel,salesModel,expensesModel;
     private JScrollPane buyScrollPane,salesScrollPane,expensesScrollPane;
 
-    private String[] buyColumns = {"Product ID", "Name", "Supplier", "Date", "Quantity", "Amount (taka)"};
-    private String[] buyRows = new String[6];
+    private String[] buyColumns = {"Product ID", "Name", "Supplier", "Date","Buying price", "Quantity", "Unit Price","Total"};
+    private String[] buyRows = new String[8];
 
-   private String[] salesColumns = {"Sale Id", "Product Name", "Date", "Quantity", "MRP"};
+    private String[] salesColumns = {"Sale Id", "Product Name", "Date", "Quantity", "MRP"};
     private String[] salesRows = new String[5];
 
-    private String[] expensesColumns = {"Expense Id", "Purpose", "Date", "Amount (taka)"};
-    private String[] expensesRows = new String[4];
+    private String[] expensesColumns = {"Expense Id", "Purpose", "Date", "Amount (taka)","Description"};
+    private String[] expensesRows = new String[5];
+
+    private static String[] months = {"Select an option", "January", "February", "March", "April","May", "June", "July", "August","September", "October", "November", "December"};//month list.
+
 
 
     public Report(JFrame frame) {
@@ -34,6 +37,11 @@ public class Report {
     }
 
     public JPanel initComponents() {
+
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        int xsize = (int) toolkit.getScreenSize().getWidth();
+        int ysize = (int) toolkit.getScreenSize().getHeight();
+        frame.setSize(xsize, ysize);
 
         panel = new JPanel();
         panel.setLayout(null);
@@ -44,41 +52,41 @@ public class Report {
 
 
 
-            JLabel head = new JLabel("Report");
-            head.setHorizontalAlignment(SwingConstants.CENTER);
-            head.setFont(new Font("Lato Medium", Font.PLAIN, 40));
-            head.setBounds(450, 0, 600, 70);
-            panel.add(head);
+        JLabel head = new JLabel("Report");
+        head.setHorizontalAlignment(SwingConstants.CENTER);
+        head.setFont(new Font("Lato Medium", Font.PLAIN, 40));
+        head.setBounds(450, 0, 600, 70);
+        panel.add(head);
 
 
-            rsales = new JButton("Sales");
-            rsales.setBounds(250, 250, 120, 50);
-            rsales.setBackground(Color.cyan);
-            rsales.setFont(f2);
-            rsales.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    salesTable = new JTable();
-                    salesModel = new DefaultTableModel();
-                    salesScrollPane = new JScrollPane(salesTable);
-                    salesModel.setColumnIdentifiers(salesColumns);
-                    salesTable.setModel(salesModel);
-                    salesTable.setFont(f1);
-                    salesTable.setBackground(Color.WHITE);
-                    salesTable.setSelectionBackground(Color.GRAY);
-                    salesTable.setRowHeight(30);
+        rsales = new JButton("Sales");
+        rsales.setBounds(250, 250, 120, 50);
+        rsales.setBackground(Color.cyan);
+        rsales.setFont(f2);
+        rsales.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salesTable = new JTable();
+                salesModel = new DefaultTableModel();
+                salesScrollPane = new JScrollPane(salesTable);
+                salesModel.setColumnIdentifiers(salesColumns);
+                salesTable.setModel(salesModel);
+                salesTable.setFont(f1);
+                salesTable.setBackground(Color.WHITE);
+                salesTable.setSelectionBackground(Color.GRAY);
+                salesTable.setRowHeight(30);
 
-                    salesScrollPane.setBounds(200, 450, 1000, 300);
-                    panel.add(salesScrollPane);
-                }
-            });
-            panel.add(rsales);
+                salesScrollPane.setBounds(200, 450, 1000, 300);
+                panel.add(salesScrollPane);
+            }
+        });
+        panel.add(rsales);
 
-            rbuy = new JButton("Buy");
-            rbuy.setBounds(650, 250, 120, 50);
-            rbuy.setBackground(Color.cyan);
-            rbuy.setFont(f2);
-            rbuy.addActionListener(new ActionListener() {
+        rbuy = new JButton("Buy");
+        rbuy.setBounds(650, 250, 120, 50);
+        rbuy.setBackground(Color.cyan);
+        rbuy.setFont(f2);
+        rbuy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buyTable = new JTable();
@@ -95,13 +103,13 @@ public class Report {
                 panel.add(buyScrollPane);
             }
         });
-            panel.add(rbuy);
+        panel.add(rbuy);
 
-            rexpenses = new JButton("Expenses");
-            rexpenses.setBounds(1050, 250, 120, 50);
-            rexpenses.setBackground(Color.cyan);
-            rexpenses.setFont(f2);
-            rexpenses.addActionListener(new ActionListener() {
+        rexpenses = new JButton("Expenses");
+        rexpenses.setBounds(1050, 250, 120, 50);
+        rexpenses.setBackground(Color.cyan);
+        rexpenses.setFont(f2);
+        rexpenses.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 expensesTable = new JTable();
@@ -118,7 +126,7 @@ public class Report {
                 panel.add(expensesScrollPane);
             }
         });
-            panel.add(rexpenses);
+        panel.add(rexpenses);
 
         summary = new JButton("Summary");
         summary.setBounds(640, 370, 150, 30);
@@ -132,24 +140,27 @@ public class Report {
         });
         panel.add(summary);
 
-            lmonth = new JLabel("Month : ");
-            lmonth.setBounds(200, 150, 150, 50);
-            lmonth.setFont(f1);
-            panel.add(lmonth);
-            lyear = new JLabel("Year : ");
-            lyear.setBounds(900, 150, 150, 50);
-            lyear.setFont(f1);
-            panel.add(lyear);
-            monthComboBox = new JComboBox();
-            monthComboBox.setBounds(280, 160, 200, 30);
-            monthComboBox.setEditable(false);
-            monthComboBox.setFont(f1);
-            panel.add(monthComboBox);
-            yearComboBox = new JComboBox();
-            yearComboBox.setBounds(980, 160, 200, 30);
-            yearComboBox.setEditable(false);
-            yearComboBox.setFont(f1);
-            panel.add( yearComboBox);
+        lmonth = new JLabel("Month : ");
+        lmonth.setBounds(xsize/4, 150, 150, 50);
+        lmonth.setFont(f1);
+        panel.add(lmonth);
+
+        lyear = new JLabel("Year : ");
+        lyear.setBounds(xsize/2, 150, 150, 50);
+        lyear.setFont(f1);
+        panel.add(lyear);
+
+        monthComboBox = new JComboBox(months);
+        monthComboBox.setBounds((xsize/4)+60, 160, 200, 30);
+        monthComboBox.setEditable(false);
+        monthComboBox.setFont(f1);
+        panel.add(monthComboBox);
+
+        yearComboBox = new JComboBox();
+        yearComboBox.setBounds((xsize/2)+60, 160, 200, 30);
+        yearComboBox.setEditable(false);
+        yearComboBox.setFont(f1);
+        panel.add( yearComboBox);
 
         frame.add(panel);
         frame.setAlwaysOnTop(true);
@@ -158,16 +169,13 @@ public class Report {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Report");
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
-
-            return  panel;
 
 
-        }
+
+        return  panel;
+
+
+    }
 
 
 
