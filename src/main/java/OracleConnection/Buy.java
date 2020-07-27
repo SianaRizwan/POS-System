@@ -22,10 +22,13 @@ public class Buy {
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
     ResultSet rs;
-    Inventory inv = new Inventory(frame);
+    Inventory inv ;
+    Sell sell;
 
-    public Buy(JFrame frame,Inventory i) {
+    public Buy(JFrame frame,Inventory i,Sell s) {
         this.frame = frame;
+        inv=i;
+        sell=s;
         inv.table_update_inventory();
 
     }
@@ -184,7 +187,8 @@ public class Buy {
 
 
                             String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE) values(?, ?, ?, ?, ?, ?)";
-                            ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER);
+                            String col[]={"S_ID"};
+                            ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER,col);
                             ps.setString(1, buyComboBox.getSelectedItem().toString());
                             ps.setInt(2, Integer.parseInt(buy_priceTextField.getText().trim()));
                             ps.setInt(3, Integer.parseInt(buyQuantityTextField.getText().trim()));
@@ -193,7 +197,23 @@ public class Buy {
                             ps.setDate(6, sqlBuyDate1);
                             ps.executeUpdate();
 
+                            ResultSet rs=ps.getGeneratedKeys();
+                            while (rs.next()){
+                                //   System.out.println("id "+rs.getInt(1));
+                                int idd=rs.getInt(1);
+                                OracleConnection oc3 = new OracleConnection();
+
+                                String sql3="update PRODUCT set S_ID=? where S_NAME=?";
+                                PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
+                                ps3.setInt(1, idd);
+                                ps3.setString(2, buyComboBox.getSelectedItem().toString());
+
+                                ps3.executeUpdate();
+                            }
+
+                            //  oc.conn.commit();
                             inv.table_update_inventory();
+                            sell.prodName();
 
                         }
                         buy_priceTextField.setText("");
@@ -201,16 +221,11 @@ public class Buy {
                         buyMRPTextField.setText("");
                         buySupplierTextField.setText("");
                         buyDateTextField.setText("");
+                        buyComboBox.requestFocus();
 
 
                     } catch (Exception e2) {
                         System.out.println(e2);
-                    } finally {
-                        try {
-                            ps.close();
-                        } catch (SQLException ex) {
-                            System.out.println(ex);
-                        }
                     }
 
 
@@ -234,10 +249,8 @@ public class Buy {
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             buyComboBox.removeAllItems();
-            // sellComboBox.removeAllItems();
             while (rs.next()) {
                 buyComboBox.addItem(new Buy.productName(rs.getInt(1), rs.getString(2)));
-                //sellComboBox.addItem(new Dashboard.productName(rs.getInt(1), rs.getString(2)));
             }
 
 

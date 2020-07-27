@@ -43,8 +43,8 @@ public class Dashboard {
         mainPanel.add(tabbedPane);
 
         Inventory inventory = new Inventory(frame);
-        Buy buy = new Buy(frame, inventory);
         Sell sell = new Sell(frame, inventory);
+        Buy buy = new Buy(frame, inventory, sell);
         Paybills paybills = new Paybills(frame);
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));

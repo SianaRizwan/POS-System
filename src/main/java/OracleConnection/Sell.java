@@ -124,7 +124,6 @@ public class Sell {
 
                         while (rs.next()) {
                             sellIdTextField.setText(String.valueOf(rs.getInt("P_ID")));
-                            //  sellManufacturerTextField.setText(rs.getString("MANUFACTURER"));
                             sellMRPTextField.setText(String.valueOf(rs.getInt("MRP")));
                         }
 
@@ -307,7 +306,7 @@ public class Sell {
         return panelSell;
     }
 
-    private void prodName() {
+    public void prodName() {
         try {
             String sql = "select * from SUPPLY_ORDER ";
             ps = oc.conn.prepareStatement(sql);
