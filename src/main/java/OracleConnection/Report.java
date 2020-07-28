@@ -73,12 +73,15 @@ public class Report {
         rsales.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
                 salesTable = new JTable();
                 salesModel = new DefaultTableModel();
                 salesScrollPane = new JScrollPane(salesTable);
                 salesModel.setColumnIdentifiers(salesColumns);
                 salesTable.setModel(salesModel);
                 salesTable.setFont(f1);
+                salesTable.setVisible(true);
                 salesTable.setBackground(Color.WHITE);
                 salesTable.setSelectionBackground(Color.GRAY);
                 salesTable.setRowHeight(30);
@@ -96,6 +99,8 @@ public class Report {
         rbuy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
                 buyTable = new JTable();
                 buyModel = new DefaultTableModel();
                 buyScrollPane = new JScrollPane(buyTable);
@@ -103,6 +108,7 @@ public class Report {
                 buyTable.setModel(buyModel);
                 buyTable.setFont(f1);
                 buyTable.setBackground(Color.WHITE);
+                buyTable.setVisible(true);
                 buyTable.setSelectionBackground(Color.GRAY);
                 buyTable.setRowHeight(30);
                 buyScrollPane.setBounds(200, 450, 1000, 300);
@@ -119,6 +125,8 @@ public class Report {
         rexpenses.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
                 expensesTable = new JTable();
                 expensesModel = new DefaultTableModel();
                 expensesScrollPane = new JScrollPane(expensesTable);
@@ -126,6 +134,7 @@ public class Report {
                 expensesTable.setModel(expensesModel);
                 expensesTable.setFont(f1);
                 expensesTable.setBackground(Color.WHITE);
+                expensesTable.setVisible(true);
                 expensesTable.setSelectionBackground(Color.GRAY);
                 expensesTable.setRowHeight(30);
                 expensesScrollPane.setBounds(200, 450, 1000, 300);
@@ -144,44 +153,44 @@ public class Report {
             public void actionPerformed(ActionEvent e) {
                 //JOptionPane.showMessageDialog(frame,"Profit or loss is (query)");
                 lcost = new JLabel("Net Cost : ");
-                lcost.setBounds(450, 450, 150, 50);
+                lcost.setBounds(450, 400, 150, 50);
                 lcost.setFont(f2);
                 panel.add(lcost);
 
                 lsales = new JLabel("Net Sales : ");
-                lsales.setBounds(450, 500, 150, 50);
+                lsales.setBounds(450, 450, 150, 50);
                 lsales.setFont(f2);
                 panel.add(lsales);
 
                 lprofit = new JLabel("Profit : ");
-                lprofit.setBounds(450, 550, 150, 50);
+                lprofit.setBounds(450, 500, 150, 50);
                 lprofit.setFont(f2);
                 panel.add(lprofit);
 
                 lloss = new JLabel("Loss : ");
-                lloss.setBounds(450, 600, 150, 50);
+                lloss.setBounds(450, 550, 150, 50);
                 lloss.setFont(f2);
                 panel.add(lloss);
 
 
 
                 tcost = new JTextField();
-                tcost.setBounds(600, 460, 250, 30);
+                tcost.setBounds(600, 410, 250, 30);
                 tcost.setFont(f2);
                 panel.add(tcost);
 
                 tsales = new JTextField();
-                tsales.setBounds(600, 510, 250, 30);
+                tsales.setBounds(600, 460, 250, 30);
                 tsales.setFont(f2);
                 panel.add(tsales);
 
                 tprofit = new JTextField();
-                tprofit.setBounds(600, 560, 250, 30);
+                tprofit.setBounds(600, 510, 250, 30);
                 tprofit.setFont(f2);
                 panel.add(tprofit);
 
                 tloss = new JTextField();
-                tloss.setBounds(600, 610, 250, 30);
+                tloss.setBounds(600, 560, 250, 30);
                 tloss.setFont(f2);
                 panel.add( tloss);
 

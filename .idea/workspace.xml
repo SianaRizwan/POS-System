@@ -3,11 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/LoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/LoginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,38 +201,38 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="539" y="38" key="CommitChangelistDialog2/0.0.1920.1030@0.0.1920.1030" timestamp="1595848039615" />
-    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1594723753858">
+    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1595944566753">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1594723753858" />
-    <state width="1864" height="217" key="GridCell.Tab.0.bottom" timestamp="1595932806721">
+    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1595944566753" />
+    <state width="1864" height="217" key="GridCell.Tab.0.bottom" timestamp="1595968296111">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1595932806721" />
-    <state width="1864" height="217" key="GridCell.Tab.0.center" timestamp="1595932806721">
+    <state width="1864" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1595968296111" />
+    <state width="1864" height="217" key="GridCell.Tab.0.center" timestamp="1595968296111">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1595932806721" />
-    <state width="1864" height="217" key="GridCell.Tab.0.left" timestamp="1595932806721">
+    <state width="1864" height="217" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1595968296111" />
+    <state width="1864" height="217" key="GridCell.Tab.0.left" timestamp="1595968296111">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1595932806721" />
-    <state width="1864" height="217" key="GridCell.Tab.0.right" timestamp="1595932806721">
+    <state width="1864" height="217" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1595968296111" />
+    <state width="1864" height="217" key="GridCell.Tab.0.right" timestamp="1595968296111">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1595932806721" />
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1595924520264">
+    <state width="1864" height="217" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1595968296111" />
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1595944506671">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1595924520264" />
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1595944506671" />
     <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595848087038">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1030@0.0.1920.1030" timestamp="1595848087038" />
-    <state x="226" y="149" key="new project wizard" timestamp="1594723771495">
+    <state x="226" y="80" key="new project wizard" timestamp="1595944663035">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="226" y="149" key="new project wizard/0.0.1920.1030@0.0.1920.1030" timestamp="1594723771495" />
+    <state x="226" y="80" key="new project wizard/0.0.1920.1030@0.0.1920.1030" timestamp="1595944663035" />
     <state x="638" y="74" key="refactoring.ChangeSignatureDialog" timestamp="1595795279502">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>

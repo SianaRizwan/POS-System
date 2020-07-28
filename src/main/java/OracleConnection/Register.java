@@ -1,11 +1,12 @@
 package OracleConnection;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Register {
 
@@ -20,19 +21,22 @@ public class Register {
     private JLabel emailLabel;
     private JTextField emailTextField;
     private JLabel passwordLabel;
+    private JPasswordField passwordField;
     private JLabel retypePasswordLabel;
     private JPasswordField retypePasswordField;
     private JButton registerButton, backButton;
-    private JLabel pokpokLabel;
-    private JPasswordField passwordField;
-    private String uID;
+    private JLabel pokpokLabel, designation;
+    private JComboBox salaryComboBox;
+
+    OracleConnection oc = new OracleConnection();
 
     Register(JFrame frame) {
         this.frame = frame;
-        initComponents();
     }
 
-    private void initComponents() {
+
+
+    public JPanel initComponents() {
 
 
         registerPanel = new JPanel();
@@ -46,12 +50,12 @@ public class Register {
 
         signupLabel = new JLabel();
         signupLabel.setText("SIGN UP");
-        signupLabel.setBounds(670, 170, 100, 50);
+        signupLabel.setBounds(600, 170, 100, 50);
         signupLabel.setFont(font2);
         registerPanel.add(signupLabel);
 
         pokpokLabel = new JLabel();
-        pokpokLabel.setText("Create Your Account. It's Free and Only Take a Minute ");
+        pokpokLabel.setText("Create Account For Your Employees");
         pokpokLabel.setBounds(570, 200, 300, 50);
         pokpokLabel.setFont(font3);
         registerPanel.add(pokpokLabel);
@@ -111,22 +115,32 @@ public class Register {
         retypePasswordField.setFont(font1);
         registerPanel.add(retypePasswordField);
 
-        backButton = new JButton("Back");
-        backButton.setBounds(580, 490, 100, 20);
-        backButton.setBackground(new Color(0x7E0AB5));
-        backButton.setForeground(new Color(0xFEFEFE));
-        backButton.setFont(f1);
-        registerPanel.add(backButton);
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new LoginPage(frame);
-                registerPanel.setVisible(false);
-            }
-        });
+        designation = new JLabel("DESIGNATION : ");
+        designation.setBounds(500,450,150,50);
+        designation.setFont(f1);
+        registerPanel.add(designation);
+
+        salaryComboBox = new JComboBox();
+        salaryComboBox.setBounds(675, 460, 200, 30);
+        registerPanel.add(salaryComboBox);
+        salaryComboBox.setEditable(false);
+
+//        backButton = new JButton("Back");
+//        backButton.setBounds(580, 490, 100, 20);
+//        backButton.setBackground(new Color(0x7E0AB5));
+//        backButton.setForeground(new Color(0xFEFEFE));
+//        backButton.setFont(f1);
+//        registerPanel.add(backButton);
+//        backButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                new LoginPage(frame);
+//                registerPanel.setVisible(false);
+//            }
+//        });
 
         registerButton = new JButton("Register");
-        registerButton.setBounds(700, 490, 100, 20);
+        registerButton.setBounds(600, 500, 100, 20);
         registerButton.setFont(f1);
         registerButton.setBackground(new Color(0x7E0AB5));
         registerButton.setForeground(new Color(0xFEFEFE));
@@ -139,31 +153,29 @@ public class Register {
                     if (emailValidator.validate(emailTextField.getText().trim())) {
                         if ((passwordField.getText()).equals(retypePasswordField.getText())) {
 
-                            OracleConnection oc = new OracleConnection();
-                            String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL) values(?, ?, ?, ?)";
+                            // OracleConnection oc = new OracleConnection();
+                            //changes
+                            String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL, SAL_ID) values(?, ?, ?, ?, ?)";
                             PreparedStatement ps = oc.conn.prepareStatement(sql);
-                            uID=(userTextField.getText().trim());
                             ps.setInt(1, Integer.parseInt(userTextField.getText().trim()));
                             ps.setString(2, nameTextField.getText().trim());
                             ps.setString(3, passwordField.getText());
                             ps.setString(4, emailTextField.getText().trim());
+                            //changes
+                            ps.setInt(5, getDesignationId());
                             int x = ps.executeUpdate();
 
-                            OracleConnection oc1 = new OracleConnection();
-                            String sql1 = "insert into SALES (U_ID) values(?)";
-                            PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
-                            ps1.setInt(1, Integer.parseInt(userTextField.getText().trim()));
-                            ps1.executeUpdate();
-
-
+                            //changes
                             if (x > 0) {
-                                if (uID.charAt(0) == '1' && uID.charAt(1) == '2' && uID.charAt(2) == '3') {
-                                    new AdminDashboard(frame);
-                                    registerPanel.setVisible(false);
-                                } else {
-                                    new Dashboard(frame);
-                                    registerPanel.setVisible(false);
-                                }
+//                                new Dashboard(frame);
+//                                registerPanel.setVisible(false);
+                                userTextField.setText("");
+                                nameTextField.setText("");
+                                emailTextField.setText("");
+                                passwordField.setText("");
+                                retypePasswordField.setText("");
+                                salaryComboBox.requestFocus();
+
                             } else {
                                 JOptionPane.showMessageDialog(frame, "insert failed");
                             }
@@ -198,6 +210,61 @@ public class Register {
         int ysize = (int) toolkit.getScreenSize().getHeight();
         frame.setSize(xsize, ysize);
 
+        chooseDesignation();
+
+        return registerPanel;
+
+    }
+
+    private void chooseDesignation() {
+        try {
+            String sql = "select * from SALARY";
+            OracleConnection oc1 = new OracleConnection();
+            PreparedStatement ps = oc1.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            salaryComboBox.removeAllItems();
+            while (rs.next()) {
+                salaryComboBox.addItem(new Register.designation(rs.getString(2)));
+            }
+
+
+        } catch (Exception c) {
+            System.out.println(c);
+        }
+    }
+
+    public class designation {
+        String name;
+
+        public designation(String name) {
+            this.name = name;
+        }
+
+        public String toString() {
+            return name;
+        }
+    }
+
+    //changes
+
+    private int getDesignationId() {
+        int sal_id = 0;
+        try {
+            //String DesignationName = salaryComboBox.getSelectedItem().toString();
+
+            Statement st = oc.conn.createStatement();
+            String sql = "select SAL_ID,DESIGNATION from SALARY where DESIGNATION ='" + salaryComboBox.getSelectedItem() + "'";
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                sal_id= rs.getInt("SAL_ID");
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e + " getDesignationId");
+        }
+
+        return sal_id;
     }
 
 }

@@ -1,6 +1,5 @@
 package OracleConnection;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -101,23 +100,23 @@ public class LoginPage {
         });
         panel.add(loginButton);
 
-        regLabel = new JLabel("Create an account?");
-        regLabel.setBounds(550, 430, 200, 30);
-        panel.setFont(f1);
-        panel.add(regLabel);
-        registerButton = new JButton("Register");
-        registerButton.setBounds(670, 435, 82, 20);
-        registerButton.setBackground(new Color(0x7E0AB5));
-        registerButton.setForeground(new Color(0xFEFEFE));
-        registerButton.setFont(f2);
-        panel.add(registerButton);
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Register(frame);
-                panel.setVisible(false);
-            }
-        });
+//        regLabel = new JLabel("Create an account?");
+//        regLabel.setBounds(550, 430, 200, 30);
+//        panel.setFont(f1);
+//        panel.add(regLabel);
+//        registerButton = new JButton("Register");
+//        registerButton.setBounds(670, 435, 82, 20);
+//        registerButton.setBackground(new Color(0x7E0AB5));
+//        registerButton.setForeground(new Color(0xFEFEFE));
+//        registerButton.setFont(f2);
+//        panel.add(registerButton);
+//        registerButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                new Register(frame);
+//                panel.setVisible(false);
+//            }
+//        });
 
         frame.add(panel);
         frame.setAlwaysOnTop(true);

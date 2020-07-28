@@ -40,11 +40,15 @@ public class AdminDashboard {
         Paybills paybills = new Paybills(frame);
         Report report = new Report(frame);
         Salary salary =new Salary(frame);
+        Register register = new Register(frame);
+
+
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
         tabbedPane.addTab("Report", report.initComponents());
         tabbedPane.addTab("Salary", salary.initComponents());
+        tabbedPane.addTab("Register", register.initComponents());
 
         frame.add(mainPanel);
         frame.setAlwaysOnTop(true);
