@@ -5,6 +5,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Vector;
 
 public class Report {
     private JFrame frame;
@@ -21,7 +28,7 @@ public class Report {
     private String[] buyColumns = {"Product ID", "Name", "Supplier", "Date","Buying price", "Quantity", "Unit Price","Total"};
     private String[] buyRows = new String[8];
 
-    private String[] salesColumns = {"Sale Id", "Product Name", "Date", "Quantity", "MRP"};
+    private String[] salesColumns = { "Date","Product Name", "Seller", "Quantity", "MRP","Total"};
     private String[] salesRows = new String[5];
 
     private String[] expensesColumns = {"Expense Id", "Purpose", "Date", "Amount (taka)","Description"};
@@ -75,8 +82,8 @@ public class Report {
                 salesTable.setBackground(Color.WHITE);
                 salesTable.setSelectionBackground(Color.GRAY);
                 salesTable.setRowHeight(30);
-
                 salesScrollPane.setBounds(200, 450, 1000, 300);
+                salesTable();
                 panel.add(salesScrollPane);
             }
         });
@@ -98,8 +105,8 @@ public class Report {
                 buyTable.setBackground(Color.WHITE);
                 buyTable.setSelectionBackground(Color.GRAY);
                 buyTable.setRowHeight(30);
-
                 buyScrollPane.setBounds(200, 450, 1000, 300);
+                buyTable();
                 panel.add(buyScrollPane);
             }
         });
@@ -121,7 +128,6 @@ public class Report {
                 expensesTable.setBackground(Color.WHITE);
                 expensesTable.setSelectionBackground(Color.GRAY);
                 expensesTable.setRowHeight(30);
-
                 expensesScrollPane.setBounds(200, 450, 1000, 300);
                 panel.add(expensesScrollPane);
             }
@@ -177,6 +183,105 @@ public class Report {
 
     }
 
+    public void buyTable()
+    {
+        int n;
+        try {
+            String monthName = monthComboBox.getSelectedItem().toString();
+            //    System.out.println(monthName);
+
+            Date date = new SimpleDateFormat("MMMM").parse(monthName);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int monthNumber=cal.get(Calendar.MONTH)+1;
+            //      System.out.println(monthNumber);
+
+            OracleConnection oc = new OracleConnection();
+            String sql = "select S_ID,S_NAME,SUPPLIER,SUP_DATE,S_PRICE,S_QUANTITY,MRP, MRP*S_QUANTITY AS TOTAL FROM SUPPLY_ORDER" +
+                    " where  extract ( month from to_date(SUP_DATE,'yyyy-month-dd'))='"+monthNumber+"'  ORDER BY S_ID,S_NAME,SUP_DATE";
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsd = rs.getMetaData();
+            n = rsd.getColumnCount();
+
+            DefaultTableModel d = (DefaultTableModel) buyTable.getModel();
+            d.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+
+                for (int i = 1; i <= n; i++) {
+
+                    v.add(rs.getInt("S_ID"));
+                    v.add(rs.getString("S_NAME"));
+                    v.add(rs.getString("SUPPLIER"));
+                    v.add(rs.getDate("SUP_DATE"));
+                    v.add(rs.getInt("S_PRICE"));
+                    v.add(rs.getInt("S_QUANTITY"));
+                    v.add(rs.getInt("MRP"));
+                    v.add(rs.getInt("TOTAL"));
+
+                }
+                d.addRow(v);
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e + " designation table");
+        }
+
+    }
+
+    public void salesTable() {
+        int n;
+
+        try {
+            String monthName = monthComboBox.getSelectedItem().toString();
+                //System.out.println(monthName);
+
+            Date date = new SimpleDateFormat("MMMM").parse(monthName);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int monthNumber=cal.get(Calendar.MONTH)+1;
+               //System.out.println(monthNumber);
+
+            OracleConnection oc = new OracleConnection();
+            String sql ="select S.SALE_DATE ,SO.S_NAME , USERS.NAME,sum(SD.P_QUANTITY), SO.MRP,sum(SD.P_QUANTITY*SO.MRP) AS TOTAL " +
+                    "FROM SALES S,USERS,SUPPLY_ORDER SO,PRODUCT,SALES_DETAILS SD " +
+                    "where S.U_ID=USERS.U_ID AND S.SALE_ID = SD.SALE_ID AND SD.P_ID =PRODUCT.P_ID " +
+                    "AND PRODUCT.S_ID=SO.S_ID AND extract (month from to_date(SALE_DATE,'yyyy-month-dd'))='" +monthNumber+
+                    "' GROUP BY S.SALE_DATE ,SO.S_NAME , USERS.NAME, SO.MRP" +
+                    " ORDER BY S.SALE_DATE ,SO.S_NAME";
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsd = rs.getMetaData();
+            n = rsd.getColumnCount();
+
+            DefaultTableModel d = (DefaultTableModel) salesTable.getModel();
+            d.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+
+                for (int i = 1; i <= n; i++) {
+
+                    v.add(rs.getDate(1));
+                    v.add(rs.getString(2));
+                    v.add(rs.getString(3));
+                    v.add(rs.getInt(4));
+                    v.add(rs.getInt(5));
+                    v.add(rs.getInt(6));
+
+                }
+                d.addRow(v);
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e + " sales table");
+        }
+
+    }
 
 
 }
