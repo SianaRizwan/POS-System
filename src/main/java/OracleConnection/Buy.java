@@ -243,7 +243,7 @@ public class Buy {
         return panelBuy;
     }
 
-    private void prodName() {
+    public void prodName() {
         try {
             String sql = "select * from PRODUCT";
             ps = oc.conn.prepareStatement(sql);

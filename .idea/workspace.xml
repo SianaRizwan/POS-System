@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Invoice.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report.class" afterDir="false" />
     </list>
@@ -207,22 +205,22 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1594723753858" />
-    <state width="1864" height="217" key="GridCell.Tab.0.bottom" timestamp="1595926316192">
+    <state width="1864" height="217" key="GridCell.Tab.0.bottom" timestamp="1595932806721">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1595926316192" />
-    <state width="1864" height="217" key="GridCell.Tab.0.center" timestamp="1595926316192">
+    <state width="1864" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1595932806721" />
+    <state width="1864" height="217" key="GridCell.Tab.0.center" timestamp="1595932806721">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1595926316192" />
-    <state width="1864" height="217" key="GridCell.Tab.0.left" timestamp="1595926316192">
+    <state width="1864" height="217" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1595932806721" />
+    <state width="1864" height="217" key="GridCell.Tab.0.left" timestamp="1595932806721">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1595926316192" />
-    <state width="1864" height="217" key="GridCell.Tab.0.right" timestamp="1595926316192">
+    <state width="1864" height="217" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1595932806721" />
+    <state width="1864" height="217" key="GridCell.Tab.0.right" timestamp="1595932806721">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1595926316192" />
+    <state width="1864" height="217" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1595932806721" />
     <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1595924520264">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>

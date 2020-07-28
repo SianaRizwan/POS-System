@@ -19,8 +19,8 @@ public class Report {
     private JComboBox monthComboBox,yearComboBox;
     private Font f1, f2;
     private JButton rsales, rbuy, rexpenses,summary;
-    private JTextField tyear, tmonth;
-    private JLabel lyear,lmonth;
+    private JTextField tyear, tmonth,tcost,tsales,tprofit,tloss;
+    private JLabel lyear,lmonth,lcost,lsales,lprofit,lloss;
     private JTable buyTable,salesTable,expensesTable;
     private DefaultTableModel buyModel,salesModel,expensesModel;
     private JScrollPane buyScrollPane,salesScrollPane,expensesScrollPane;
@@ -67,7 +67,7 @@ public class Report {
 
 
         rsales = new JButton("Sales");
-        rsales.setBounds(250, 250, 120, 50);
+        rsales.setBounds(250, 150, 120, 50);
         rsales.setBackground(Color.cyan);
         rsales.setFont(f2);
         rsales.addActionListener(new ActionListener() {
@@ -90,7 +90,7 @@ public class Report {
         panel.add(rsales);
 
         rbuy = new JButton("Buy");
-        rbuy.setBounds(650, 250, 120, 50);
+        rbuy.setBounds(650, 150, 120, 50);
         rbuy.setBackground(Color.cyan);
         rbuy.setFont(f2);
         rbuy.addActionListener(new ActionListener() {
@@ -113,7 +113,7 @@ public class Report {
         panel.add(rbuy);
 
         rexpenses = new JButton("Expenses");
-        rexpenses.setBounds(1050, 250, 120, 50);
+        rexpenses.setBounds(1050, 150, 120, 50);
         rexpenses.setBackground(Color.cyan);
         rexpenses.setFont(f2);
         rexpenses.addActionListener(new ActionListener() {
@@ -135,35 +135,79 @@ public class Report {
         panel.add(rexpenses);
 
         summary = new JButton("Summary");
-        summary.setBounds(640, 370, 150, 30);
+        summary.setBounds(640, 260, 150, 30);
         summary.setBackground(Color.cyan);
         summary.setFont(f2);
+
         summary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame,"Profit or loss is (query)");
+                //JOptionPane.showMessageDialog(frame,"Profit or loss is (query)");
+                lcost = new JLabel("Net Cost : ");
+                lcost.setBounds(450, 450, 150, 50);
+                lcost.setFont(f2);
+                panel.add(lcost);
+
+                lsales = new JLabel("Net Sales : ");
+                lsales.setBounds(450, 500, 150, 50);
+                lsales.setFont(f2);
+                panel.add(lsales);
+
+                lprofit = new JLabel("Profit : ");
+                lprofit.setBounds(450, 550, 150, 50);
+                lprofit.setFont(f2);
+                panel.add(lprofit);
+
+                lloss = new JLabel("Loss : ");
+                lloss.setBounds(450, 600, 150, 50);
+                lloss.setFont(f2);
+                panel.add(lloss);
+
+
+
+                tcost = new JTextField();
+                tcost.setBounds(600, 460, 250, 30);
+                tcost.setFont(f2);
+                panel.add(tcost);
+
+                tsales = new JTextField();
+                tsales.setBounds(600, 510, 250, 30);
+                tsales.setFont(f2);
+                panel.add(tsales);
+
+                tprofit = new JTextField();
+                tprofit.setBounds(600, 560, 250, 30);
+                tprofit.setFont(f2);
+                panel.add(tprofit);
+
+                tloss = new JTextField();
+                tloss.setBounds(600, 610, 250, 30);
+                tloss.setFont(f2);
+                panel.add( tloss);
+
+
             }
         });
         panel.add(summary);
 
-        lmonth = new JLabel("Month : ");
-        lmonth.setBounds(xsize/4, 150, 150, 50);
+        lmonth = new JLabel("Year : ");
+        lmonth.setBounds(xsize/4, 320, 150, 50);
         lmonth.setFont(f1);
         panel.add(lmonth);
 
-        lyear = new JLabel("Year : ");
-        lyear.setBounds(xsize/2, 150, 150, 50);
+        lyear = new JLabel("Month : ");
+        lyear.setBounds(xsize/2, 320, 150, 50);
         lyear.setFont(f1);
         panel.add(lyear);
 
         monthComboBox = new JComboBox(months);
-        monthComboBox.setBounds((xsize/4)+60, 160, 200, 30);
+        monthComboBox.setBounds((xsize/4)+60, 330, 200, 30);
         monthComboBox.setEditable(false);
         monthComboBox.setFont(f1);
         panel.add(monthComboBox);
 
         yearComboBox = new JComboBox();
-        yearComboBox.setBounds((xsize/2)+60, 160, 200, 30);
+        yearComboBox.setBounds((xsize/2)+60, 330, 200, 30);
         yearComboBox.setEditable(false);
         yearComboBox.setFont(f1);
         panel.add( yearComboBox);
