@@ -179,14 +179,14 @@ public class Buy {
                         PreparedStatement ps1 = oc2.conn.prepareStatement(sql);
                         ResultSet rs1 = ps1.executeQuery();
                         if (rs1.next()) {
-                            quantityAdd();
-                        } else {
+                        /*   // quantityAdd();
+                        } else {*/
 
                             String buyDate1 = buyDateTextField.getText();
                             Date sqlBuyDate1 = Date.valueOf(buyDate1);
 
 
-                            String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE) values(?, ?, ?, ?, ?, ?)";
+                            String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE,initial_qty) values(?, ?, ?, ?, ?, ?,?)";
                             String col[]={"S_ID"};
                             ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER,col);
                             ps.setString(1, buyComboBox.getSelectedItem().toString());
@@ -195,6 +195,7 @@ public class Buy {
                             ps.setInt(4, Integer.parseInt(buyMRPTextField.getText().trim()));
                             ps.setString(5, buySupplierTextField.getText().trim());
                             ps.setDate(6, sqlBuyDate1);
+                            ps.setInt(7, Integer.parseInt(buyQuantityTextField.getText().trim()));
                             ps.executeUpdate();
 
                             ResultSet rs=ps.getGeneratedKeys();
@@ -289,11 +290,12 @@ public class Buy {
             String d = buyDateTextField.getText();
             Date date = Date.valueOf(d);
 
-            String sql = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY +?, MRP=? WHERE S_NAME = ? and S_QUANTITY > 0";
+            String sql = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY +?,initial_qty=initial_qty+?, MRP=? WHERE S_NAME = ? and S_QUANTITY > 0";
             PreparedStatement ps1 = oc.conn.prepareStatement(sql);
             ps1.setInt(1, quantity);
-            ps1.setInt(2, mrp);
-            ps1.setString(3, name);
+            ps1.setInt(2, quantity);
+            ps1.setInt(3, mrp);
+            ps1.setString(4, name);
 
             ps1.executeUpdate();
 

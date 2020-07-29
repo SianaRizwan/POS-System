@@ -110,13 +110,21 @@ public class Inventory {
     }
 
     public void table_update_inventory() {
-        int n;
+        int n,t;
         try {
             String sql = "select P_ID,NAME,MRP,S_QUANTITY from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME ";
+            //String sql3 = "SELECT SO.S_QUANTITY-SD.P_QUANTITY AS DIFF \n" +
+                  //  "   FROM SALES_DETAILS SD, SUPPLY_ORDER SO, PRODUCT PROD\n" +
+                   // "    WHERE SD.P_ID = PROD.P_ID AND PROD.S_ID = SO.S_ID;";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();
             n = rsd.getColumnCount();
+
+            //PreparedStatement ps3 = oc.conn.prepareStatement(sql3);
+            //ResultSet rs3 = ps3.executeQuery();
+            //ResultSetMetaData rsd3 = rs3.getMetaData();
+            //t=rsd3.getColumnCount();
 
             DefaultTableModel d = (DefaultTableModel) inventoryTable.getModel();
             d.setRowCount(0);
@@ -126,10 +134,10 @@ public class Inventory {
 
                 for (int i = 1; i <= n; i++) {
 
-                    v.add(rs.getInt("P_ID"));
-                    v.add(rs.getString("NAME"));
-                    v.add(rs.getInt("MRP"));
-                    v.add(rs.getInt("S_QUANTITY"));
+                    v.add(rs.getInt(1));
+                    v.add(rs.getString(2));
+                    v.add(rs.getInt(3));
+                    v.add(rs.getInt(4));
 
 
                 }

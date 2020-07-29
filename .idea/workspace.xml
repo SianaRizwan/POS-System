@@ -3,11 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/LoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/LoginPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/AdminDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/AdminDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Register$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Register.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Report.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Report.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +187,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595848041815</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="MODIFIED">
+      <created>1595969071561</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1595969071561</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -182,7 +203,8 @@
     <MESSAGE value="report and salary added" />
     <MESSAGE value="report and salary updated" />
     <MESSAGE value="report updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="report updated" />
+    <MESSAGE value="MODIFIED" />
+    <option name="LAST_COMMIT_MESSAGE" value="MODIFIED" />
   </component>
   <component name="WindowStateProjectService">
     <state x="451" y="91" key="#Notifications" timestamp="1593783260599">
@@ -197,38 +219,38 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="623" y="201" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1595787664432" />
-    <state x="539" y="38" key="CommitChangelistDialog2" timestamp="1595848039615">
+    <state x="539" y="38" key="CommitChangelistDialog2" timestamp="1595969070618">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="539" y="38" key="CommitChangelistDialog2/0.0.1920.1030@0.0.1920.1030" timestamp="1595848039615" />
+    <state x="539" y="38" key="CommitChangelistDialog2/0.0.1920.1030@0.0.1920.1030" timestamp="1595969070618" />
     <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1595944566753">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1595944566753" />
-    <state width="1864" height="217" key="GridCell.Tab.0.bottom" timestamp="1595968296111">
+    <state width="1864" height="205" key="GridCell.Tab.0.bottom" timestamp="1596003524408">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1595968296111" />
-    <state width="1864" height="217" key="GridCell.Tab.0.center" timestamp="1595968296111">
+    <state width="1864" height="205" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1596003524408" />
+    <state width="1864" height="205" key="GridCell.Tab.0.center" timestamp="1596003524408">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1595968296111" />
-    <state width="1864" height="217" key="GridCell.Tab.0.left" timestamp="1595968296111">
+    <state width="1864" height="205" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1596003524408" />
+    <state width="1864" height="205" key="GridCell.Tab.0.left" timestamp="1596003524408">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1595968296111" />
-    <state width="1864" height="217" key="GridCell.Tab.0.right" timestamp="1595968296111">
+    <state width="1864" height="205" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1596003524408" />
+    <state width="1864" height="205" key="GridCell.Tab.0.right" timestamp="1596003524408">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="217" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1595968296111" />
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1595944506671">
+    <state width="1864" height="205" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1596003524408" />
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1595996890950">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1595944506671" />
-    <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595848087038">
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1595996890950" />
+    <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595969093878">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1030@0.0.1920.1030" timestamp="1595848087038" />
+    <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1030@0.0.1920.1030" timestamp="1595969093878" />
     <state x="226" y="80" key="new project wizard" timestamp="1595944663035">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
