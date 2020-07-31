@@ -70,6 +70,12 @@ public class Sell {
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
 
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+        int xsize = (int) toolkit.getScreenSize().getWidth();
+        int ysize = (int) toolkit.getScreenSize().getHeight();
+        frame.setSize(xsize, ysize);
+
 
         {
             ///Sell Tab
@@ -124,13 +130,12 @@ public class Sell {
 
                         while (rs.next()) {
                             sellIdTextField.setText(String.valueOf(rs.getInt("P_ID")));
-                            //  sellManufacturerTextField.setText(rs.getString("MANUFACTURER"));
                             sellMRPTextField.setText(String.valueOf(rs.getInt("MRP")));
                         }
 
 
                     } catch (Exception ex) {
-                        System.out.println(ex);
+                        System.out.println(ex+" sellComboBox");
                     }
                 }
             });
@@ -154,7 +159,7 @@ public class Sell {
 
             sellUpdateButton = new JButton("Update");
             sellUpdateButton.setFont(f2);
-            sellUpdateButton.setBounds(350, 450, 100, 30);
+            sellUpdateButton.setBounds(400, 450, 100, 30);
             sellUpdateButton.setBackground(new Color(0x7E0AB5));
             sellUpdateButton.setForeground(new Color(0xFEFEFE));
             panelSell.add(sellUpdateButton);
@@ -167,7 +172,7 @@ public class Sell {
 
             sellAddButton = new JButton("Add");
             sellAddButton.setFont(f2);
-            sellAddButton.setBounds(500, 450, 100, 30);
+            sellAddButton.setBounds(600, 450, 100, 30);
             sellAddButton.setBackground(new Color(0x7E0AB5));
             sellAddButton.setForeground(new Color(0xFEFEFE));
             sellAddButton.addActionListener(new ActionListener() {
@@ -263,7 +268,6 @@ public class Sell {
                                 ps3.executeUpdate();
                             }
                             ps3.addBatch();
-                            oc3.conn.commit();
                             inv.table_update_inventory();
                         }
 
@@ -298,7 +302,7 @@ public class Sell {
             sellTable.setSelectionBackground(Color.GRAY);
             sellTable.setRowHeight(30);
 
-            sellScrollPane.setBounds(150, 610, 1000, 300);
+            sellScrollPane.setBounds(150, 500, (int) (xsize/1.5), 300);
             panelSell.add(sellScrollPane);
         }
 
@@ -307,27 +311,19 @@ public class Sell {
         return panelSell;
     }
 
-    private void prodName() {
+    public void prodName() {
         try {
-            String sql = "select * from SUPPLY_ORDER ";
+            String sql = "select distinct s_name,max(mrp)  from SUPPLY_ORDER group by s_name order by s_name ";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             sellComboBox.removeAllItems();
             while (rs.next()) {
-                sellComboBox.addItem(new Sell.productName(rs.getInt(1), rs.getString(2)));
+                sellComboBox.addItem(new Sell.productName(rs.getInt(2), rs.getString(1)));
             }
 
 
         } catch (Exception c) {
-            System.out.println(c);
-        } finally {
-            try {
-                rs.close();
-                ps.close();
-
-            } catch (SQLException e) {
-                System.out.println("prodName");
-            }
+            System.out.println(c+" prodName");
         }
     }
 

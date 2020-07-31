@@ -1,14 +1,17 @@
 package OracleConnection;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class Dashboard {
 
     private JFrame frame;
-    private JPanel mainPanel, panelReport;
+    private JPanel mainPanel, scrollPanel;
     private Font f1, f2;
     private JTabbedPane tabbedPane;
+    private JScrollPane scrollPane;
 
     LoginPage loginPage;
 
@@ -21,6 +24,7 @@ public class Dashboard {
 
 
     private void initComponents() {
+        // System.out.println(loginPage.uID);
 
 
         mainPanel = new JPanel();
@@ -42,15 +46,36 @@ public class Dashboard {
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         mainPanel.add(tabbedPane);
 
-        Inventory inventory = new Inventory(frame);
-        Buy buy = new Buy(frame, inventory);
-        Sell sell = new Sell(frame, inventory);
-        Paybills paybills = new Paybills(frame);
+        // loginPage=new LoginPage(null);
+        final Inventory inventory = new Inventory(frame);
+        final Sell sell = new Sell(frame, inventory);
+        final Buy buy = new Buy(frame, inventory,sell);
+        //  Paybills paybills = new Paybills(frame);
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("Buy", buy.initComponents(mainPanel));
         tabbedPane.addTab("Sell", sell.initComponents(mainPanel));
-        tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
+        //  tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
+
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if(tabbedPane.getSelectedIndex()==0){
+                    inventory.table_update_inventory();
+                }
+                else if(tabbedPane.getSelectedIndex()==1){
+                    buy.prodName();
+                }
+                else if(tabbedPane.getSelectedIndex()==2){
+                    sell.prodName();
+                }
+            }
+        });
+
+        //scrollPanel.add(mainPanel);
+
+//        scrollPane = new JScrollPane(mainPanel);
+//        scrollPanel.add(scrollPane);
 
 
         frame.add(mainPanel);
@@ -59,7 +84,6 @@ public class Dashboard {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Inventory Management");
-
 
     }
 

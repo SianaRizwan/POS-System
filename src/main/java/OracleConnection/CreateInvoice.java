@@ -8,7 +8,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
 import java.awt.*;
@@ -18,6 +17,7 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.PreparedStatement;
@@ -123,99 +123,117 @@ public class CreateInvoice {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String invoice="_invoice_.pdf";
+
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 System.out.println(dateFormat.format(date));
-                Document document = new Document();
 
-
-                try
-                {
-                    JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView());
-                    j.setDialogTitle("Save as pdf");
-                    j.addChoosableFileFilter(new FileNameExtensionFilter( "PDF Documents","pdf"));
-                    j.showSaveDialog(null);
-
-
-                    PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Invoice.pdf"));
-                    document.open();
-
-                    Paragraph p1= new Paragraph("Company Name");
-
-                    Paragraph p2= new Paragraph("Address");
-                    Paragraph p3= new Paragraph("042-35712296\n\n\n");
-
-                    Paragraph p4= new Paragraph("\n\nGrand Total: ");
-                    Paragraph p5= new Paragraph("\nThank you for visiting us…!!\nReturn/Exchange not possible with-out bill.");
-
-                    p1.setAlignment(Element.ALIGN_CENTER);
-                    p3.setAlignment(Element.ALIGN_CENTER);
-                    p2.setAlignment(Element.ALIGN_CENTER);
-                    document.add(p1);
-                    document.add(p2);
-                    document.add(p3);
-
-                    Phrase phrase = new Phrase("Time/Date: "+dateFormat.format(date));
-                    PdfContentByte canvas = writer.getDirectContent();
-                    ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase, 40, 740, 0);
-                    Phrase invNo = new Phrase("Invoice No: " );
-                    PdfContentByte canv = writer.getDirectContent();
-                    ColumnText.showTextAligned(canv, Element.ALIGN_LEFT, invNo, 510, 785, 0);
-
-
-
-                    PdfPTable tab = new PdfPTable(5);
-                    float[] columnWidths = new float[] {15f, 30f, 10f, 10f,15f};
-                    tab.setWidths(columnWidths);
-                    tab.addCell("Serial");
-
-                    tab.addCell("Product name");
-                    tab.addCell("Mrp");
-                    tab.addCell("Quantity");
-                    tab.addCell("Total Price");
-
-
-
-                    for (int i=0;i<(table.getRowCount());i++){
-
-                        String serial = table.getValueAt(i,0).toString();
-                        String p_name = table.getValueAt(i,1).toString();
-                        String mrp = table.getValueAt(i,2).toString();
-                        String qty = table.getValueAt(i,3).toString();
-                        //String price = table1.getValueAt(i,4).toString();
-                        tab.addCell(serial);
-                        tab.addCell(p_name);
-                        tab.addCell(mrp);
-                        tab.addCell(qty);
-                        //tab.addCell(price);
+                JFileChooser chooser = new JFileChooser();
+                chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.setDialogTitle("Save Pdf");
+                chooser.setApproveButtonText("Save");
+                chooser.addChoosableFileFilter(new FileNameExtensionFilter( "PDF","pdf"));
+                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                chooser.setAcceptAllFileFilterUsed(true);
 
 
 
 
+                if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                    System.out.println("getCurrentDirectory(): "+ chooser.getCurrentDirectory());
+
+
+                    try {
+
+                        Document document = new Document();
+                        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(),"Invoice.pdf")));
+                        document.open();
+
+                        Paragraph p1 = new Paragraph("Company Name");
+                        Paragraph p2 = new Paragraph("Address");
+                        Paragraph p3 = new Paragraph("042-35712296");
+                        Paragraph p5 = new Paragraph("Thank you for visiting us…!!\nReturn/Exchange not possible with-out bill\n\n\n\n\n");
+
+
+
+                        p1.setAlignment(Element.ALIGN_CENTER);
+                        p3.setAlignment(Element.ALIGN_CENTER);
+                        p2.setAlignment(Element.ALIGN_CENTER);
+                        p5.setAlignment(Element.ALIGN_CENTER);
+                        document.add(p1);
+                        document.add(p2);
+                        document.add(p3);
+                        document.add(p5);
+
+                        Phrase phrase = new Phrase("Time/Date: " + dateFormat.format(date));
+                        PdfContentByte canvas = writer.getDirectContent();
+                        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase, 40, 800, 0);
+
+                        Phrase phrase1 = new Phrase("CustomerName :" +tfName.getText());
+                        PdfContentByte canvas1 = writer.getDirectContent();
+                        ColumnText.showTextAligned(canvas1, Element.ALIGN_LEFT, phrase1, 40, 550, 0);
+
+                        Phrase phrase2 = new Phrase("Contact No :" +tfmobile.getText());
+                        PdfContentByte canvas2 = writer.getDirectContent();
+                        ColumnText.showTextAligned(canvas2, Element.ALIGN_LEFT, phrase2, 40, 530, 0);
+
+                        Phrase phrase3 = new Phrase("Email :" +tfemail.getText());
+                        PdfContentByte canvas3 = writer.getDirectContent();
+                        ColumnText.showTextAligned(canvas3, Element.ALIGN_LEFT, phrase3, 40, 510, 0);
+
+                        Phrase phrase4 = new Phrase("Address :" +tfaddress.getText());
+                        PdfContentByte canvas4 = writer.getDirectContent();
+                        ColumnText.showTextAligned(canvas4, Element.ALIGN_LEFT, phrase4, 40, 490, 0);
+
+                        Phrase invNo = new Phrase("Invoice No: " +tfserial.getText());
+                        PdfContentByte canv = writer.getDirectContent();
+                        ColumnText.showTextAligned(canv, Element.ALIGN_LEFT, invNo, 500, 785, 0);
+
+                        PdfContentByte canvtable = writer.getDirectContent();
+                        PdfPTable tab = new PdfPTable(5);
+                        float[] columnWidths = new float[]{15f, 30f, 10f, 10f, 15f};
+                        tab.setWidths(columnWidths);
+                        tab.setTotalWidth(85f);
+                        tab.addCell("Serial");
+                        tab.addCell("Product name");
+                        tab.addCell("Mrp");
+                        tab.addCell("Quantity");
+                        tab.addCell("Total Price");
+
+
+
+                        for (int i = 0; i < (table.getRowCount()); i++) {
+
+                            String serial = table.getValueAt(i, 0).toString();
+                            String p_name = table.getValueAt(i, 1).toString();
+                            String mrp = table.getValueAt(i, 2).toString();
+                            String qty = table.getValueAt(i, 3).toString();
+                            String price = table.getValueAt(i,4).toString();
+                            tab.addCell(serial);
+                            tab.addCell(p_name);
+                            tab.addCell(mrp);
+                            tab.addCell(qty);
+                            tab.addCell(price);
+                        }
+
+
+
+
+
+                        document.add(tab);
+                        document.close();
+                        writer.close();
+                        JOptionPane.showMessageDialog(frame, "Invoice Saved...");
+                    } catch (DocumentException e1) {
+                        Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE, null, e1);
+                        //e1.printStackTrace();
+                    } catch (FileNotFoundException e1) {
+                        Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE, null, e1);
+                        //e1.printStackTrace();
                     }
 
 
-
-
-
-
-                    document.add(tab);
-                    document.add(p4);
-                    document.add(p5);
-                    // writer.close();
-                    document.close();
-                } catch (DocumentException e1)
-                {
-                    Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE,null,e1);
-                    //e1.printStackTrace();
-                } catch (FileNotFoundException e1)
-                {
-                    Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE,null,e1);
-                    //e1.printStackTrace();
                 }
-
-
             }
 
 
