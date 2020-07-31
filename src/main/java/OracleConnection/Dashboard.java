@@ -1,8 +1,6 @@
 package OracleConnection;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class Dashboard {
@@ -44,30 +42,15 @@ public class Dashboard {
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         mainPanel.add(tabbedPane);
 
-        final Inventory inventory = new Inventory(frame);
-        final Sell sell = new Sell(frame, inventory);
-        final Buy buy = new Buy(frame, inventory, sell);
+        Inventory inventory = new Inventory(frame);
+        Buy buy = new Buy(frame, inventory);
+        Sell sell = new Sell(frame, inventory);
         Paybills paybills = new Paybills(frame);
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("Buy", buy.initComponents(mainPanel));
         tabbedPane.addTab("Sell", sell.initComponents(mainPanel));
         tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
-
-        tabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (tabbedPane.getSelectedIndex()==0){
-                    inventory.table_update_inventory();
-                }
-                else if (tabbedPane.getSelectedIndex()==1){
-                    buy.prodName();
-                }
-                else if (tabbedPane.getSelectedIndex()==2){
-                    sell.prodName();
-                }
-            }
-        });
 
 
         frame.add(mainPanel);

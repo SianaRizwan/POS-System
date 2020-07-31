@@ -5,9 +5,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Paybills {
 
@@ -48,28 +49,6 @@ public class Paybills {
         expenseComboBox.setBounds(550, 210, 200, 30);
         expenseComboBox.setEditable(false);
         panelPayBills.add(expenseComboBox);
-
-        expenseComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                try {
-                    OracleConnection oc = new OracleConnection();
-                    Statement st = oc.conn.createStatement();
-                    String purposeType = expenseComboBox.getSelectedItem().toString();
-
-                    if(purposeType=="Employee Salary") {
-                        String sql = "SELECT SUM(AMOUNT) AS TOTAL FROM SALARY, USERS WHERE SALARY.SAL_ID = USERS.SAL_ID";
-                        ResultSet rs = st.executeQuery(sql);
-                        while (rs.next()) {
-                            tfAmount.setText(String.valueOf(rs.getInt("TOTAL")));
-                        }
-                    }
-
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                }
-            }
-        });
 
         purpose = new JLabel("Purpose : ");
         purpose.setBounds(450, 200, 150, 50);

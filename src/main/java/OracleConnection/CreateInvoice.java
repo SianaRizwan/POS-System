@@ -7,6 +7,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
 import java.awt.*;
@@ -127,8 +129,15 @@ public class CreateInvoice {
                 System.out.println(dateFormat.format(date));
                 Document document = new Document();
 
+
                 try
                 {
+                    JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView());
+                    j.setDialogTitle("Save as pdf");
+                    j.addChoosableFileFilter(new FileNameExtensionFilter( "PDF Documents","pdf"));
+                    j.showSaveDialog(null);
+
+
                     PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Invoice.pdf"));
                     document.open();
 

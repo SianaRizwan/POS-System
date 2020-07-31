@@ -124,6 +124,7 @@ public class Sell {
 
                         while (rs.next()) {
                             sellIdTextField.setText(String.valueOf(rs.getInt("P_ID")));
+                            //  sellManufacturerTextField.setText(rs.getString("MANUFACTURER"));
                             sellMRPTextField.setText(String.valueOf(rs.getInt("MRP")));
                         }
 
@@ -247,27 +248,24 @@ public class Sell {
                             ps1.addBatch();
                         }
 
-                       // {
+                        {
                             //qty minus
-                           // String sql3 = "SELECT SO.S_QUANTITY-SD.P_QUANTITY \n" +
-                                   // "   FROM SALES_DETAILS SD, SUPPLY_ORDER SO, PRODUCT PROD\n" +
-                                  //  "    WHERE SD.P_ID = PROD.P_ID AND PROD.S_ID = SO.S_ID;";
-                            //changed query
-                            //OracleConnection oc3 = new OracleConnection();
-                            //PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
-                           // String qty = "";
-                            //for (int i = 0; i < sellTable.getRowCount(); i++) {
-                               // String name = sellTable.getValueAt(i, 0).toString();
-                               // qty = sellTable.getValueAt(i, 3).toString();
+                            String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY -? WHERE S_NAME = ? and S_QUANTITY > 0";
+                            OracleConnection oc3 = new OracleConnection();
+                            PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
+                            String qty = "";
+                            for (int i = 0; i < sellTable.getRowCount(); i++) {
+                                String name = sellTable.getValueAt(i, 0).toString();
+                                qty = sellTable.getValueAt(i, 3).toString();
 
-                               // ps3.setString(2, name);
-                               // ps3.setInt(1, Integer.parseInt(qty));
-                               // ps3.executeUpdate();
-                           // }
-                           // ps3.addBatch();
-                           // oc3.conn.commit();
-                           // inv.table_update_inventory();
-                       // }
+                                ps3.setString(2, name);
+                                ps3.setInt(1, Integer.parseInt(qty));
+                                ps3.executeUpdate();
+                            }
+                            ps3.addBatch();
+                            oc3.conn.commit();
+                            inv.table_update_inventory();
+                        }
 
 
                     } catch (Exception ex) {
@@ -309,7 +307,7 @@ public class Sell {
         return panelSell;
     }
 
-    public void prodName() {
+    private void prodName() {
         try {
             String sql = "select * from SUPPLY_ORDER ";
             ps = oc.conn.prepareStatement(sql);
