@@ -149,6 +149,10 @@ public class Report {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //JOptionPane.showMessageDialog(frame,"Profit or loss is (query)");
+                panel.remove(expensesScrollPane);
+                panel.remove(buyScrollPane);
+                panel.remove(salesScrollPane);
+                panel.updateUI();
                 lcost = new JLabel("Net Cost : ");
                 lcost.setBounds(450, 450, 150, 50);
                 lcost.setFont(f2);
@@ -329,7 +333,7 @@ public class Report {
             int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
 
             OracleConnection oc = new OracleConnection();
-            String sql="select e_id,purpose,sup_date,amount,description from expenses where  extract (year from to_date(SUP_DATE,'dd-mon-yy'))='"+yearName+"' and extract (month from to_date(SUP_DATE,'yyyy-month-dd'))='"+monthNumber+"' ORDER BY e_id";
+            String sql = "select e_id,purpose,sup_date,amount,description from expenses where  extract (year from to_date(SUP_DATE,'dd-mon-yy'))='" + yearName + "' and extract (month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber + "' ORDER BY e_id";
 
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

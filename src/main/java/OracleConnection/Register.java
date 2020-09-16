@@ -165,7 +165,8 @@ initComponents();
                         designation.setVisible(false);
                         salaryComboBox.setVisible(false);
                         showMessage(pokpokLabel, "     Create New Account ");
-
+                         tfDesignationId.setText("1");
+                         tfDesignationName.setText("admin");
                         System.out.println("pop");
                     } else {
                         designationName.setVisible(false);
