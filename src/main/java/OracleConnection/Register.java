@@ -27,11 +27,19 @@ public class Register {
     private JButton registerButton, backButton;
     private JLabel pokpokLabel, designation;
     private JComboBox salaryComboBox;
+    int count = 0;
 
     OracleConnection oc = new OracleConnection();
+    private JLabel designationId;
+    private JLabel designationName;
+    private JTextField tfDesignationId;
+    private JTextField tfDesignationName;
 
     Register(JFrame frame) {
         this.frame = frame;
+/*
+initComponents();
+*/
     }
 
 
@@ -55,7 +63,6 @@ public class Register {
         registerPanel.add(signupLabel);
 
         pokpokLabel = new JLabel();
-        pokpokLabel.setText("Create Account For Your Employees");
         pokpokLabel.setBounds(570, 200, 300, 50);
         pokpokLabel.setFont(font3);
         registerPanel.add(pokpokLabel);
@@ -116,7 +123,7 @@ public class Register {
         registerPanel.add(retypePasswordField);
 
         designation = new JLabel("DESIGNATION : ");
-        designation.setBounds(500,450,150,50);
+        designation.setBounds(500, 450, 150, 50);
         designation.setFont(f1);
         registerPanel.add(designation);
 
@@ -125,22 +132,73 @@ public class Register {
         registerPanel.add(salaryComboBox);
         salaryComboBox.setEditable(false);
 
-//        backButton = new JButton("Back");
-//        backButton.setBounds(580, 490, 100, 20);
-//        backButton.setBackground(new Color(0x7E0AB5));
-//        backButton.setForeground(new Color(0xFEFEFE));
-//        backButton.setFont(f1);
-//        registerPanel.add(backButton);
-//        backButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                new LoginPage(frame);
-//                registerPanel.setVisible(false);
-//            }
-//        });
+        designationId = new JLabel("Designation Id : ");
+        designationId.setBounds(500, 450, 150, 50);
+        designationId.setFont(f1);
+        registerPanel.add(designationId);
+
+        designationName = new JLabel("Designation Name : ");
+        designationName.setBounds(500, 490, 150, 50);
+        designationName.setFont(f1);
+        registerPanel.add(designationName);
+
+        tfDesignationId = new JTextField();
+        tfDesignationId.setBounds(675, 460, 200, 30);
+        tfDesignationId.setFont(f1);
+        registerPanel.add(tfDesignationId);
+
+        tfDesignationName = new JTextField();
+        tfDesignationName.setBounds(675, 500, 200, 30);
+        tfDesignationName.setFont(f1);
+        registerPanel.add(tfDesignationName);
+        {
+            try {
+                String sql = "select count(u_id) from users";
+                OracleConnection oc = new OracleConnection();
+                PreparedStatement ps = oc.conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+
+                System.out.println("pol");
+                while (rs.next()) {
+                    count = rs.getInt(1);
+                    if (count == 0) {
+                        designation.setVisible(false);
+                        salaryComboBox.setVisible(false);
+                        showMessage(pokpokLabel, "     Create New Account ");
+
+                        System.out.println("pop");
+                    } else {
+                        designationName.setVisible(false);
+                        designationId.setVisible(false);
+                        tfDesignationName.setVisible(false);
+                        tfDesignationId.setVisible(false);
+                        chooseDesignation();
+                        showMessage(pokpokLabel, "Create Account For Your Employees");
+                        System.out.println("jop");
+
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e + " reg designation");
+            }
+
+        }
+/*
+
+        designation = new JLabel("DESIGNATION : ");
+        designation.setBounds(500,450,150,50);
+        designation.setFont(f1);
+        registerPanel.add(designation);
+
+        salaryComboBox = new JComboBox();
+        salaryComboBox.setBounds(675, 460, 200, 30);
+        registerPanel.add(salaryComboBox);
+        salaryComboBox.setEditable(false);
+*/
+
 
         registerButton = new JButton("Register");
-        registerButton.setBounds(600, 500, 100, 20);
+        registerButton.setBounds(600, 550, 100, 20);
         registerButton.setFont(f1);
         registerButton.setBackground(new Color(0x7E0AB5));
         registerButton.setForeground(new Color(0xFEFEFE));
@@ -153,22 +211,37 @@ public class Register {
                     if (emailValidator.validate(emailTextField.getText().trim())) {
                         if ((passwordField.getText()).equals(retypePasswordField.getText())) {
 
-                            // OracleConnection oc = new OracleConnection();
-                            //changes
                             String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL, SAL_ID) values(?, ?, ?, ?, ?)";
                             PreparedStatement ps = oc.conn.prepareStatement(sql);
                             ps.setInt(1, Integer.parseInt(userTextField.getText().trim()));
                             ps.setString(2, nameTextField.getText().trim());
                             ps.setString(3, passwordField.getText());
                             ps.setString(4, emailTextField.getText().trim());
-                            //changes
-                            ps.setInt(5, getDesignationId());
+                            if(count==0){
+                                String sql1="insert into salary (sal_id,designation) values(?,?)";
+                                OracleConnection oc1=new OracleConnection();
+                                PreparedStatement ps1=oc1.conn.prepareStatement(sql1);
+                                ps1.setInt(1, Integer.parseInt(tfDesignationId.getText().trim()));
+                                ps1.setString(2,tfDesignationName.getText().trim());
+                                int y=ps1.executeUpdate();
+                                if(y>0){
+                                    new AdminDashboard(frame);
+                                    registerPanel.setVisible(false);
+                                }
+                            }
+                            if (count == 0) {
+                                ps.setInt(5, Integer.parseInt(tfDesignationId.getText().trim()));
+                            }
+                            else {
+                                ps.setInt(5, getDesignationId());
+                            }
                             int x = ps.executeUpdate();
 
-                            //changes
+
                             if (x > 0) {
-//                                new Dashboard(frame);
-//                                registerPanel.setVisible(false);
+
+                                JOptionPane.showMessageDialog(frame, "registration successful");
+
                                 userTextField.setText("");
                                 nameTextField.setText("");
                                 emailTextField.setText("");
@@ -193,7 +266,6 @@ public class Register {
                 }
 
 
-
             }
         });
 
@@ -210,10 +282,13 @@ public class Register {
         int ysize = (int) toolkit.getScreenSize().getHeight();
         frame.setSize(xsize, ysize);
 
-        chooseDesignation();
 
         return registerPanel;
 
+    }
+
+    private void showMessage(JLabel pokpokLabel, String s) {
+        pokpokLabel.setText(s);
     }
 
     private void chooseDesignation() {
@@ -257,10 +332,9 @@ public class Register {
             ResultSet rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                sal_id= rs.getInt("SAL_ID");
+                sal_id = rs.getInt("SAL_ID");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e + " getDesignationId");
         }
 

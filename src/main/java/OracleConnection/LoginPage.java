@@ -18,7 +18,6 @@ public class LoginPage {
     private JPasswordField passwordField;
     private JButton loginButton;
     private static String uID;
-    private Image img;
 
 
     LoginPage(JFrame frame) {
@@ -26,7 +25,7 @@ public class LoginPage {
         initComponents();
     }
 
-    private void initComponents()  {
+    private void initComponents() {
         //frame = new JFrame();
 
         panel = new JPanel();
@@ -36,7 +35,6 @@ public class LoginPage {
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
         panel.setBackground(new Color(0xD9B9F2));
-
         userLabel = new JLabel();
         userLabel.setText("Username : ");
         userLabel.setBounds(500, 250, 150, 50);
@@ -72,19 +70,21 @@ public class LoginPage {
                 try {
                     OracleConnection oc = new OracleConnection();
 
-                    String sql = "select U_ID,NAME,PASSWORD FROM USERS where NAME='" + userNameField.getText().trim() + "'and PASSWORD ='" + passwordField.getText() + "'";
+                    String sql = "select U_ID,NAME,PASSWORD,users.sal_id,designation FROM USERS,salary where users.sal_id=salary.sal_id and NAME='" + userNameField.getText().trim() + "'and PASSWORD ='" + passwordField.getText() + "'";
                     PreparedStatement ps = oc.conn.prepareStatement(sql);
                     ResultSet rs = ps.executeQuery();
                     if (rs.next()) {
                         uID = String.valueOf(rs.getInt("U_ID"));
+                        String designation=rs.getString("designation");
                         // System.out.println(uID);
-                        if (uID.charAt(0) == '1' && uID.charAt(1) == '2' && uID.charAt(2) == '3') {
+
+                        if (designation.equals("admin")||designation.equals("ADMIN")||designation.equals("Admin")) {
+
                             new AdminDashboard(frame);
-                            panel.setVisible(false);
                         } else {
                             new Dashboard(frame);
-                            panel.setVisible(false);
                         }
+                        panel.setVisible(false);
 
                     } else {
 
@@ -125,7 +125,29 @@ public class LoginPage {
     }
 
     public static void main(String[] args) {
+        int count;
         JFrame frame = new JFrame();
-        new LoginPage(frame);
+        try{
+            String sql="select count(u_id) from users";
+            OracleConnection oc=new OracleConnection();
+            PreparedStatement ps=oc.conn.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                count=rs.getInt(1);
+                System.out.println(count);
+                if(count==0) {
+
+                    Register register=   new Register(frame);
+                    register.initComponents();
+
+                }
+                else new LoginPage(frame);
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e +"  login drama");
+        }
     }
 }
+ 

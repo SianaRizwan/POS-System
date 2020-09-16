@@ -173,21 +173,23 @@ public class CreateInvoice {
                         PdfContentByte canvas = writer.getDirectContent();
                         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase, 40, 800, 0);
 
-                        Phrase phrase1 = new Phrase("CustomerName :" + tfName.getText());
-                        PdfContentByte canvas1 = writer.getDirectContent();
-                        ColumnText.showTextAligned(canvas1, Element.ALIGN_LEFT, phrase1, 40, 550, 0);
+                        Paragraph phrase1 = new Paragraph("CustomerName :" + tfName.getText());
+                        phrase1.setIndentationLeft(30f);
+                        document.add(phrase1);
 
-                        Phrase phrase2 = new Phrase("Contact No :" + tfmobile.getText());
-                        PdfContentByte canvas2 = writer.getDirectContent();
-                        ColumnText.showTextAligned(canvas2, Element.ALIGN_LEFT, phrase2, 40, 530, 0);
+                        Paragraph phrase2 = new Paragraph("Contact No :" + tfmobile.getText());
+                        phrase2.setIndentationLeft(30f);
+                        document.add(phrase2);
 
-                        Phrase phrase3 = new Phrase("Email :" + tfemail.getText());
-                        PdfContentByte canvas3 = writer.getDirectContent();
-                        ColumnText.showTextAligned(canvas3, Element.ALIGN_LEFT, phrase3, 40, 510, 0);
+                        Paragraph phrase3 = new Paragraph("Email :" + tfemail.getText());
+                        phrase3.setIndentationLeft(30f);
+                        document.add(phrase3);
 
-                        Phrase phrase4 = new Phrase("Address :" + tfaddress.getText());
-                        PdfContentByte canvas4 = writer.getDirectContent();
-                        ColumnText.showTextAligned(canvas4, Element.ALIGN_LEFT, phrase4, 40, 490, 0);
+                        Paragraph phrase4 = new Paragraph("Address :" + tfaddress.getText());
+                        phrase4.setIndentationLeft(30f);
+                        phrase4.setSpacingAfter(20f);
+                        document.add(phrase4);
+
 
                         Phrase invNo = new Phrase("Invoice No: " + invoiceSerialNumberTextField.getText());
                         PdfContentByte canv = writer.getDirectContent();
@@ -219,8 +221,17 @@ public class CreateInvoice {
                             tab.addCell(price);
                         }
 
-
                         document.add(tab);
+
+                        Paragraph netTotal = new Paragraph("Net Total : " + netTotalTextField.getText());
+                        netTotal.setIndentationLeft(385f);
+                        document.add(netTotal);
+
+                        Paragraph createdBy = new Paragraph("Created By : " + invoiceGeneratorCreatedByTextField.getText());
+                        createdBy.setSpacingBefore(15f);
+                        createdBy.setIndentationLeft(385f);
+                        document.add(createdBy);
+
                         document.close();
                         writer.close();
                         JOptionPane.showMessageDialog(frame, "Invoice Saved...");
