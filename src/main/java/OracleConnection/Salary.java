@@ -75,6 +75,7 @@ public class Salary {
                 public void actionPerformed(ActionEvent e) {
                     salaryUpdate();
                     designationInfoTable();
+                    tfUpdateAmount.setText("");
                 }
             });
             panel.add(updateButton);
