@@ -1,14 +1,16 @@
 package OracleConnection;
 
+
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.*;
 
 public class Paybills {
 
@@ -18,9 +20,11 @@ public class Paybills {
 
     private JComboBox expenseComboBox;
     private JLabel expId, purpose, amount, date, description;//expense Paybills
-    private JTextField tfExpId, tfAmount, tfDate, tfDescription;//expense Paybills
+    private JTextField tfExpId, tfAmount, tfDescription;//expense Paybills
     private JButton expSaveButton, expDelButton, expAddButton;
     private static String[] purposes = {"Select an option", "Employee Salary", "Rent", "Utility Bills", "Others"};//expense list.
+
+    private JDateChooser dateChooser;
 
     private JTable expTable;
     private DefaultTableModel expModel;
@@ -49,6 +53,28 @@ public class Paybills {
         expenseComboBox.setBounds(550, 210, 200, 30);
         expenseComboBox.setEditable(false);
         panelPayBills.add(expenseComboBox);
+
+        expenseComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                try {
+                    OracleConnection oc = new OracleConnection();
+                    Statement st = oc.conn.createStatement();
+                    String purposeType = expenseComboBox.getSelectedItem().toString();
+
+                    if (purposeType == "Employee Salary") {
+                        String sql = "SELECT SUM(AMOUNT) AS TOTAL FROM SALARY, USERS WHERE SALARY.SAL_ID = USERS.SAL_ID";
+                        ResultSet rs = st.executeQuery(sql);
+                        while (rs.next()) {
+                            tfAmount.setText(String.valueOf(rs.getInt("TOTAL")));
+                        }
+                    }
+
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+        });
 
         purpose = new JLabel("Purpose : ");
         purpose.setBounds(450, 200, 150, 50);
@@ -80,10 +106,10 @@ public class Paybills {
         tfAmount.setFont(f1);
         panelPayBills.add(tfAmount);
 
-        tfDate = new JTextField();
-        tfDate.setBounds(550, 310, 200, 30);
-        tfDate.setFont(f1);
-        panelPayBills.add(tfDate);
+
+        dateChooser = new JDateChooser();
+        dateChooser.setBounds(550, 310, 200, 30); // Modify depending on your preference
+        panelPayBills.add(dateChooser);
 
         tfDescription = new JTextField();
         tfDescription.setBounds(550, 360, 200, 30);
@@ -95,6 +121,21 @@ public class Paybills {
         tfExpId.setFont(f1);
         panelPayBills.add(tfExpId);
 
+        expTable = new JTable();
+        expModel = new DefaultTableModel();
+        expScrollPane = new JScrollPane(expTable);
+        expModel.setColumnIdentifiers(expenseColumns);
+        expTable.setModel(expModel);
+        expTable.setFont(f1);
+        expTable.setBackground(Color.WHITE);
+        expTable.setSelectionBackground(Color.GRAY);
+        expTable.setAutoCreateRowSorter(true);
+
+        expTable.setRowHeight(30);
+
+        expScrollPane.setBounds(150, 610, 1000, 300);
+        panelPayBills.add(expScrollPane);
+
         expAddButton = new JButton("Add");
         expAddButton.setFont(f2);
         expAddButton.setForeground(new Color(0xFEFEFE));
@@ -105,11 +146,7 @@ public class Paybills {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //date
-                    String expDate = tfDate.getText();
-                    Date sqlExpDate = Date.valueOf(expDate);
-                    // Date selectedDate = (Date) datePicker.getModel().getValue();
-
+                    Date sqlExpDate = convertJavaDateToSqlDate(dateChooser.getDate());
                     //purpose
                     String purpose = expenseComboBox.getSelectedItem().toString();
 
@@ -121,21 +158,14 @@ public class Paybills {
                     ps.setString(4, tfDescription.getText());
                     ps.setInt(5, Integer.parseInt(tfAmount.getText()));
                     ps.executeUpdate();
-                  /*  {
-                        //sal_id(pk) empty,so it wont work
-                        OracleConnection oc1 = new OracleConnection();
-                        String sql1 = "insert into SALARY (DESIGNATION, AMOUNT) values(?, ?)";
-                        PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
-                        ps1.setString(1, tfDescription.getText());
-                        ps1.setInt(2, Integer.parseInt(tfAmount.getText()));
-                        ps1.executeUpdate();
-                    } */
+
 
                     expenseTableAdd();
                     tfExpId.setText("");
-                    tfDate.setText("");
                     tfDescription.setText("");
                     tfAmount.setText("");
+
+                    expenseComboBox.requestFocus();
 
                 } catch (Exception eq) {
                     System.out.println(eq);
@@ -160,8 +190,8 @@ public class Paybills {
         expSaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Paybills(frame);
-                panelPayBills.setVisible(false);
+                JOptionPane.showMessageDialog(frame, "Expenses Saved Successfully");
+                expModel.setRowCount(0);
             }
         });
 
@@ -198,18 +228,6 @@ public class Paybills {
         expDelButton.setFont(f2);
         panelPayBills.add(expDelButton);
 
-        expTable = new JTable();
-        expModel = new DefaultTableModel();
-        expScrollPane = new JScrollPane(expTable);
-        expModel.setColumnIdentifiers(expenseColumns);
-        expTable.setModel(expModel);
-        expTable.setFont(f1);
-        expTable.setBackground(Color.WHITE);
-        expTable.setSelectionBackground(Color.GRAY);
-        expTable.setRowHeight(30);
-
-        expScrollPane.setBounds(150, 610, 1000, 300);
-        panelPayBills.add(expScrollPane);
 
         return panelPayBills;
 
@@ -217,11 +235,16 @@ public class Paybills {
 
     private void expenseTableAdd() {
         //date
-        String expDate = tfDate.getText();
-        Date sqlExpDate = Date.valueOf(expDate);
+        Date sqlExpDate = convertJavaDateToSqlDate(dateChooser.getDate());
 
         DefaultTableModel d = (DefaultTableModel) expTable.getModel();
         d.addRow(new Object[]{expenseComboBox.getSelectedItem().toString(), Integer.parseInt(tfExpId.getText()),
                 Integer.parseInt(tfAmount.getText()), sqlExpDate, tfDescription.getText()});
     }
+
+
+    private java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+        return new java.sql.Date(date.getTime());
+    }
+
 }

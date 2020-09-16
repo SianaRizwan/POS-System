@@ -6,7 +6,7 @@ import java.awt.*;
 public class AdminDashboard {
 
     private JFrame frame;
-    private JPanel mainPanel, reportPanel;
+    private JPanel mainPanel;
     private Font f1, f2;
     private JTabbedPane tabbedPane;
 
@@ -21,7 +21,7 @@ public class AdminDashboard {
         mainPanel.setLayout(null);
         mainPanel.setBackground(new Color(0x7E0AB5));
 
-        f1 = new Font("Arial", Font.BOLD, 15);
+        f1 = new Font("Arial",Font.PLAIN, 25);
         f2 = new Font("Arial", Font.BOLD, 11);
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -34,20 +34,21 @@ public class AdminDashboard {
         tabbedPane = new JTabbedPane();
         tabbedPane.setBounds(0, 0, xsize, ysize);
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
+        tabbedPane.setFont(f1);
         mainPanel.add(tabbedPane);
 
         Inventory inventory = new Inventory(frame);
         Paybills paybills = new Paybills(frame);
         Report report = new Report(frame);
         Salary salary =new Salary(frame);
-        Register register = new Register(frame);
+        Register register=new Register(frame);
 
 
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
-        tabbedPane.addTab("Report", report.initComponents());
         tabbedPane.addTab("Salary", salary.initComponents());
+        tabbedPane.addTab("Report", report.initComponents());
         tabbedPane.addTab("Register", register.initComponents());
 
         frame.add(mainPanel);

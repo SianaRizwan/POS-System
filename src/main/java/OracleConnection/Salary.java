@@ -1,6 +1,5 @@
 package OracleConnection;
 
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -25,6 +24,7 @@ public class Salary {
 
     private String[] salaryColumns = {"Id", "Designation", "Amount (taka)"};
     private String[] salaryRows = new String[3];
+    private JButton deleteButton;
 
     public Salary(JFrame frame) {
         this.frame = frame;
@@ -39,136 +39,123 @@ public class Salary {
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
 
-        updateLabel = new JLabel("Update Salary Amount");
-        updateLabel.setBounds(280, 140, 200, 60);
-        updateLabel.setFont(f1);
-        panel.add(updateLabel);
+        //update
+        {
+            updateLabel = new JLabel("Update Salary Amount");
+            updateLabel.setBounds(280, 140, 200, 60);
+            updateLabel.setFont(f1);
+            panel.add(updateLabel);
 
-        updateDesignation = new JLabel("Designation : ");
-        updateDesignation.setBounds(200, 200, 150, 50);
-        updateDesignation.setFont(f1);
-        panel.add(updateDesignation);
+            updateDesignation = new JLabel("Designation : ");
+            updateDesignation.setBounds(200, 200, 150, 50);
+            updateDesignation.setFont(f1);
+            panel.add(updateDesignation);
 
-        designationComboBox = new JComboBox();
-        designationComboBox.setBounds(350, 210, 250, 30);
-        panel.add(designationComboBox);
-        designationComboBox.setEditable(false);
+            designationComboBox = new JComboBox();
+            designationComboBox.setBounds(350, 210, 250, 30);
+            panel.add(designationComboBox);
+            designationComboBox.setEditable(false);
 
-        updateAmount = new JLabel("Amount : ");
-        updateAmount.setBounds(200, 250, 150, 50);
-        updateAmount.setFont(f1);
-        panel.add(updateAmount);
+            updateAmount = new JLabel("Amount : ");
+            updateAmount.setBounds(200, 250, 150, 50);
+            updateAmount.setFont(f1);
+            panel.add(updateAmount);
 
-        tfUpdateAmount = new JTextField();
-        tfUpdateAmount.setBounds(350, 260, 250, 30);
-        tfUpdateAmount.setFont(f1);
-        panel.add(tfUpdateAmount);
+            tfUpdateAmount = new JTextField();
+            tfUpdateAmount.setBounds(350, 260, 250, 30);
+            tfUpdateAmount.setFont(f1);
+            panel.add(tfUpdateAmount);
 
-        updateButton = new JButton("Update"); // add an alert later
-        updateButton.setBounds(390, 320, 90, 25);
-        updateButton.setBackground(new Color(0x7E0AB5));
-        updateButton.setFont(f2);
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-
-                try{
-                    OracleConnection oc=new OracleConnection();
-                    String sql="update SALARY set AMOUNT=? where DESIGNATION=?";
-                    PreparedStatement ps=oc.conn.prepareStatement(sql);
-                    ps.setInt(1, Integer.parseInt(tfUpdateAmount.getText()));
-                    ps.setString(2,designationComboBox.getSelectedItem().toString());
-
-                    ps.executeUpdate();
-
-                    tfUpdateAmount.setText("");
-                    designationComboBox.requestFocus();
+            updateButton = new JButton("Update"); // add an alert later
+            updateButton.setBounds(390, 380, 90, 25);
+            updateButton.setBackground(new Color(0x7E0AB5));
+            updateButton.setFont(f2);
+            updateButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    salaryUpdate();
                     designationInfoTable();
-                } catch (Exception exception) {
-                    System.out.println(exception +" update");
                 }
-            }
-        });
-        panel.add(updateButton);
+            });
+            panel.add(updateButton);
+        }
 
         //add
 
-        addLabel = new JLabel("Add New Designation");
-        addLabel.setBounds(780, 140, 200, 60);
-        addLabel.setFont(f1);
-        panel.add(addLabel);
+        {
+            addLabel = new JLabel("Add New Designation");
+            addLabel.setBounds(780, 140, 200, 60);
+            addLabel.setFont(f1);
+            panel.add(addLabel);
 
-        designationId = new JLabel("Designation Id : ");
-        designationId.setBounds(700, 200, 150, 50);
-        designationId.setFont(f1);
-        panel.add(designationId);
+            designationId = new JLabel("Designation Id : ");
+            designationId.setBounds(700, 200, 150, 50);
+            designationId.setFont(f1);
+            panel.add(designationId);
 
-        designationName = new JLabel("Designation Name : ");
-        designationName.setBounds(700, 250, 150, 50);
-        designationName.setFont(f1);
-        panel.add(designationName);
+            designationName = new JLabel("Designation Name : ");
+            designationName.setBounds(700, 250, 150, 50);
+            designationName.setFont(f1);
+            panel.add(designationName);
 
-        amount = new JLabel("Amount : ");
-        amount.setBounds(700, 300, 150, 50);
-        amount.setFont(f1);
-        panel.add(amount);
+            amount = new JLabel("Amount : ");
+            amount.setBounds(700, 300, 150, 50);
+            amount.setFont(f1);
+            panel.add(amount);
 
-        tfDesignationId = new JTextField();
-        tfDesignationId.setBounds(850, 210, 250, 30);
-        tfDesignationId.setFont(f1);
-        panel.add(tfDesignationId);
+            tfDesignationId = new JTextField();
+            tfDesignationId.setBounds(850, 210, 250, 30);
+            tfDesignationId.setFont(f1);
+            panel.add(tfDesignationId);
 
-        tfDesignationName = new JTextField();
-        tfDesignationName.setBounds(850, 260, 250, 30);
-        tfDesignationName.setFont(f1);
-        panel.add(tfDesignationName);
+            tfDesignationName = new JTextField();
+            tfDesignationName.setBounds(850, 260, 250, 30);
+            tfDesignationName.setFont(f1);
+            panel.add(tfDesignationName);
 
-        tfAmount = new JTextField();
-        tfAmount.setBounds(850, 310, 250, 30);
-        tfAmount.setFont(f1);
-        panel.add(tfAmount);
+            tfAmount = new JTextField();
+            tfAmount.setBounds(850, 310, 250, 30);
+            tfAmount.setFont(f1);
+            panel.add(tfAmount);
 
-        addButton = new JButton("Save");
-        addButton.setBounds(900, 380, 70, 25);
-        addButton.setBackground(new Color(0x7E0AB5));
-        addButton.setFont(f2);
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            addButton = new JButton("Save");
+            addButton.setBounds(900, 380, 70, 25);
+            addButton.setBackground(new Color(0x7E0AB5));
+            addButton.setFont(f2);
+            addButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        OracleConnection oc = new OracleConnection();
 
-                try {
-                    OracleConnection oc = new OracleConnection();
-
-                    String sql1 = "insert into SALARY (SAL_ID, DESIGNATION, AMOUNT) values(?, ?, ?)";
+                        String sql1 = "insert into SALARY (SAL_ID, DESIGNATION, AMOUNT) values(?, ?, ?)";
 
 
-                    PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
+                        PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
 
-                    ps1.setInt(1, Integer.parseInt(tfDesignationId.getText().trim()));
-                    ps1.setString(2, tfDesignationName.getText().trim());
-                    ps1.setInt(3, Integer.parseInt(tfAmount.getText().trim()));
-                    int x = ps1.executeUpdate();
+                        ps1.setInt(1, Integer.parseInt(tfDesignationId.getText()));
+                        ps1.setString(2, tfDesignationName.getText());
+                        ps1.setInt(3, Integer.parseInt(tfAmount.getText()));
+                        int x = ps1.executeUpdate();
 
-                    if (x < 0) {
+                        tfDesignationId.setText("");
+                        tfDesignationName.setText("");
+                        tfAmount.setText("");
+                        tfDesignationId.requestFocus();
+                        designationInfoTable();
+                        chooseDesignation();
 
-                        JOptionPane.showMessageDialog(frame, "input valid info");
+                        if (x < 0) {
+
+                            JOptionPane.showMessageDialog(frame, "input valid info");
+                        }
+                    } catch (Exception d) {
+                        System.out.println(d);
                     }
-                    tfDesignationId.setText("");
-                    tfDesignationName.setText("");
-                    tfAmount.setText("");
-                    tfDesignationId.requestFocus();
-
-                    designationInfoTable();
-                    chooseDesignation();
-
-                } catch (Exception d) {
-                    System.out.println(d +" save salary");
                 }
-            }
-        });
-        panel.add(addButton);
-
+            });
+            panel.add(addButton);
+        }
         frame.add(panel);
         frame.setAlwaysOnTop(true);
         frame.setResizable(false);
@@ -194,14 +181,65 @@ public class Salary {
         salaryTable.setBackground(Color.WHITE);
         salaryTable.setSelectionBackground(Color.GRAY);
         salaryTable.setRowHeight(30);
-
-        salaryScrollPane.setBounds(150, 510, 1000, 300);
+        salaryTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        salaryTable.setAutoCreateRowSorter(true);
+        salaryScrollPane.setBounds(150, 460, 1000, 200);
         panel.add(salaryScrollPane);
 
-        chooseDesignation();
+        //remove item
+        {
+            deleteButton = new JButton("Delete"); // add an alert later
+            deleteButton.setBounds(550, 380, 90, 25);
+            deleteButton.setBackground(new Color(0x7E0AB5));
+            deleteButton.setFont(f2);
+            deleteButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int selectRow = salaryTable.getSelectedRow();
+                    String name = salaryModel.getValueAt(selectRow, 1).toString();
+                    int warningMsg = JOptionPane.showConfirmDialog(frame, "Do you want to delete it?", "DELETE", JOptionPane.YES_NO_OPTION);
+
+                    if (warningMsg == JOptionPane.YES_OPTION) {
+                        try {
+
+                            String sql1 = "delete from salary where designation=?";
+
+                            OracleConnection oc1 = new OracleConnection();
+                            PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
+
+                            ps1.setString(1, name);
+                            ps1.executeUpdate();
+
+                            salaryModel.removeRow(selectRow);
+
+                        } catch (Exception ex) {
+                            System.out.println(ex + " salary delete");
+                        }
+                    }
+
+                }
+            });
+            panel.add(deleteButton);
+        }
         designationInfoTable();
+        chooseDesignation();
         return panel;
 
+    }
+
+    private void salaryUpdate() {
+        try {
+            OracleConnection oc = new OracleConnection();
+            String sql = "update salary set amount=? where designation=?";
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(tfUpdateAmount.getText()));
+            ps.setString(2, designationComboBox.getSelectedItem().toString());
+
+            ps.executeUpdate();
+
+        } catch (Exception exception) {
+            System.out.println(exception + " update salary button");
+        }
     }
 
     private void chooseDesignation() {
@@ -217,7 +255,7 @@ public class Salary {
 
 
         } catch (Exception c) {
-            System.out.println(c +" chooseDesignation");
+            System.out.println(c);
         }
     }
 
@@ -254,15 +292,12 @@ public class Salary {
                     v.add(rs.getInt("SAL_ID"));
                     v.add(rs.getString("DESIGNATION"));
                     v.add(rs.getInt("AMOUNT"));
-
-
                 }
                 d.addRow(v);
             }
 
-
         } catch (Exception e) {
-            System.out.println(e + " designation table");
+            System.out.println(e + " designationInfoTable");
         }
 
     }

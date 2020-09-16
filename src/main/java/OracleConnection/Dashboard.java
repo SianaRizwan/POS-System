@@ -61,10 +61,10 @@ public class Dashboard {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if(tabbedPane.getSelectedIndex()==0){
-                    inventory.table_update_inventory();
+                    inventory.updateInventoryTable();
                 }
                 else if(tabbedPane.getSelectedIndex()==1){
-                    buy.prodName();
+                    buy.addProductNameToJComboBox();
                 }
                 else if(tabbedPane.getSelectedIndex()==2){
                     sell.prodName();

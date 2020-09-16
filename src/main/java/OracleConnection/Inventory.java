@@ -1,5 +1,6 @@
 package OracleConnection;
 
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -13,9 +14,9 @@ import java.util.Vector;
 
 public class Inventory {
     private JFrame frame;
-    private JPanel panelInventory,Panel;
+    private JPanel panelInventory, Panel;
     private Font f1, f2;
-    private JButton  inventoryDeleteButton;
+    private JButton inventoryDeleteButton;
 
 
     private JTable inventoryTable;
@@ -28,20 +29,23 @@ public class Inventory {
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
     ResultSet rs;
+
+
+
     public Inventory(JFrame frame) {
-        this.frame=frame;
+        this.frame = frame;
+
         initComponents(Panel);
-        table_update_inventory();
+        updateInventoryTable();
     }
 
-    public JPanel initComponents(final JPanel mainPanel){
+    public JPanel initComponents(final JPanel mainPanel) {
 
-        this.Panel=mainPanel;
+        this.Panel = mainPanel;
 
         panelInventory = new JPanel();
         panelInventory.setLayout(null);
         panelInventory.setBackground(new Color(0xD9B9F2));
-
 
 
         f1 = new Font("Arial", Font.BOLD, 15);
@@ -63,6 +67,7 @@ public class Inventory {
 
                 if (warningMsg == JOptionPane.YES_OPTION) {
                     try {
+
                         String sql1 = "delete from PRODUCT where NAME=?";
 
                         OracleConnection oc1 = new OracleConnection();
@@ -78,7 +83,8 @@ public class Inventory {
                         ps2.setString(1, name);
                         ps2.executeUpdate();
 
-                        table_update_inventory();
+                        updateInventoryTable();
+
 
                     } catch (Exception ex) {
                         System.out.println(ex + " inventory delete");
@@ -87,7 +93,6 @@ public class Inventory {
 
             }
         });
-
 
 
         inventoryTable = new JTable();
@@ -99,21 +104,21 @@ public class Inventory {
         inventoryTable.setBackground(Color.WHITE);
         inventoryTable.setSelectionBackground(Color.GRAY);
         inventoryTable.setRowHeight(30);
+        inventoryTable.setAutoCreateRowSorter(true);
 
-        inventoryScrollPane.setBounds(150,350,1000,300);
+        inventoryScrollPane.setBounds(150, 350, 1000, 300);
         panelInventory.add(inventoryScrollPane);
 
 
-        table_update_inventory();
+        updateInventoryTable();
 
         return panelInventory;
     }
 
-    public void table_update_inventory() {
-        System.out.println("table update inv executed");
+    public void updateInventoryTable() {
         int n;
         try {
-            String sql = "select P_ID,NAME,MRP,S_QUANTITY from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME ";
+            String sql = "select P_ID,NAME,max(MRP),sum(S_QUANTITY) from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME having sum(S_QUANTITY)>0 group by  P_ID,NAME order by NAME";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();
@@ -129,8 +134,8 @@ public class Inventory {
 
                     v.add(rs.getInt("P_ID"));
                     v.add(rs.getString("NAME"));
-                    v.add(rs.getInt("MRP"));
-                    v.add(rs.getInt("S_QUANTITY"));
+                    v.add(rs.getInt(3));
+                    v.add(rs.getInt(4));
 
 
                 }
@@ -139,16 +144,17 @@ public class Inventory {
 
 
         } catch (Exception e) {
-            System.out.println(e+ " table_update_inventory");
-        }
-        finally {
+            System.out.println(e + " table_update_inventory");
+        } finally {
             try {
                 rs.close();
                 ps.close();
 
             } catch (SQLException e) {
-                System.out.println(e+" 1table_update_inventory");
+                System.out.println(e + " 1table_update_inventory");
             }
         }
     }
+
+
 }

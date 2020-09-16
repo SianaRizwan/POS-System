@@ -12,12 +12,13 @@ public class LoginPage {
 
     private JFrame frame;
     private JPanel panel;
-    private JLabel userLabel, passLabel, regLabel;
+    private JLabel userLabel, passLabel;
     private Font f1, f2;
     private JTextField userNameField;
     private JPasswordField passwordField;
-    private JButton loginButton, registerButton;
+    private JButton loginButton;
     private static String uID;
+    private Image img;
 
 
     LoginPage(JFrame frame) {
@@ -25,7 +26,7 @@ public class LoginPage {
         initComponents();
     }
 
-    private void initComponents() {
+    private void initComponents()  {
         //frame = new JFrame();
 
         panel = new JPanel();
@@ -100,23 +101,6 @@ public class LoginPage {
         });
         panel.add(loginButton);
 
-//        regLabel = new JLabel("Create an account?");
-//        regLabel.setBounds(550, 430, 200, 30);
-//        panel.setFont(f1);
-//        panel.add(regLabel);
-//        registerButton = new JButton("Register");
-//        registerButton.setBounds(670, 435, 82, 20);
-//        registerButton.setBackground(new Color(0x7E0AB5));
-//        registerButton.setForeground(new Color(0xFEFEFE));
-//        registerButton.setFont(f2);
-//        panel.add(registerButton);
-//        registerButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                new Register(frame);
-//                panel.setVisible(false);
-//            }
-//        });
 
         frame.add(panel);
         frame.setAlwaysOnTop(true);
@@ -131,6 +115,8 @@ public class LoginPage {
         int ysize = (int) toolkit.getScreenSize().getHeight();
         frame.setSize(xsize, ysize);
     }
+
+
 
     public static String getUID() {
         System.out.println(uID);

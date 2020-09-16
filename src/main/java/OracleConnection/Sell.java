@@ -1,5 +1,7 @@
 package OracleConnection;
 
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -22,12 +24,14 @@ public class Sell {
     private JTextField sellMRPTextField;
     private JLabel sellQuantityLabel;
     private JLabel sellDateLabel;
-    private JTextField sellQuantityTextField, sellDateTextField;//sell
+    private JTextField sellQuantityTextField;//sell
     private JButton invoiceButton, sellSaveButton, sellAddButton, sellUpdateButton;//sell
     private JTable sellTable;
     private JPanel panelSell, Panel;
     private DefaultTableModel sellModel;
     private JScrollPane sellScrollPane;
+    private JDateChooser dateChooser;
+
 
     private String[] sellColumns = {"Name", "Id", "MRP", "Quantity", "Total", "Date"};
     private String[] sellRows = new String[6];
@@ -122,15 +126,15 @@ public class Sell {
                 public void itemStateChanged(ItemEvent e) {
                     try {
                         OracleConnection oc = new OracleConnection();
-                        Statement st = oc.conn.createStatement();
-                        String sql = "select P_ID,SUPPLY_ORDER.S_ID,SUPPLY_ORDER.S_NAME,MRP FROM PRODUCT,SUPPLY_ORDER where SUPPLY_ORDER.S_ID=PRODUCT.S_ID and " +
-                                "SUPPLY_ORDER.S_NAME='" + sellComboBox.getSelectedItem().toString() + "'";
+                        String sql = "select P_ID, SUPPLY_ORDER.S_NAME,max(MRP) FROM PRODUCT,SUPPLY_ORDER where SUPPLY_ORDER.S_ID=PRODUCT.S_ID and " +
+                                "SUPPLY_ORDER.S_NAME='" + sellComboBox.getSelectedItem().toString() + "' having sum(s_quantity)>0 group by P_ID, SUPPLY_ORDER.S_NAME order by  SUPPLY_ORDER.S_NAME";
+                        PreparedStatement st = oc.conn.prepareStatement(sql);
 
-                        ResultSet rs = st.executeQuery(sql);
+                        ResultSet rs = st.executeQuery();
 
                         while (rs.next()) {
                             sellIdTextField.setText(String.valueOf(rs.getInt("P_ID")));
-                            sellMRPTextField.setText(String.valueOf(rs.getInt("MRP")));
+                            sellMRPTextField.setText(String.valueOf(rs.getInt(3)));
                         }
 
 
@@ -152,10 +156,14 @@ public class Sell {
             sellQuantityTextField.setFont(f1);
             panelSell.add(sellQuantityTextField);
 
-            sellDateTextField = new JTextField();
+          /*  sellDateTextField = new JTextField();
             sellDateTextField.setBounds(600, 360, 200, 30);
             sellDateTextField.setFont(f1);
-            panelSell.add(sellDateTextField);
+            panelSell.add(sellDateTextField);*/
+
+            dateChooser = new JDateChooser();
+            dateChooser.setBounds(600, 360, 200, 30); // Modify depending on your preference
+            panelSell.add(dateChooser);
 
             sellUpdateButton = new JButton("Update");
             sellUpdateButton.setFont(f2);
@@ -255,7 +263,7 @@ public class Sell {
 
                         {
                             //qty minus
-                            String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY -? WHERE S_NAME = ? and S_QUANTITY > 0";
+                            String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY-? WHERE S_NAME = ? and  (select sum(S_QUANTITY) from supply_order where s_name=? having sum(S_QUANTITY) > 0 )> 0 and s_id=(select max(s_id) from supply_order where s_name=? and S_QUANTITY > 0 )";
                             OracleConnection oc3 = new OracleConnection();
                             PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
                             String qty = "";
@@ -264,11 +272,13 @@ public class Sell {
                                 qty = sellTable.getValueAt(i, 3).toString();
 
                                 ps3.setString(2, name);
+                                ps3.setString(3, name);
+                                ps3.setString(4, name);
                                 ps3.setInt(1, Integer.parseInt(qty));
                                 ps3.executeUpdate();
                             }
                             ps3.addBatch();
-                            inv.table_update_inventory();
+                            inv.updateInventoryTable();
                         }
 
 
@@ -313,7 +323,7 @@ public class Sell {
 
     public void prodName() {
         try {
-            String sql = "select distinct s_name,max(mrp)  from SUPPLY_ORDER group by s_name order by s_name ";
+            String sql = "select distinct s_name,max(mrp)  from SUPPLY_ORDER having sum(s_quantity)>0 group by s_name order by s_name ";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             sellComboBox.removeAllItems();
@@ -334,22 +344,26 @@ public class Sell {
         sellIdTextField.setText(d.getValueAt(row, 1).toString());
         sellMRPTextField.setText(d.getValueAt(row, 2).toString());
         sellQuantityTextField.setText(d.getValueAt(row, 3).toString());
-        sellDateTextField.setText(d.getValueAt(row, 5).toString());
+        dateChooser.setDate((java.util.Date) d.getValueAt(row, 5));
     }
 
     private void sellTableQtyUpdate(java.awt.event.ActionEvent evt) {
         try {
-            String sellDate = sellDateTextField.getText();
-            Date date = Date.valueOf(sellDate);
+            /*String sellDate = sellDateTextField.getText();
+            Date date = Date.valueOf(sellDate);*/
+
+            Date date = convertJavaDateToSqlDate(dateChooser.getDate());
+
 
             OracleConnection oc1 = new OracleConnection();
-            String sql = "select * from SUPPLY_ORDER where S_NAME=?";
+            String sql = "select  distinct S_NAME,max(mrp) ,sum(S_QUANTITY) from SUPPLY_ORDER  where s_name=? group by S_name";
             PreparedStatement p1 = oc1.conn.prepareStatement(sql);
             p1.setString(1, sellComboBox.getSelectedItem().toString());
             ResultSet rs1 = p1.executeQuery();
 
+
             while (rs1.next()) {
-                int availableQty = rs1.getInt("S_QUANTITY");
+                int availableQty = rs1.getInt(3);
 
                 int mrp = Integer.parseInt(sellMRPTextField.getText());
                 int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
@@ -373,6 +387,7 @@ public class Sell {
                     } else {
                         JOptionPane.showMessageDialog(frame, "update unsuccessful");
                     }
+                    sellQuantityTextField.setText("");
 
                 }
             }
@@ -385,18 +400,18 @@ public class Sell {
     private void addToJtable() {
         try {
 
-            String sellDate = sellDateTextField.getText();
-            Date date = Date.valueOf(sellDate);
+            Date date = convertJavaDateToSqlDate(dateChooser.getDate());
+
 
             OracleConnection oc1 = new OracleConnection();
-            String sql = "select * from SUPPLY_ORDER where S_NAME=?";
+            String sql = "select  distinct S_NAME,max(mrp) ,sum(S_QUANTITY) from SUPPLY_ORDER  where s_name=? group by S_name";
             PreparedStatement p1 = oc1.conn.prepareStatement(sql);
             p1.setString(1, sellComboBox.getSelectedItem().toString());
             ResultSet rs1 = p1.executeQuery();
 
             while (rs1.next()) {
-                int availableQty = rs1.getInt("S_QUANTITY");
-
+                int availableQty = rs1.getInt(3);
+                //  System.out.println(availableQty +" qty");
                 int mrp = Integer.parseInt(sellMRPTextField.getText());
                 int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
 
@@ -407,12 +422,16 @@ public class Sell {
                     DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
                     d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
                             Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), total, date});
-                    sellQuantityTextField.setText("");
                 }
+                sellQuantityTextField.setText("");
+
 
             }
         } catch (Exception e) {
             System.out.println(e + " addToJtable sell");
         }
+    }
+    private java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+        return new java.sql.Date(date.getTime());
     }
 }
