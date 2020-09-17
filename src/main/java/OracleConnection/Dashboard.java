@@ -23,7 +23,7 @@ public class Dashboard {
 
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
-        mainPanel.setBackground(new Color(139, 143, 45));
+        mainPanel.setBackground(new Color(139, 143, 45,255));
 
         f1 = new Font("Arial", Font.BOLD, 20);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -45,23 +45,7 @@ public class Dashboard {
         final Buy buy = new Buy(frame, inventory,sell);
         logOutPanel= new JPanel();
         logOutPanel.setLayout(null);
-        logOutPanel = new javax.swing.JPanel() {
-            protected void paintComponent(Graphics g) {
-                if (g instanceof Graphics2D) {
-                    final int R = 224;
-                    final int G = 224;
-                    final int B = 123;
-                    Paint p =
-                            new GradientPaint(0.3f, 0.5f, new Color(R, G, B, 100),
-                                    getWidth(), getHeight(), new Color(R, G, B, 255), true);
-                    Graphics2D g2d = (Graphics2D)g;
-                    g2d.setPaint(p);
-                    g2d.fillRect(0, 0, getWidth(), getHeight());
-                } else {
-                    super.paintComponent(g);
-                }
-            }
-        };
+        logOutPanel.setBackground(new Color(195, 197, 97));
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("Buy", buy.initComponents(mainPanel));
