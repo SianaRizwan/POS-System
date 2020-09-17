@@ -34,7 +34,7 @@ public class Salary {
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(0xD9B9F2));
+        panel.setBackground(new Color(195, 197, 97));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -68,7 +68,7 @@ public class Salary {
 
             updateButton = new JButton("Update"); // add an alert later
             updateButton.setBounds(390, 380, 90, 25);
-            updateButton.setBackground(new Color(0x7E0AB5));
+            updateButton.setBackground(Color.cyan);
             updateButton.setFont(f2);
             updateButton.addActionListener(new ActionListener() {
                 @Override
@@ -121,7 +121,7 @@ public class Salary {
 
             addButton = new JButton("Save");
             addButton.setBounds(900, 380, 70, 25);
-            addButton.setBackground(new Color(0x7E0AB5));
+            addButton.setBackground(Color.cyan);
             addButton.setFont(f2);
             addButton.addActionListener(new ActionListener() {
                 @Override
@@ -191,7 +191,7 @@ public class Salary {
         {
             deleteButton = new JButton("Delete"); // add an alert later
             deleteButton.setBounds(550, 380, 90, 25);
-            deleteButton.setBackground(new Color(0x7E0AB5));
+            deleteButton.setBackground(Color.cyan);
             deleteButton.setFont(f2);
             deleteButton.addActionListener(new ActionListener() {
                 @Override

@@ -47,7 +47,7 @@ public class Paybills {
 
         panelPayBills = new JPanel();
         panelPayBills.setLayout(null);
-        panelPayBills.setBackground(new Color(0xD9B9F2));
+        panelPayBills.setBackground(new Color(195, 197, 97));
 
         expenseComboBox = new JComboBox(purposes);
         expenseComboBox.setBounds(550, 210, 200, 30);
@@ -141,8 +141,8 @@ public class Paybills {
 
         expAddButton = new JButton("Add");
         expAddButton.setFont(f2);
-        expAddButton.setForeground(new Color(0xFEFEFE));
-        expAddButton.setBackground(new Color(0x7E0AB5));
+        expAddButton.setForeground(Color.BLACK);
+        expAddButton.setBackground(Color.cyan);
         expAddButton.setBounds(450, 500, 100, 30);
         panelPayBills.add(expAddButton);
         expAddButton.addActionListener(new ActionListener() {
@@ -185,9 +185,9 @@ public class Paybills {
 
         expSaveButton = new JButton("Save");
         expSaveButton.setFont(f2);
-        expSaveButton.setForeground(new Color(0xFEFEFE));
+        expSaveButton.setForeground(Color.BLACK);
 
-        expSaveButton.setBackground(new Color(0x7E0AB5));
+        expSaveButton.setBackground(Color.cyan);
         expSaveButton.setBounds(600, 500, 100, 30);
         panelPayBills.add(expSaveButton);
         expSaveButton.addActionListener(new ActionListener() {
@@ -200,8 +200,8 @@ public class Paybills {
 
         expDelButton = new JButton("Delete");
         expDelButton.setBounds(750, 500, 100, 30);
-        expDelButton.setBackground(new Color(0x7E0AB5));
-        expDelButton.setForeground(new Color(0xFEFEFE));
+        expDelButton.setBackground(Color.cyan);
+        expDelButton.setForeground(Color.BLACK);
         expDelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

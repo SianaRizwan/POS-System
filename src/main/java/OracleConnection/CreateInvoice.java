@@ -58,7 +58,7 @@ public class CreateInvoice {
 
         mainpanel = new JPanel();
         mainpanel.setLayout(null);
-        mainpanel.setBackground(new Color(0xD9B9F2));
+        mainpanel.setBackground(new Color(195, 197, 97));
         //mainpanel.setBackground(Color.lightGray);
         JLabel head = new JLabel("Invoice");
         head.setHorizontalAlignment(SwingConstants.CENTER);

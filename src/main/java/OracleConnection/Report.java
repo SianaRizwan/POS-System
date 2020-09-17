@@ -58,7 +58,7 @@ public class Report {
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(0xD9B9F2));
+        panel.setBackground(new Color(195, 197, 97));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.PLAIN, 18);

@@ -69,7 +69,7 @@ public class Sell {
 
         panelSell = new JPanel();
         panelSell.setLayout(null);
-        panelSell.setBackground(new Color(0xD9B9F2));
+        panelSell.setBackground(new Color(195, 197, 97));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -168,8 +168,8 @@ public class Sell {
             sellUpdateButton = new JButton("Update");
             sellUpdateButton.setFont(f2);
             sellUpdateButton.setBounds(400, 450, 100, 30);
-            sellUpdateButton.setBackground(new Color(0x7E0AB5));
-            sellUpdateButton.setForeground(new Color(0xFEFEFE));
+            sellUpdateButton.setBackground(Color.cyan);
+            sellUpdateButton.setForeground(Color.BLACK);
             panelSell.add(sellUpdateButton);
             sellUpdateButton.addActionListener(new ActionListener() {
                 @Override
@@ -181,8 +181,8 @@ public class Sell {
             sellAddButton = new JButton("Add");
             sellAddButton.setFont(f2);
             sellAddButton.setBounds(600, 450, 100, 30);
-            sellAddButton.setBackground(new Color(0x7E0AB5));
-            sellAddButton.setForeground(new Color(0xFEFEFE));
+            sellAddButton.setBackground(Color.cyan);
+            sellAddButton.setForeground(Color.BLACK);
             sellAddButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -206,8 +206,8 @@ public class Sell {
 
             invoiceButton = new JButton("Invoice");
             invoiceButton.setBounds(800, 450, 100, 30);
-            invoiceButton.setBackground(new Color(0x7E0AB5));
-            invoiceButton.setForeground(new Color(0xFEFEFE));
+            invoiceButton.setBackground(Color.cyan);
+            invoiceButton.setForeground(Color.BLACK);
 
             invoiceButton.setFont(f2);
             panelSell.add(invoiceButton);

@@ -42,7 +42,7 @@ public class Buy {
 
         panelBuy = new JPanel();
         panelBuy.setLayout(null);
-        panelBuy.setBackground(new Color(0xD9B9F2));
+        panelBuy.setBackground(new Color(195, 197, 97));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -152,9 +152,9 @@ public class Buy {
             buyAddNewButton = new JButton("Add New");
             buyAddNewButton.setBounds(850, 110, 100, 30);
             buyAddNewButton.setFont(f2);
-            buyAddNewButton.setForeground(new Color(0xFEFEFE));
+            buyAddNewButton.setForeground(Color.BLACK);
 
-            buyAddNewButton.setBackground(new Color(0x7E0AB5));
+            buyAddNewButton.setBackground(Color.cyan);
             buyAddNewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -168,8 +168,8 @@ public class Buy {
             buySaveButton = new JButton("Save");
             buySaveButton.setFont(f2);
             buySaveButton.setBounds(580, 550, 80, 30);
-            buySaveButton.setBackground(new Color(0x7E0AB5));
-            buySaveButton.setForeground(new Color(0xFEFEFE));
+            buySaveButton.setBackground(Color.cyan);
+            buySaveButton.setForeground(Color.BLACK);
 
             panelBuy.add(buySaveButton);
             buySaveButton.addActionListener(new ActionListener() {

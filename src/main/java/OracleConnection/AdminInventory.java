@@ -36,7 +36,7 @@ public class AdminInventory {
 
         panelInventory = new JPanel();
         panelInventory.setLayout(null);
-        panelInventory.setBackground(new Color(0xD9B9F2));
+        panelInventory.setBackground(new Color(195, 197, 97));
 
 
 
@@ -45,7 +45,7 @@ public class AdminInventory {
 
         inventoryDeleteButton = new JButton("Delete");
         inventoryDeleteButton.setBounds(600, 240, 90, 25);
-        inventoryDeleteButton.setBackground(new Color(0x7E0AB5));
+        inventoryDeleteButton.setBackground(Color.cyan);
         inventoryDeleteButton.setForeground(new Color(0xFEFEFE));
         inventoryDeleteButton.setFont(f2);
         panelInventory.add(inventoryDeleteButton);

@@ -26,7 +26,7 @@ public class ProductEntry {
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(0xD9B9F2));
+        panel.setBackground(new Color(195, 197, 97));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -57,7 +57,7 @@ public class ProductEntry {
 
         backButton = new JButton("Back");
         backButton.setBounds(720, 400, 70, 25);
-        backButton.setBackground(new Color(0x7E0AB5));
+        backButton.setBackground(Color.cyan);
         backButton.setFont(f2);
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -71,7 +71,7 @@ public class ProductEntry {
 
         addButton = new JButton("Save");
         addButton.setBounds(620, 400, 70, 25);
-        addButton.setBackground(new Color(0x7E0AB5));
+        addButton.setBackground(Color.cyan);
         addButton.setFont(f2);
         addButton.addActionListener(new ActionListener() {
             @Override

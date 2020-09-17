@@ -45,7 +45,7 @@ public class Inventory {
 
         panelInventory = new JPanel();
         panelInventory.setLayout(null);
-        panelInventory.setBackground(new Color(0xD9B9F2));
+        panelInventory.setBackground(new Color(195, 197, 97));
 
 
         f1 = new Font("Arial", Font.BOLD, 15);
@@ -53,8 +53,8 @@ public class Inventory {
 
         inventoryDeleteButton = new JButton("Delete");
         inventoryDeleteButton.setBounds(600, 240, 90, 25);
-        inventoryDeleteButton.setBackground(new Color(0x7E0AB5));
-        inventoryDeleteButton.setForeground(new Color(0xFEFEFE));
+        inventoryDeleteButton.setBackground(Color.cyan);
+        inventoryDeleteButton.setForeground(Color.BLACK);
         inventoryDeleteButton.setFont(f2);
         panelInventory.add(inventoryDeleteButton);
         inventoryDeleteButton.addActionListener(new ActionListener() {

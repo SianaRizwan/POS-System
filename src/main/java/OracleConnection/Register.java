@@ -51,7 +51,7 @@ initComponents();
 
         registerPanel = new JPanel();
         registerPanel.setLayout(null);
-        registerPanel.setBackground(new Color(0xD9B9F2));
+        registerPanel.setBackground(new Color(195, 197, 97 ));
 
         font1 = new Font("Arial", Font.BOLD, 15);
         f1 = new Font("Arial", Font.BOLD, 15);
@@ -189,8 +189,8 @@ initComponents();
 
         registerButton = new JButton("Register");
         registerButton.setFont(f1);
-        registerButton.setBackground(new Color(0x7E0AB5));
-        registerButton.setForeground(new Color(0xFEFEFE));
+        registerButton.setBackground(Color.cyan);
+        registerButton.setForeground(Color.BLACK);
         registerPanel.add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             @Override

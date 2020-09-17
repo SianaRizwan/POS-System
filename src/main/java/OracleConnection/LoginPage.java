@@ -34,7 +34,7 @@ public class LoginPage {
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
-        panel.setBackground(new Color(0xD9B9F2));
+        panel.setBackground(new Color(139, 143, 45,180));
         userLabel = new JLabel();
         userLabel.setText("Username : ");
         userLabel.setBounds(500, 250, 150, 50);
@@ -60,9 +60,9 @@ public class LoginPage {
 
         loginButton = new JButton("Login");
         loginButton.setBounds(630, 360, 80, 30);
-        loginButton.setBackground(new Color(0x7E0AB5));
+        loginButton.setBackground(Color.cyan);
         loginButton.setFont(f2);
-        loginButton.setForeground(new Color(0xFEFEFE));
+        loginButton.setForeground(Color.BLACK);
 
         loginButton.addActionListener(new ActionListener() {
             @Override
