@@ -8,13 +8,10 @@ import java.awt.*;
 public class Dashboard {
 
     private JFrame frame;
-    private JPanel mainPanel, scrollPanel;
+    private JPanel mainPanel, scrollPanel,logOutPanel;
     private Font f1, f2;
-    private JTabbedPane tabbedPane;
+    public JTabbedPane tabbedPane;
     private JScrollPane scrollPane;
-
-    LoginPage loginPage;
-
 
     Dashboard(JFrame frame) {
         this.frame = frame;
@@ -22,16 +19,13 @@ public class Dashboard {
 
     }
 
-
     private void initComponents() {
-        // System.out.println(loginPage.uID);
-
 
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
         mainPanel.setBackground(new Color(0x7E0AB5));
 
-        f1 = new Font("Arial", Font.BOLD, 15);
+        f1 = new Font("Arial", Font.BOLD, 20);
         f2 = new Font("Arial", Font.BOLD, 11);
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -46,16 +40,18 @@ public class Dashboard {
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         mainPanel.add(tabbedPane);
 
-        // loginPage=new LoginPage(null);
         final Inventory inventory = new Inventory(frame);
         final Sell sell = new Sell(frame, inventory);
         final Buy buy = new Buy(frame, inventory,sell);
-        //  Paybills paybills = new Paybills(frame);
+        logOutPanel= new JPanel();
+        logOutPanel.setLayout(null);
+        logOutPanel.setBackground(new Color(0xD9B9F2));
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("Buy", buy.initComponents(mainPanel));
         tabbedPane.addTab("Sell", sell.initComponents(mainPanel));
-        //  tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
+        tabbedPane.addTab("Logout", logOutPanel);
+
 
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
@@ -69,13 +65,15 @@ public class Dashboard {
                 else if(tabbedPane.getSelectedIndex()==2){
                     sell.prodName();
                 }
+                else if(tabbedPane.getSelectedIndex()==3){
+                    int warningMsg = JOptionPane.showConfirmDialog(frame, "Do you want to Logout?", "Logout", JOptionPane.YES_NO_OPTION);
+                    if(warningMsg==JOptionPane.YES_OPTION){
+                        new LoginPage(frame);
+                        mainPanel.setVisible(false);
+                    }
+                }
             }
         });
-
-        //scrollPanel.add(mainPanel);
-
-//        scrollPane = new JScrollPane(mainPanel);
-//        scrollPanel.add(scrollPane);
 
 
         frame.add(mainPanel);

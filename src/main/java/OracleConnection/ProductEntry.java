@@ -1,6 +1,5 @@
 package OracleConnection;
 
-
 /// adding new category
 
 import javax.swing.*;
@@ -27,7 +26,7 @@ public class ProductEntry {
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(Color.lightGray);
+        panel.setBackground(new Color(0xD9B9F2));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -58,12 +57,13 @@ public class ProductEntry {
 
         backButton = new JButton("Back");
         backButton.setBounds(720, 400, 70, 25);
-        backButton.setBackground(Color.cyan);
+        backButton.setBackground(new Color(0x7E0AB5));
         backButton.setFont(f2);
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Dashboard(frame);
+                Dashboard dashboard = new Dashboard(frame);
+                dashboard.tabbedPane.setSelectedIndex(1);
                 panel.setVisible(false);
             }
         });
@@ -71,7 +71,7 @@ public class ProductEntry {
 
         addButton = new JButton("Save");
         addButton.setBounds(620, 400, 70, 25);
-        addButton.setBackground(Color.cyan);
+        addButton.setBackground(new Color(0x7E0AB5));
         addButton.setFont(f2);
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -89,6 +89,8 @@ public class ProductEntry {
                     ps1.setString(2, tfProductName.getText());
                     ps1.setString(3,tfProductName.getText());
                     int x = ps1.executeUpdate();
+
+                    oc.conn.commit();
 
                     tfProductId.setText("");
                     tfProductName.setText("");

@@ -118,7 +118,7 @@ public class Inventory {
     public void updateInventoryTable() {
         int n;
         try {
-            String sql = "select P_ID,NAME,max(MRP),sum(S_QUANTITY) from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME having sum(S_QUANTITY)>0 group by  P_ID,NAME order by NAME";
+            String sql = "select P_ID,NAME,max(MRP),sum(S_QUANTITY) from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME having sum(S_QUANTITY)>0 group by  P_ID,NAME order by p_id";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();

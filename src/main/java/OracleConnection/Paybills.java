@@ -69,6 +69,9 @@ public class Paybills {
                             tfAmount.setText(String.valueOf(rs.getInt("TOTAL")));
                         }
                     }
+                    else{
+                        tfAmount.setText("");
+                    }
 
                 } catch (Exception ex) {
                     System.out.println(ex);

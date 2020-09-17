@@ -18,22 +18,29 @@ public class Report {
     private JComboBox monthComboBox, yearComboBox;
     private Font f1, f2;
     private JButton rsales, rbuy, rexpenses, summary;
-    private JTextField tyear, tmonth, tcost, tsales, tprofit, tloss;
-    private JLabel lyear, lmonth, lcost, lsales, lprofit, lloss;
+    private JTextField tyear, tmonth, totalExpenseTF, totalSalesTF, netIncomeTF;
+    private JLabel lyear, lmonth, labelTotalExpense, labelTotalSales, labelNetIncome;
     private JTable buyTable, salesTable, expensesTable;
     private DefaultTableModel buyModel, salesModel, expensesModel;
     private JScrollPane buyScrollPane, salesScrollPane, expensesScrollPane;
 
-    private String[] buyColumns = {"Product ID", "Name", "Supplier", "Date", "Buying price", "Quantity", "Unit MRP", "Total"};
+    int totalBill = 0;
+    int totalBuy = 0;
+
+    private String[] buyColumns = {"Date", "Product ID", "Name", "Supplier", "Buying price", "Quantity", "Unit MRP", "Total"};
     private String[] buyRows = new String[8];
 
     private String[] salesColumns = {"Date", "Product Name", "Seller", "Quantity", "MRP", "Total"};
     private String[] salesRows = new String[5];
 
-    private String[] expensesColumns = {"Expense Id", "Purpose", "Date", "Amount (taka)", "Description"};
+    private String[] expensesColumns = {"Date", "Expense Id", "Purpose", "Amount (taka)", "Description"};
     private String[] expensesRows = new String[5];
 
     private static String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};//month list.
+    private JLabel totalLabel;
+    private JTextField totalTextField;
+    private Font f3;
+    private JLabel head;
 
 
     public Report(JFrame frame) {
@@ -54,169 +61,209 @@ public class Report {
         panel.setBackground(new Color(0xD9B9F2));
 
         f1 = new Font("Arial", Font.BOLD, 15);
-        f2 = new Font("Arial", Font.BOLD, 16);
+        f2 = new Font("Arial", Font.PLAIN, 18);
+        f3 = new Font("Arial", Font.BOLD, 18);
 
 
-        JLabel head = new JLabel("Report");
+        head = new JLabel();
+        showReportLabel(head, "REPORT");
+
         head.setHorizontalAlignment(SwingConstants.CENTER);
         head.setFont(new Font("Lato Medium", Font.PLAIN, 40));
         head.setBounds(450, 0, 600, 70);
         panel.add(head);
 
+        salesTable = new JTable();
+        salesModel = new DefaultTableModel();
+        salesScrollPane = new JScrollPane(salesTable);
+        salesModel.setColumnIdentifiers(salesColumns);
+        salesTable.setModel(salesModel);
+        salesTable.setFont(f1);
+        salesTable.setBackground(Color.WHITE);
+        salesTable.setSelectionBackground(Color.GRAY);
+        salesTable.setRowHeight(30);
+        salesTable.setAutoCreateRowSorter(true);
+        salesScrollPane.setBounds(230, 180, 1000, 450);
+
+        buyTable = new JTable();
+        buyModel = new DefaultTableModel();
+        buyScrollPane = new JScrollPane(buyTable);
+        buyModel.setColumnIdentifiers(buyColumns);
+        buyTable.setModel(buyModel);
+        buyTable.setFont(f1);
+        buyTable.setBackground(Color.WHITE);
+        buyTable.setSelectionBackground(Color.GRAY);
+        buyTable.setRowHeight(30);
+        buyTable.setAutoCreateRowSorter(true);
+        buyScrollPane.setBounds(230, 180, 1000, 450);
+
+        expensesTable = new JTable();
+        expensesModel = new DefaultTableModel();
+        expensesScrollPane = new JScrollPane(expensesTable);
+        expensesModel.setColumnIdentifiers(expensesColumns);
+        expensesTable.setModel(expensesModel);
+        expensesTable.setFont(f1);
+        expensesTable.setBackground(Color.WHITE);
+        expensesTable.setSelectionBackground(Color.GRAY);
+        expensesTable.setRowHeight(30);
+        expensesTable.setAutoCreateRowSorter(true);
+        expensesScrollPane.setBounds(230, 180, 1000, 450);
+
+        totalLabel = new JLabel("TOTAL : ");
+        totalLabel.setBounds(850, 670, 150, 50);
+        totalLabel.setFont(f3);
+
+        totalTextField = new JTextField();
+        totalTextField.setBounds(950, 680, 200, 30);
+        totalTextField.setFont(f2);
+
+
+        labelTotalExpense = new JLabel("Net Expense : ");
+        labelTotalExpense.setBounds(450, 255, 150, 50);
+        labelTotalExpense.setFont(f3);
+
+        labelTotalSales = new JLabel(  "Net Sales   : ");
+        labelTotalSales.setBounds(450, 325, 150, 50);
+        labelTotalSales.setFont(f3);
+
+        labelNetIncome = new JLabel(   "Net Income  : ");
+        labelNetIncome.setBounds(450, 385, 150, 50);
+        labelNetIncome.setFont(f3);
+
+
+        totalExpenseTF = new JTextField();
+        totalExpenseTF.setBounds(600, 260, 250, 50);
+        totalExpenseTF.setFont(f2);
+
+        totalSalesTF = new JTextField();
+        totalSalesTF.setBounds(600, 330, 250, 50);
+        totalSalesTF.setFont(f2);
+
+        netIncomeTF = new JTextField();
+        netIncomeTF.setBounds(600, 390, 250, 50);
+        netIncomeTF.setFont(f2);
+
 
         rsales = new JButton("Sales");
-        rsales.setBounds(250, 150, 120, 50);
+        rsales.setBounds(50, 330, 120, 30);
         rsales.setBackground(Color.cyan);
         rsales.setFont(f2);
         rsales.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                panel.remove(expensesScrollPane);
+                panel.remove(buyScrollPane);
+                panel.updateUI();
                 salesYearComboFillUp();
-                salesTable = new JTable();
-                salesModel = new DefaultTableModel();
-                salesScrollPane = new JScrollPane(salesTable);
-                salesModel.setColumnIdentifiers(salesColumns);
-                salesTable.setModel(salesModel);
-                salesTable.setFont(f1);
-                salesTable.setBackground(Color.WHITE);
-                salesTable.setSelectionBackground(Color.GRAY);
-                salesTable.setRowHeight(30);
-                salesTable.setAutoCreateRowSorter(true);
-
-                salesScrollPane.setBounds(200, 450, 1000, 300);
-                salesTable();
+                setSalesReport();
                 panel.add(salesScrollPane);
+                panel.add(totalLabel);
+                panel.add(totalTextField);
+                totalTextField.setText(String.valueOf(setTotalSales()));
+                setSummaryInfoVisibility(false);
+                setVisibilityTotal(true);
+                totalTextField.setEditable(false);
+                showReportLabel(head, "SALES REPORT");
+
             }
         });
         panel.add(rsales);
 
+
         rbuy = new JButton("Buy");
-        rbuy.setBounds(650, 150, 120, 50);
+        rbuy.setBounds(50, 280, 120, 30);
         rbuy.setBackground(Color.cyan);
         rbuy.setFont(f2);
         rbuy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                panel.remove(expensesScrollPane);
+                panel.remove(salesScrollPane);
+                panel.updateUI();
                 buyYearComboFillUp();
-                buyTable = new JTable();
-                buyModel = new DefaultTableModel();
-                buyScrollPane = new JScrollPane(buyTable);
-                buyModel.setColumnIdentifiers(buyColumns);
-                buyTable.setModel(buyModel);
-                buyTable.setFont(f1);
-                buyTable.setBackground(Color.WHITE);
-                buyTable.setSelectionBackground(Color.GRAY);
-                buyTable.setRowHeight(30);
-                buyTable.setAutoCreateRowSorter(true);
-                buyScrollPane.setBounds(200, 450, 1000, 300);
-                buyTable();
+                setBuyReport();
                 panel.add(buyScrollPane);
+                panel.add(totalLabel);
+                panel.add(totalTextField);
+                setSummaryInfoVisibility(false);
+                totalTextField.setText(String.valueOf(getTotalBuy()));
+                totalTextField.setEditable(false);
+                setVisibilityTotal(true);
+                showReportLabel(head, "PURCHASE REPORT");
+
+
             }
         });
         panel.add(rbuy);
 
+
         rexpenses = new JButton("Expenses");
-        rexpenses.setBounds(1050, 150, 120, 50);
+        rexpenses.setBounds(50, 380, 120, 30);
         rexpenses.setBackground(Color.cyan);
         rexpenses.setFont(f2);
         rexpenses.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                panel.remove(salesScrollPane);
+                panel.remove(buyScrollPane);
+                panel.updateUI();
                 expenseYearComboFillUp();
-                expensesTable = new JTable();
-                expensesModel = new DefaultTableModel();
-                expensesScrollPane = new JScrollPane(expensesTable);
-                expensesModel.setColumnIdentifiers(expensesColumns);
-                expensesTable.setModel(expensesModel);
-                expensesTable.setFont(f1);
-                expensesTable.setBackground(Color.WHITE);
-                expensesTable.setSelectionBackground(Color.GRAY);
-                expensesTable.setRowHeight(30);
-                expensesTable.setAutoCreateRowSorter(true);
-                expensesScrollPane.setBounds(200, 450, 1000, 300);
-                expenseTable();
+                setExpenseReport();
                 panel.add(expensesScrollPane);
+                panel.add(totalTextField);
+                panel.add(totalLabel);
+                totalTextField.setText(String.valueOf(getTotalPayBill()));
+                setVisibilityTotal(true);
+                showReportLabel(head, "EXPENSE REPORT");
+
+                totalTextField.setEditable(false);
+                setSummaryInfoVisibility(false);
             }
         });
         panel.add(rexpenses);
 
         summary = new JButton("Summary");
-        summary.setBounds(640, 260, 150, 30);
+        summary.setBounds(50, 230, 120, 30);
         summary.setBackground(Color.cyan);
         summary.setFont(f2);
 
         summary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //JOptionPane.showMessageDialog(frame,"Profit or loss is (query)");
                 panel.remove(expensesScrollPane);
                 panel.remove(buyScrollPane);
                 panel.remove(salesScrollPane);
+                setSummaryInfoVisibility(true);
+                showReportLabel(head, "SUMMARY");
+                setVisibilityTotal(false);
                 panel.updateUI();
-                lcost = new JLabel("Net Cost : ");
-                lcost.setBounds(450, 450, 150, 50);
-                lcost.setFont(f2);
-                panel.add(lcost);
-
-                lsales = new JLabel("Net Sales : ");
-                lsales.setBounds(450, 500, 150, 50);
-                lsales.setFont(f2);
-                panel.add(lsales);
-
-                lprofit = new JLabel("Profit : ");
-                lprofit.setBounds(450, 550, 150, 50);
-                lprofit.setFont(f2);
-                panel.add(lprofit);
-
-                lloss = new JLabel("Loss : ");
-                lloss.setBounds(450, 600, 150, 50);
-                lloss.setFont(f2);
-                panel.add(lloss);
-
-
-                tcost = new JTextField();
-                tcost.setBounds(600, 460, 250, 30);
-                tcost.setFont(f2);
-                panel.add(tcost);
-
-                tsales = new JTextField();
-                tsales.setBounds(600, 510, 250, 30);
-                tsales.setFont(f2);
-                panel.add(tsales);
-
-                tprofit = new JTextField();
-                tprofit.setBounds(600, 560, 250, 30);
-                tprofit.setFont(f2);
-                panel.add(tprofit);
-
-                tloss = new JTextField();
-                tloss.setBounds(600, 610, 250, 30);
-                tloss.setFont(f2);
-                panel.add(tloss);
-
+                summaryYearComboFillUp();
+                summaryInfoPanelAdd();
+                setSummaryDetails();
 
             }
         });
         panel.add(summary);
 
         lmonth = new JLabel("Month : ");
-        lmonth.setBounds(xsize / 4, 320, 150, 50);
+        lmonth.setBounds(410, 120, 150, 50);
         lmonth.setFont(f1);
         panel.add(lmonth);
 
         lyear = new JLabel("Year : ");
-        lyear.setBounds(xsize / 2, 320, 150, 50);
+        lyear.setBounds(710, 120, 150, 50);
         lyear.setFont(f1);
         panel.add(lyear);
 
         monthComboBox = new JComboBox(months);
-        monthComboBox.setBounds((xsize / 4) + 60, 330, 200, 30);
+        monthComboBox.setBounds(470, 130, 200, 30);
         monthComboBox.setEditable(false);
         monthComboBox.setFont(f1);
         panel.add(monthComboBox);
 
         yearComboBox = new JComboBox();
-        yearComboBox.setBounds((xsize / 2) + 60, 330, 200, 30);
+        yearComboBox.setBounds(770, 130, 200, 30);
         yearComboBox.setEditable(false);
         yearComboBox.setFont(f1);
         panel.add(yearComboBox);
@@ -234,13 +281,41 @@ public class Report {
 
     }
 
-    public void buyTable() {
+    private void showReportLabel(JLabel Label, String s) {
+        head.setText(s);
+
+    }
+
+    private void setVisibilityTotal(boolean status) {
+        totalLabel.setVisible(status);
+        totalTextField.setVisible(status);
+    }
+
+    private void setSummaryInfoVisibility(boolean status) {
+        labelTotalExpense.setVisible(status);
+        labelTotalSales.setVisible(status);
+        labelNetIncome.setVisible(status);
+        totalExpenseTF.setVisible(status);
+        totalSalesTF.setVisible(status);
+        netIncomeTF.setVisible(status);
+    }
+
+    private void summaryInfoPanelAdd() {
+        panel.add(labelTotalExpense);
+        panel.add(labelTotalSales);
+        panel.add(labelNetIncome);
+        panel.add(totalExpenseTF);
+        panel.add(totalSalesTF);
+        panel.add(netIncomeTF);
+    }
+
+    public void setBuyReport() {
         int n;
         try {
             int monthNumber = getMonthNumber();
             int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
 
-            String sql = "select P_ID,SUPPLY_ORDER.S_NAME,SUPPLIER,SUP_DATE,S_PRICE,initial_qty,MRP, S_PRICE*initial_qty AS TOTAL FROM SUPPLY_ORDER,product" +
+            String sql = "select SUP_DATE,P_ID,SUPPLY_ORDER.S_NAME,SUPPLIER,S_PRICE,initial_qty,MRP, S_PRICE*initial_qty AS TOTAL FROM SUPPLY_ORDER,product" +
                     " where SUPPLY_ORDER.s_name=product.s_name and extract ( month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber +
                     "' AND extract (year from to_date(SUP_DATE,'dd-mon-yy'))='" + yearName +
                     "' ORDER BY p_ID,SUPPLY_ORDER.S_NAME,SUP_DATE";
@@ -258,10 +333,10 @@ public class Report {
 
                 for (int i = 1; i <= n; i++) {
 
-                    v.add(rs.getInt(1));
-                    v.add(rs.getString(2));
+                    v.add(rs.getDate(1));
+                    v.add(rs.getInt(2));
                     v.add(rs.getString(3));
-                    v.add(rs.getDate(4));
+                    v.add(rs.getString(4));
                     v.add(rs.getInt(5));
                     v.add(rs.getInt(6));
                     v.add(rs.getInt(7));
@@ -278,7 +353,7 @@ public class Report {
 
     }
 
-    public void salesTable() {
+    public void setSalesReport() {
         int n;
 
         try {
@@ -325,7 +400,103 @@ public class Report {
 
     }
 
-    public void expenseTable() {
+    public void setSummaryDetails() {
+
+        totalSalesTF.setText(String.valueOf(setTotalSales()));
+        totalExpenseTF.setText(String.valueOf(setTotalExpense()));
+        netIncomeTF.setText(String.valueOf(setTotalSales() - setTotalExpense()));
+        totalSalesTF.setEditable(false);
+        totalExpenseTF.setEditable(false);
+        netIncomeTF.setEditable(false);
+    }
+
+    private int setTotalSales() {
+        int toatlSales = 0;
+        try {
+            int monthNumber = getMonthNumber();
+            int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
+            OracleConnection oc = new OracleConnection();
+            String sql = "select sum(sd.p_quantity*so.mrp) from sales_details sd,supply_order so,sales,product  " +
+                    "where sales.sale_id=sd.sale_id AND SD.P_ID =PRODUCT.P_ID AND PRODUCT.S_ID=SO.S_ID " +
+                    "and extract (month from to_date(sales.SALE_DATE,'yyyy-month-dd'))='" + monthNumber + "'" +
+                    "AND extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + yearName + "'" +
+                    " having sum(sd.p_quantity*so.mrp)=(select sum(sum(sd.p_quantity*so.mrp))  " +
+                    "from sales_details sd,supply_order so,sales,product " +
+                    " where sales.sale_id=sd.sale_id and SD.P_ID =PRODUCT.P_ID " +
+                    "AND PRODUCT.S_ID=SO.S_ID and extract (month from to_date(sales.SALE_DATE,'yyyy-month-dd'))='" + monthNumber + "'" +
+                    "AND extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + yearName + "'" +
+                    " group by (sd.p_quantity*so.mrp)) ";
+
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                toatlSales = rs.getInt(1);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e + "  summary details");
+        }
+        return toatlSales;
+
+    }
+
+    private int setTotalExpense() {
+        int toatlExpense = 0;
+
+        totalBill = getTotalPayBill();
+        totalBuy = getTotalBuy();
+        toatlExpense = totalBill + totalBuy;
+        return toatlExpense;
+
+    }
+
+    private int getTotalBuy() {
+        try {
+            int monthNumber = getMonthNumber();
+            int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
+
+            OracleConnection oc2 = new OracleConnection();
+            String sql2 = "select sum(s_price*initial_qty) from supply_order where " +
+                    "extract (month from to_date(supply_order.Sup_DATE,'yyyy-month-dd'))='" + monthNumber + "'" +
+                    "AND extract (year from to_date(supply_order.Sup_DATE,'dd-mon-yy'))='" + yearName + "'";
+
+            PreparedStatement ps2 = oc2.conn.prepareStatement(sql2);
+            ResultSet rs2 = ps2.executeQuery();
+            while (rs2.next()) {
+                totalBuy = rs2.getInt(1);
+
+            }
+        } catch (Exception e) {
+            System.out.println(e + "  getTotalBuy");
+        }
+        return totalBuy;
+    }
+
+    private int getTotalPayBill() {
+        try {
+            int monthNumber = getMonthNumber();
+            int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
+            OracleConnection oc1 = new OracleConnection();
+            String sql1 = "select sum(amount) from expenses where  " +
+                    " extract (month from to_date(expenses.Sup_DATE,'yyyy-month-dd'))='" + monthNumber + "'" +
+                    "AND extract (year from to_date(expenses.Sup_DATE,'dd-mon-yy'))='" + yearName + "'";
+
+
+            PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
+            ResultSet rs1 = ps1.executeQuery();
+            while (rs1.next()) {
+                totalBill = rs1.getInt(1);
+
+            }
+        } catch (Exception e) {
+            System.out.println(e + "  getTotalPayBill");
+        }
+        return totalBill;
+    }
+
+
+    public void setExpenseReport() {
         int n;
 
         try {
@@ -333,7 +504,7 @@ public class Report {
             int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
 
             OracleConnection oc = new OracleConnection();
-            String sql = "select e_id,purpose,sup_date,amount,description from expenses where  extract (year from to_date(SUP_DATE,'dd-mon-yy'))='" + yearName + "' and extract (month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber + "' ORDER BY e_id";
+            String sql = "select sup_date,e_id,purpose,amount,description from expenses where  extract (year from to_date(SUP_DATE,'dd-mon-yy'))='" + yearName + "' and extract (month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber + "' ORDER BY e_id";
 
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -348,11 +519,12 @@ public class Report {
 
                 for (int i = 1; i <= n; i++) {
 
-                    v.add(rs.getInt(1));
-                    v.add(rs.getString(2));
-                    v.add(rs.getDate(3));
+                    v.add(rs.getDate(1));
+                    v.add(rs.getInt(2));
+                    v.add(rs.getString(3));
                     v.add(rs.getInt(4));
                     v.add(rs.getString(5));
+
 
                 }
                 d.addRow(v);
@@ -392,6 +564,13 @@ public class Report {
         yearComboFillup(sql);
     }
 
+    public void summaryYearComboFillUp() {
+        String sql = "(SELECT SUPPLY_ORDER.sup_date FROM SUPPLY_ORDER ) " +
+                "union (SELECT EXPENSES.sup_date FROM EXPENSES )" +
+                " union (SELECT SALES.sale_date FROM sales ) ";
+        yearComboFillup(sql);
+    }
+
     private void yearComboFillup(String sql) {
         yearComboBox.removeAllItems();
         try {
@@ -422,4 +601,9 @@ public class Report {
         }
     }
 
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        Report report = new Report(frame);
+        report.initComponents();
+    }
 }
