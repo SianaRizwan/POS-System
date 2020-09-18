@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,10 +45,11 @@ public class CreateInvoice {
     LoginPage loginPage;
     private JLabel netTotalLabel;
     private JTextField netTotalTextField;
-
+    BackgroundColor backgroundColor;
 
     public CreateInvoice(JFrame frame) {
         this.frame = frame;
+        backgroundColor = new BackgroundColor(frame);
         initComponents();
 
     }
@@ -56,10 +58,8 @@ public class CreateInvoice {
         //frame = new JFrame();
 
 
-        mainpanel = new JPanel();
+        mainpanel = backgroundColor.setGradientPanel();
         mainpanel.setLayout(null);
-        mainpanel.setBackground(new Color(195, 197, 97));
-        //mainpanel.setBackground(Color.lightGray);
         JLabel head = new JLabel("Invoice");
         head.setHorizontalAlignment(SwingConstants.CENTER);
         head.setFont(new Font("Lato Medium", Font.PLAIN, 40));
@@ -70,23 +70,19 @@ public class CreateInvoice {
         f2 = new Font("Arial", Font.BOLD, 11);
         cName = new JLabel("Customer Name : ");
         cName.setBounds(200, 100, 150, 50);
-        cName.setFont(f1);
-        mainpanel.add(cName);
+        labelPanelAdd(cName);
 
         mobile = new JLabel("Mobile no : ");
         mobile.setBounds(650, 100, 150, 50);
-        mobile.setFont(f1);
-        mainpanel.add(mobile);
+        labelPanelAdd(mobile);
 
         address = new JLabel("Address : ");
         address.setBounds(200, 150, 150, 50);
-        address.setFont(f1);
-        mainpanel.add(address);
+        labelPanelAdd(address);
 
         email = new JLabel("Email : ");
         email.setBounds(650, 150, 150, 50);
-        email.setFont(f1);
-        mainpanel.add(email);
+        labelPanelAdd(email);
 
         tfName = new JTextField();
         tfName.setBounds(350, 110, 200, 30);
@@ -123,7 +119,7 @@ public class CreateInvoice {
 
         invsave = new JButton("Save");
         invsave.setBounds(200, 750, 120, 40);
-        invsave.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(invsave);
         invsave.setFont(f2);
         mainpanel.add(invsave);
         invsave.addActionListener(new ActionListener() {
@@ -153,27 +149,43 @@ public class CreateInvoice {
                         Document document = new Document();
                         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "Invoice.pdf")));
                         document.open();
+                        String company_Name = null, companyAddress = null, contactNumber = null;
 
-                        Paragraph p1 = new Paragraph("Company Name");
-                        Paragraph p2 = new Paragraph("Address");
-                        Paragraph p3 = new Paragraph("042-35712296");
+                        try {
+                            String sql = "select * from company_info";
+                            OracleConnection oc = new OracleConnection();
+                            PreparedStatement ps = oc.conn.prepareStatement(sql);
+                            ResultSet rs = ps.executeQuery();
+                            while (rs.next()) {
+                                company_Name = rs.getString(1);
+                                companyAddress = rs.getString(2);
+                                contactNumber = rs.getString(3);
+                            }
+
+                        } catch (SQLException throwables) {
+                            System.out.println(throwables + " create invoice company info");
+                        }
+
+                        Paragraph companyName = new Paragraph(company_Name);
+                        Paragraph address = new Paragraph(companyAddress);
+                        Paragraph contactNum = new Paragraph(contactNumber);
                         Paragraph p5 = new Paragraph("Thank you for visiting us…!!\nReturn/Exchange not possible with-out bill\n\n\n\n\n");
 
 
-                        p1.setAlignment(Element.ALIGN_CENTER);
-                        p3.setAlignment(Element.ALIGN_CENTER);
-                        p2.setAlignment(Element.ALIGN_CENTER);
+                        companyName.setAlignment(Element.ALIGN_CENTER);
+                        contactNum.setAlignment(Element.ALIGN_CENTER);
+                        address.setAlignment(Element.ALIGN_CENTER);
                         p5.setAlignment(Element.ALIGN_CENTER);
-                        document.add(p1);
-                        document.add(p2);
-                        document.add(p3);
+                        document.add(companyName);
+                        document.add(address);
+                        document.add(contactNum);
                         document.add(p5);
 
                         Phrase phrase = new Phrase("Time/Date: " + dateFormat.format(date));
                         PdfContentByte canvas = writer.getDirectContent();
                         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase, 40, 800, 0);
 
-                        Paragraph phrase1 = new Paragraph("CustomerName :" + tfName.getText());
+                        Paragraph phrase1 = new Paragraph("Customer Name :" + tfName.getText());
                         phrase1.setIndentationLeft(30f);
                         document.add(phrase1);
 
@@ -251,7 +263,7 @@ public class CreateInvoice {
         });
         invprint = new JButton("Print");
         invprint.setBounds(350, 750, 120, 40);
-        invprint.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(invprint);
         invprint.setFont(f2);
         mainpanel.add(invprint);
         invprint.addActionListener(new ActionListener() {
@@ -297,21 +309,21 @@ public class CreateInvoice {
 
         invback = new JButton("Back");
         invback.setBounds(500, 750, 120, 40);
-        invback.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(invback);
         invback.setFont(f2);
         mainpanel.add(invback);
         invback.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Dashboard(frame);
+                Dashboard dashboard = new Dashboard(frame);
+                dashboard.tabbedPane.setSelectedIndex(2);
                 mainpanel.setVisible(false);
             }
         });
 
         invoiceSerial = new JLabel("Invoice serial : ");
         invoiceSerial.setBounds(10, 10, 130, 40);
-        invoiceSerial.setFont(f1);
-        mainpanel.add(invoiceSerial);
+        labelPanelAdd(invoiceSerial);
 
         invoiceSerialNumberTextField = new JTextField();
         invoiceSerialNumberTextField.setBounds(130, 15, 160, 30);
@@ -322,13 +334,11 @@ public class CreateInvoice {
 
         invoiceGeneratorCreatedBy = new JLabel("Created by :");
         invoiceGeneratorCreatedBy.setBounds(950, 740, 150, 50);
-        invoiceGeneratorCreatedBy.setFont(f1);
-        mainpanel.add(invoiceGeneratorCreatedBy);
+        labelPanelAdd(invoiceGeneratorCreatedBy);
 
         companyName = new JLabel("Company Name :");
         companyName.setBounds(950, 790, 150, 50);
-        companyName.setFont(f1);
-        mainpanel.add(companyName);
+        labelPanelAdd(companyName);
 
         invoiceGeneratorCreatedByTextField = new JTextField();
         invoiceGeneratorCreatedByTextField.setBounds(1150, 750, 200, 30);
@@ -340,13 +350,13 @@ public class CreateInvoice {
         companyNameTextField = new JTextField();
         companyNameTextField.setBounds(1150, 800, 200, 30);
         companyNameTextField.setFont(f1);
+        setCompanyName();
         mainpanel.add(companyNameTextField);
 
         netTotalLabel = new JLabel("Net Total : ");
         netTotalLabel.setBounds(800, 660, 150, 50);
         netTotalLabel.setToolTipText("Enter password");
-        netTotalLabel.setFont(f1);
-        mainpanel.add(netTotalLabel);
+        labelPanelAdd(netTotalLabel);
 
         netTotalTextField = new JTextField();
         netTotalTextField.setBounds(950, 670, 200, 30);
@@ -356,18 +366,15 @@ public class CreateInvoice {
         mainpanel.add(netTotalTextField);
 
         frame.add(mainpanel);
-        frame.setAlwaysOnTop(true);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Inventory Management");
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
+        backgroundColor.setScreenSize(frame);
 
+    }
+
+    private void labelPanelAdd(JLabel label) {
+        label.setFont(f1);
+        mainpanel.add(label);
     }
 
     private void setInvoiceSerialNumber() {
@@ -387,35 +394,53 @@ public class CreateInvoice {
     }
 
     private void setSellerName() {
-        try{
-            String sql="select name from users where u_id='"+loginPage.getUID()+"'";
-            OracleConnection oc=new OracleConnection();
-            PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
-            ResultSet rs=preparedStatement.executeQuery();
-            while (rs.next()){
+        try {
+            String sql = "select name from users where u_id='" + loginPage.getUID() + "'";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement preparedStatement = oc.conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
 
                 invoiceGeneratorCreatedByTextField.setText(rs.getString(1));
             }
 
         } catch (Exception e) {
-            System.out.println(e+"  setSellerName");
+            System.out.println(e + "  setSellerName");
+        }
+    }
+
+    private void setCompanyName() {
+        try {
+            String sql = "select name from company_info";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement preparedStatement = oc.conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+
+                companyNameTextField.setText(rs.getString(1));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e + "  setCompanyName");
         }
     }
 
     private void setNetTotalValue() {
-        try{
-            String sql="select sum(mrp*p_quantity) from supply_order,sales_details,sales,product where sales.sale_id=sales_details.sale_id and sales_details.p_id=product.p_id and product.s_id=supply_order.s_id and sales.sale_id=(select max(sale_id) from sales)";
-            OracleConnection oc=new OracleConnection();
-            PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
-            ResultSet rs=preparedStatement.executeQuery();
-            while (rs.next()){
+        try {
+            String sql = "select sum(mrp*p_quantity) from supply_order,sales_details,sales,product " +
+                    "where sales.sale_id=sales_details.sale_id and sales_details.p_id=product.p_id " +
+                    "and product.s_id=supply_order.s_id and sales.sale_id=(select max(sale_id) from sales)";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement preparedStatement = oc.conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
 
                 netTotalTextField.setText(rs.getString(1));
                 //   System.out.println(loginPage.getUID()+" opop");
             }
 
         } catch (Exception e) {
-            System.out.println(e+"  invoice serial");
+            System.out.println(e + "  invoice serial");
         }
     }
 

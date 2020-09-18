@@ -36,19 +36,21 @@ public class Paybills {
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
     ResultSet rs;
+    BackgroundColor backgroundColor;
 
     Paybills(JFrame frame) {
         this.frame = frame;
+        backgroundColor =new BackgroundColor(frame);
+
     }
 
     public JPanel initComponents(JPanel mainPanel) {
 
         this.panel = mainPanel;
 
-        panelPayBills = new JPanel();
+        panelPayBills = backgroundColor.setGradientPanel();
         panelPayBills.setLayout(null);
-        panelPayBills.setBackground(new Color(195, 197, 97));
-
+        f1 = new Font("Arial", Font.BOLD, 15);
         expenseComboBox = new JComboBox(purposes);
         expenseComboBox.setBounds(550, 210, 200, 30);
         expenseComboBox.setEditable(false);
@@ -81,33 +83,27 @@ public class Paybills {
 
         purpose = new JLabel("Purpose : ");
         purpose.setBounds(450, 200, 150, 50);
-        purpose.setFont(f1);
-        panelPayBills.add(purpose);
+        labelPanelAdd(purpose);
 
         amount = new JLabel("Amount : ");
         amount.setBounds(450, 250, 150, 50);
-        amount.setFont(f1);
-        panelPayBills.add(amount);
+        labelPanelAdd(amount);
 
         date = new JLabel("Date : ");
         date.setBounds(450, 300, 150, 50);
-        date.setFont(f1);
-        panelPayBills.add(date);
+        labelPanelAdd(date);
 
         description = new JLabel("Description : ");
         description.setBounds(450, 350, 150, 50);
-        description.setFont(f1);
-        panelPayBills.add(description);
+        labelPanelAdd(description);
 
         expId = new JLabel("Expense Id : ");
         expId.setBounds(450, 400, 150, 50);
-        expId.setFont(f1);
-        panelPayBills.add(expId);
+        labelPanelAdd(expId);
 
         tfAmount = new JTextField();
         tfAmount.setBounds(550, 260, 200, 30);
-        tfAmount.setFont(f1);
-        panelPayBills.add(tfAmount);
+        textFieldPanelAdd(tfAmount);
 
 
         dateChooser = new JDateChooser();
@@ -116,13 +112,11 @@ public class Paybills {
 
         tfDescription = new JTextField();
         tfDescription.setBounds(550, 360, 200, 30);
-        tfDescription.setFont(f1);
-        panelPayBills.add(tfDescription);
+        textFieldPanelAdd(tfDescription);
 
         tfExpId = new JTextField();
         tfExpId.setBounds(550, 410, 200, 30);
-        tfExpId.setFont(f1);
-        panelPayBills.add(tfExpId);
+        textFieldPanelAdd(tfExpId);
 
         expTable = new JTable();
         expModel = new DefaultTableModel();
@@ -133,18 +127,13 @@ public class Paybills {
         expTable.setBackground(Color.WHITE);
         expTable.setSelectionBackground(Color.GRAY);
         expTable.setAutoCreateRowSorter(true);
-
         expTable.setRowHeight(30);
-
         expScrollPane.setBounds(150, 610, 1000, 300);
         panelPayBills.add(expScrollPane);
 
         expAddButton = new JButton("Add");
-        expAddButton.setFont(f2);
-        expAddButton.setForeground(Color.BLACK);
-        expAddButton.setBackground(Color.cyan);
         expAddButton.setBounds(450, 500, 100, 30);
-        panelPayBills.add(expAddButton);
+        buttonPanelAdd(expAddButton);
         expAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,24 +161,14 @@ public class Paybills {
 
                 } catch (Exception eq) {
                     System.out.println(eq);
-                } finally {
-                    try {
-                        ps.close();
-                    } catch (SQLException ex) {
-                        System.out.println(ex);
-                    }
                 }
             }
         });
 
 
         expSaveButton = new JButton("Save");
-        expSaveButton.setFont(f2);
-        expSaveButton.setForeground(Color.BLACK);
-
-        expSaveButton.setBackground(Color.cyan);
         expSaveButton.setBounds(600, 500, 100, 30);
-        panelPayBills.add(expSaveButton);
+        buttonPanelAdd(expSaveButton);
         expSaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -200,8 +179,7 @@ public class Paybills {
 
         expDelButton = new JButton("Delete");
         expDelButton.setBounds(750, 500, 100, 30);
-        expDelButton.setBackground(Color.cyan);
-        expDelButton.setForeground(Color.BLACK);
+        buttonPanelAdd(expDelButton);
         expDelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -228,12 +206,26 @@ public class Paybills {
 
             }
         });
-        expDelButton.setFont(f2);
-        panelPayBills.add(expDelButton);
 
 
         return panelPayBills;
 
+    }
+
+    private void buttonPanelAdd(JButton button) {
+        backgroundColor.setButtonColor(button);
+        button.setFont(f2);
+        panelPayBills.add(button);
+    }
+
+    private void textFieldPanelAdd(JTextField tfAmount) {
+        tfAmount.setFont(f1);
+        panelPayBills.add(tfAmount);
+    }
+
+    private void labelPanelAdd(JLabel purpose2) {
+        purpose2.setFont(f1);
+        panelPayBills.add(purpose2);
     }
 
     private void expenseTableAdd() {

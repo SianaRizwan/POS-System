@@ -12,20 +12,20 @@ public class Register {
 
     private JFrame frame;
     private JPanel registerPanel;
-    private Font font1, font2, font3, f1;
+    private Font font1, font2, font3;
     private JLabel signupLabel;
     private JLabel userLabel;
     private JTextField userTextField;
-    private JLabel nameLabel;
-    private JTextField nameTextField;
+    private JLabel userNameLabel;
+    private JTextField userNameTextField;
     private JLabel emailLabel;
     private JTextField emailTextField;
     private JLabel passwordLabel;
     private JPasswordField passwordField;
     private JLabel retypePasswordLabel;
     private JPasswordField retypePasswordField;
-    private JButton registerButton, backButton;
-    private JLabel pokpokLabel, designation;
+    private JButton registerButton;
+    private JLabel welcomeMessageLabel, designation;
     private JComboBox salaryComboBox;
     int count = 0;
 
@@ -37,97 +37,79 @@ public class Register {
     private JLabel companyNameLabel,companyAddressLabel,contactNumberLabel;
     private JTextField companyNameTextField,contactNumberTextField;
     private JTextArea companyAddressTextArea;
+    BackgroundColor backgroundColor;
 
     Register(JFrame frame) {
         this.frame = frame;
-/*
-initComponents();
-*/
+        backgroundColor =new BackgroundColor(frame);
     }
 
 
     public JPanel initComponents() {
 
-
-        registerPanel = new JPanel();
+        registerPanel = backgroundColor.setGradientPanel();
         registerPanel.setLayout(null);
-        registerPanel.setBackground(new Color(195, 197, 97 ));
 
         font1 = new Font("Arial", Font.BOLD, 15);
-        f1 = new Font("Arial", Font.BOLD, 15);
-        font2 = new Font("Arial", Font.BOLD, 22);
-        font3 = new Font("Arial", Font.PLAIN, 12);
+        font2 = new Font("Arial", Font.BOLD, 25);
+        font3 = new Font("Arial", Font.PLAIN, 15);
 
         signupLabel = new JLabel();
         signupLabel.setText("SIGN UP");
-        signupLabel.setBounds(600, 170, 100, 50);
-        signupLabel.setFont(font2);
-        registerPanel.add(signupLabel);
+        signupLabel.setBounds(630, 150, 150, 50);
+        labelPanelAdd(signupLabel, font2);
 
-        pokpokLabel = new JLabel();
-        pokpokLabel.setBounds(570, 200, 300, 50);
-        pokpokLabel.setFont(font3);
-        registerPanel.add(pokpokLabel);
+        welcomeMessageLabel = new JLabel();
+        labelPanelAdd(welcomeMessageLabel, font3);
 
         userLabel = new JLabel();
         userLabel.setText("USER ID : ");
         userLabel.setBounds(500, 250, 150, 50);
-        userLabel.setFont(font1);
-        registerPanel.add(userLabel);
+        labelPanelAdd(userLabel, font1);
 
         userTextField = new JTextField();
         userTextField.setBounds(675, 260, 200, 30);
-        userTextField.setFont(font1);
-        registerPanel.add(userTextField);
+        textFieldPanelAdd(userTextField);
 
-        nameLabel = new JLabel();
-        nameLabel.setText("NAME : ");
-        nameLabel.setBounds(500, 290, 150, 50);
-        nameLabel.setFont(font1);
-        registerPanel.add(nameLabel);
+        userNameLabel = new JLabel();
+        userNameLabel.setText("USER NAME : ");
+        userNameLabel.setBounds(500, 290, 150, 50);
+        labelPanelAdd(userNameLabel, font1);
 
-        nameTextField = new JTextField();
-        nameTextField.setBounds(675, 300, 200, 30);
-        nameTextField.setFont(font1);
-        registerPanel.add(nameTextField);
+        userNameTextField = new JTextField();
+        userNameTextField.setBounds(675, 300, 200, 30);
+        textFieldPanelAdd(userNameTextField);
 
         emailLabel = new JLabel();
         emailLabel.setText("EMAIL : ");
         emailLabel.setBounds(500, 330, 150, 50);
-        emailLabel.setFont(font1);
-        registerPanel.add(emailLabel);
+        labelPanelAdd(emailLabel, font1);
 
         emailTextField = new JTextField();
         emailTextField.setBounds(675, 340, 200, 30);
-        emailTextField.setFont(font1);
-        registerPanel.add(emailTextField);
+        textFieldPanelAdd(emailTextField);
 
         passwordLabel = new JLabel();
         passwordLabel.setText("PASSWORD : ");
         passwordLabel.setBounds(500, 370, 150, 50);
-        passwordLabel.setFont(font1);
-        registerPanel.add(passwordLabel);
+        labelPanelAdd(passwordLabel, font1);
 
         passwordField = new JPasswordField();
         passwordField.setBounds(675, 380, 200, 30);
-        passwordField.setFont(font1);
-        registerPanel.add(passwordField);
+        textFieldPanelAdd(passwordField);
 
         retypePasswordLabel = new JLabel();
         retypePasswordLabel.setText("RETYPE PASSWORD : ");
         retypePasswordLabel.setBounds(500, 410, 200, 50);
-        retypePasswordLabel.setFont(font1);
-        registerPanel.add(retypePasswordLabel);
+        labelPanelAdd(retypePasswordLabel, font1);
 
         retypePasswordField = new JPasswordField();
         retypePasswordField.setBounds(675, 420, 200, 30);
-        retypePasswordField.setFont(font1);
-        registerPanel.add(retypePasswordField);
+        textFieldPanelAdd(retypePasswordField);
 
         designation = new JLabel("DESIGNATION : ");
         designation.setBounds(500, 450, 150, 50);
-        designation.setFont(f1);
-        registerPanel.add(designation);
+        labelPanelAdd(designation, font1);
 
         salaryComboBox = new JComboBox();
         salaryComboBox.setBounds(675, 460, 200, 30);
@@ -136,61 +118,50 @@ initComponents();
 
         designationId = new JLabel("DESIGNATION ID: ");
         designationId.setBounds(500, 600, 150, 50);
-        designationId.setFont(f1);
-        registerPanel.add(designationId);
+        labelPanelAdd(designationId, font1);
 
         designationName = new JLabel("DESIGNATION : ");
         designationName.setBounds(500, 640, 150, 50);
-        designationName.setFont(f1);
-        registerPanel.add(designationName);
+        labelPanelAdd(designationName, font1);
 
         tfDesignationId = new JTextField();
         tfDesignationId.setBounds(675, 610, 200, 30);
-        tfDesignationId.setFont(f1);
-        registerPanel.add(tfDesignationId);
+        textFieldPanelAdd(tfDesignationId);
 
         companyNameLabel = new JLabel("COMPANY NAME : ");
         companyNameLabel.setBounds(500, 450, 150, 50);
-        companyNameLabel.setFont(f1);
-        registerPanel.add(companyNameLabel);
+        labelPanelAdd(companyNameLabel, font1);
 
         companyNameTextField = new JTextField();
         companyNameTextField.setBounds(675, 460, 200, 30);
-        companyNameTextField.setFont(f1);
-        registerPanel.add(companyNameTextField);
+        textFieldPanelAdd(companyNameTextField);
 
 
         companyAddressLabel = new JLabel("ADDRESS : ");
         companyAddressLabel.setBounds(500, 490, 150, 50);
-        companyAddressLabel.setFont(f1);
-        registerPanel.add(companyAddressLabel);
+        labelPanelAdd(companyAddressLabel, font1);
 
         companyAddressTextArea = new JTextArea();
         companyAddressTextArea.setBounds(675, 500, 200, 60);
-        companyAddressTextArea.setFont(f1);
+        companyAddressTextArea.setFont(font1);
         registerPanel.add(companyAddressTextArea);
 
         contactNumberLabel = new JLabel("CONTACT NO. : ");
         contactNumberLabel.setBounds(500, 560, 150, 50);
-        contactNumberLabel.setFont(f1);
-        registerPanel.add(contactNumberLabel);
+        labelPanelAdd(contactNumberLabel, font1);
 
         contactNumberTextField = new JTextField();
         contactNumberTextField.setBounds(675, 570, 200, 30);
-        contactNumberTextField.setFont(f1);
-        registerPanel.add(contactNumberTextField);
-
+        textFieldPanelAdd(contactNumberTextField);
 
 
         tfDesignationName = new JTextField();
         tfDesignationName.setBounds(675, 650, 200, 30);
-        tfDesignationName.setFont(f1);
-        registerPanel.add(tfDesignationName);
+        textFieldPanelAdd(tfDesignationName);
 
         registerButton = new JButton("Register");
-        registerButton.setFont(f1);
-        registerButton.setBackground(Color.cyan);
-        registerButton.setForeground(Color.BLACK);
+        registerButton.setFont(font1);
+        backgroundColor.setButtonColor(registerButton);
         registerPanel.add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -203,7 +174,7 @@ initComponents();
                             String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL, SAL_ID) values(?, ?, ?, ?, ?)";
                             PreparedStatement ps = oc.conn.prepareStatement(sql);
                             ps.setInt(1, Integer.parseInt(userTextField.getText().trim()));
-                            ps.setString(2, nameTextField.getText().trim());
+                            ps.setString(2, userNameTextField.getText().trim());
                             ps.setString(3, passwordField.getText());
                             ps.setString(4, emailTextField.getText().trim());
                             if (count == 0) {
@@ -226,7 +197,7 @@ initComponents();
                                 ps2.setString(3,contactNumberTextField.getText().trim());
 
                                 ps2.executeUpdate();
-                                System.out.println("bbbb");
+                                //      System.out.println("bbbb");
                             }
                             if (count == 0) {
                                 ps.setInt(5, Integer.parseInt(tfDesignationId.getText().trim()));
@@ -240,12 +211,7 @@ initComponents();
 
                                 JOptionPane.showMessageDialog(frame, "registration successful");
 
-                                userTextField.setText("");
-                                nameTextField.setText("");
-                                emailTextField.setText("");
-                                passwordField.setText("");
-                                retypePasswordField.setText("");
-                                salaryComboBox.requestFocus();
+                                resetTextFields();
 
                             } else {
                                 JOptionPane.showMessageDialog(frame, "insert failed");
@@ -271,23 +237,38 @@ initComponents();
 
 
         frame.add(registerPanel);
-        frame.setAlwaysOnTop(true);
+      /*  frame.setAlwaysOnTop(true);
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Inventory Management");
+        frame.setTitle("Inventory Management");*/
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
 
+        backgroundColor.setScreenSize(frame);
 
         return registerPanel;
 
     }
 
+    private void resetTextFields() {
+        userTextField.setText("");
+        userNameTextField.setText("");
+        emailTextField.setText("");
+        passwordField.setText("");
+        retypePasswordField.setText("");
+        salaryComboBox.requestFocus();
+    }
+
+    private void textFieldPanelAdd(JTextField companyNameTextField) {
+        companyNameTextField.setFont(font1);
+        registerPanel.add(companyNameTextField);
+    }
+
+    private void labelPanelAdd(JLabel emailLabel, Font font1) {
+        emailLabel.setFont(font1);
+        registerPanel.add(emailLabel);
+    }
 
 
     private void setRegistrationField() {
@@ -302,17 +283,18 @@ initComponents();
                 if (count == 0) {
                     designation.setVisible(false);
                     salaryComboBox.setVisible(false);
-                    showMessage(pokpokLabel, "     Create New Account ");
-                    tfDesignationId.setText("1");
+                    showMessage( "Create New Account ");
                     tfDesignationName.setText("Admin");
                     tfDesignationName.setEditable(false);
-                    registerButton.setBounds(600, 800, 100, 20);
+                    welcomeMessageLabel.setBounds(615, 180, 300, 50);
+                    registerButton.setBounds(620, 740, 100, 30);
 
                 } else {
                     setVisibilityFalse();
                     chooseDesignation();
-                    showMessage(pokpokLabel, "Create Account For Your Employees");
-                    registerButton.setBounds(620, 520, 100, 20);
+                    showMessage( "Create Account For Your Employees");
+                    welcomeMessageLabel.setBounds(570, 180, 300, 50);
+                    registerButton.setBounds(620, 520, 100, 30);
 
 
                 }
@@ -335,8 +317,8 @@ initComponents();
         companyNameTextField.setVisible(false);
     }
 
-    private void showMessage(JLabel pokpokLabel, String s) {
-        pokpokLabel.setText(s);
+    private void showMessage( String s) {
+        welcomeMessageLabel.setText(s);
     }
 
     public void chooseDesignation() {

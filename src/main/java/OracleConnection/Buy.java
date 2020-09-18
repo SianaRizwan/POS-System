@@ -26,13 +26,14 @@ public class Buy {
     ResultSet rs;
     Inventory inv;
     Sell sell;
+    BackgroundColor backgroundColor;
 
     public Buy(JFrame frame, Inventory i, Sell s) {
         this.frame = frame;
         inv = i;
         sell = s;
         inv.updateInventoryTable();
-
+        backgroundColor = new BackgroundColor(frame);
     }
 
     public JPanel initComponents(final JPanel mainPanel) {
@@ -40,9 +41,8 @@ public class Buy {
 
         this.Panel = mainPanel;
 
-        panelBuy = new JPanel();
+        panelBuy = backgroundColor.setGradientPanel();
         panelBuy.setLayout(null);
-        panelBuy.setBackground(new Color(195, 197, 97));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -152,9 +152,7 @@ public class Buy {
             buyAddNewButton = new JButton("Add New");
             buyAddNewButton.setBounds(850, 110, 100, 30);
             buyAddNewButton.setFont(f2);
-            buyAddNewButton.setForeground(Color.BLACK);
-
-            buyAddNewButton.setBackground(Color.cyan);
+            backgroundColor.setButtonColor(buyAddNewButton);
             buyAddNewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -168,8 +166,7 @@ public class Buy {
             buySaveButton = new JButton("Save");
             buySaveButton.setFont(f2);
             buySaveButton.setBounds(580, 550, 80, 30);
-            buySaveButton.setBackground(Color.cyan);
-            buySaveButton.setForeground(Color.BLACK);
+            backgroundColor.setButtonColor(buySaveButton);
 
             panelBuy.add(buySaveButton);
             buySaveButton.addActionListener(new ActionListener() {
@@ -179,50 +176,35 @@ public class Buy {
 
                     try {
 
-                        OracleConnection oc2 = new OracleConnection();
+                        Date sqlBuyDate1 = convertJavaDateToSqlDate(dateChooser.getDate());
 
-                        String sql = "select S_NAME FROM SUPPLY_ORDER where S_NAME='" + buyComboBox.getSelectedItem().toString() + "'";
-                        PreparedStatement ps1 = oc2.conn.prepareStatement(sql);
-                        ps1.executeQuery();
+                        String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE,initial_qty) values(?, ?, ?, ?, ?, ?,?)";
+                        String col[] = {"S_ID"};
+                        ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER, col);
+                        ps.setString(1, buyComboBox.getSelectedItem().toString());
+                        ps.setInt(2, Integer.parseInt(buy_priceTextField.getText().trim()));
+                        ps.setInt(3, Integer.parseInt(buyQuantityTextField.getText().trim()));
+                        ps.setInt(4, Integer.parseInt(buyMRPTextField.getText().trim()));
+                        ps.setString(5, buySupplierTextField.getText().trim());
+                        ps.setDate(6, sqlBuyDate1);
+                        ps.setInt(7, Integer.parseInt(buyQuantityTextField.getText().trim()));
+                        ps.executeQuery();
 
-                        {
+                        refreshTextFields();
 
+                        ResultSet rs = ps.getGeneratedKeys();
 
-                            Date sqlBuyDate1 = convertJavaDateToSqlDate(dateChooser.getDate());
+                        while (rs.next()) {
+                            System.out.println("id " + rs.getInt(1));
+                            int idd = rs.getInt(1);
+                            OracleConnection oc3 = new OracleConnection();
 
-                            String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE,initial_qty) values(?, ?, ?, ?, ?, ?,?)";
-                            String col[] = {"S_ID"};
-                            ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER, col);
-                            ps.setString(1, buyComboBox.getSelectedItem().toString());
-                            ps.setInt(2, Integer.parseInt(buy_priceTextField.getText().trim()));
-                            ps.setInt(3, Integer.parseInt(buyQuantityTextField.getText().trim()));
-                            ps.setInt(4, Integer.parseInt(buyMRPTextField.getText().trim()));
-                            ps.setString(5, buySupplierTextField.getText().trim());
-                            ps.setDate(6, sqlBuyDate1);
-                            ps.setInt(7, Integer.parseInt(buyQuantityTextField.getText().trim()));
-                            ps.executeQuery();
+                            String sql3 = "update PRODUCT set S_ID=? where S_NAME=?";
+                            PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
+                            ps3.setInt(1, idd);
+                            ps3.setString(2, buyComboBox.getSelectedItem().toString());
 
-                            refreshTextFields();
-
-                            ResultSet rs = ps.getGeneratedKeys();
-
-                            while (rs.next()) {
-                                System.out.println("id " + rs.getInt(1));
-                                int idd = rs.getInt(1);
-                                OracleConnection oc3 = new OracleConnection();
-
-                                String sql3 = "update PRODUCT set S_ID=? where S_NAME=?";
-                                PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
-                                ps3.setInt(1, idd);
-                                ps3.setString(2, buyComboBox.getSelectedItem().toString());
-
-                                ps3.executeUpdate();
-                            }
-
-                            //     oc.conn.commit();
-                            inv.updateInventoryTable();
-                            sell.prodName();
-
+                            ps3.executeUpdate();
                         }
 
 
@@ -239,8 +221,6 @@ public class Buy {
 
 
         addProductNameToJComboBox();
-        inv.updateInventoryTable();
-
 
         return panelBuy;
     }

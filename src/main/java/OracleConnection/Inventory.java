@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.Vector;
 
 public class Inventory {
@@ -18,13 +17,12 @@ public class Inventory {
     private Font f1, f2;
     private JButton inventoryDeleteButton;
 
-
+    BackgroundColor backgroundColor;
     private JTable inventoryTable;
     private DefaultTableModel inventoryModel;
     private JScrollPane inventoryScrollPane;
 
     private String[] inventoryColumns = {"Id", "Name", "MRP", "Quantity"};
-    private String[] inventoryRows = new String[4];
 
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
@@ -34,18 +32,17 @@ public class Inventory {
 
     public Inventory(JFrame frame) {
         this.frame = frame;
+        backgroundColor =new BackgroundColor(frame);
 
         initComponents(Panel);
-        updateInventoryTable();
     }
 
     public JPanel initComponents(final JPanel mainPanel) {
 
         this.Panel = mainPanel;
 
-        panelInventory = new JPanel();
+        panelInventory = backgroundColor.setGradientPanel();
         panelInventory.setLayout(null);
-        panelInventory.setBackground(new Color(195, 197, 97));
 
 
         f1 = new Font("Arial", Font.BOLD, 15);
@@ -53,8 +50,7 @@ public class Inventory {
 
         inventoryDeleteButton = new JButton("Delete");
         inventoryDeleteButton.setBounds(600, 240, 90, 25);
-        inventoryDeleteButton.setBackground(Color.cyan);
-        inventoryDeleteButton.setForeground(Color.BLACK);
+        backgroundColor.setButtonColor(inventoryDeleteButton);
         inventoryDeleteButton.setFont(f2);
         panelInventory.add(inventoryDeleteButton);
         inventoryDeleteButton.addActionListener(new ActionListener() {
@@ -87,6 +83,7 @@ public class Inventory {
 
 
                     } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(frame,"Selected Product Is Sold At Least Once \nIt Cannot Be Deleted ");
                         System.out.println(ex + " inventory delete");
                     }
                 }
@@ -145,16 +142,9 @@ public class Inventory {
 
         } catch (Exception e) {
             System.out.println(e + " table_update_inventory");
-        } finally {
-            try {
-                rs.close();
-                ps.close();
-
-            } catch (SQLException e) {
-                System.out.println(e + " 1table_update_inventory");
-            }
         }
     }
+
 
 
 }

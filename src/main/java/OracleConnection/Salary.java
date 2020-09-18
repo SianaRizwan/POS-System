@@ -25,16 +25,17 @@ public class Salary {
     private String[] salaryColumns = {"Id", "Designation", "Amount (taka)"};
     private String[] salaryRows = new String[3];
     private JButton deleteButton;
+    BackgroundColor backgroundColor;
 
     public Salary(JFrame frame) {
         this.frame = frame;
+        backgroundColor =new BackgroundColor(frame);
     }
 
     public JPanel initComponents() {
 
-        panel = new JPanel();
+        panel = backgroundColor.setGradientPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(195, 197, 97));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -68,8 +69,7 @@ public class Salary {
 
             updateButton = new JButton("Update"); // add an alert later
             updateButton.setBounds(390, 380, 90, 25);
-            updateButton.setBackground(Color.cyan);
-            updateButton.setFont(f2);
+            buttonPanelAdd(updateButton);
             updateButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -78,7 +78,6 @@ public class Salary {
                     designationInfoTable();
                 }
             });
-            panel.add(updateButton);
         }
 
         //add
@@ -121,8 +120,7 @@ public class Salary {
 
             addButton = new JButton("Save");
             addButton.setBounds(900, 380, 70, 25);
-            addButton.setBackground(Color.cyan);
-            addButton.setFont(f2);
+            buttonPanelAdd(addButton);
             addButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -155,20 +153,11 @@ public class Salary {
                     }
                 }
             });
-            panel.add(addButton);
         }
         frame.add(panel);
-        frame.setAlwaysOnTop(true);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Inventory Management");
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
+        backgroundColor.setScreenSize(frame);
 
 
         // table
@@ -191,8 +180,7 @@ public class Salary {
         {
             deleteButton = new JButton("Delete"); // add an alert later
             deleteButton.setBounds(550, 380, 90, 25);
-            deleteButton.setBackground(Color.cyan);
-            deleteButton.setFont(f2);
+            buttonPanelAdd(deleteButton);
             deleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -202,9 +190,7 @@ public class Salary {
 
                     if (warningMsg == JOptionPane.YES_OPTION) {
                         try {
-
                             String sql1 = "delete from salary where designation=?";
-
                             OracleConnection oc1 = new OracleConnection();
                             PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
 
@@ -220,12 +206,17 @@ public class Salary {
 
                 }
             });
-            panel.add(deleteButton);
         }
         designationInfoTable();
         chooseDesignation();
         return panel;
 
+    }
+
+    private void buttonPanelAdd(JButton button) {
+        backgroundColor.setButtonColor(button);
+        button.setFont(f2);
+        panel.add(button);
     }
 
     private void salaryUpdate() {
@@ -235,7 +226,6 @@ public class Salary {
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ps.setInt(1, Integer.parseInt(tfUpdateAmount.getText()));
             ps.setString(2, designationComboBox.getSelectedItem().toString());
-
             ps.executeUpdate();
 
         } catch (Exception exception) {
@@ -256,7 +246,7 @@ public class Salary {
 
 
         } catch (Exception c) {
-            System.out.println(c);
+            System.out.println(c+" chooseDesignation");
         }
     }
 

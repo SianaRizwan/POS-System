@@ -16,48 +16,39 @@ public class ProductEntry {
     private JTextField tfProductId, tfProductName;
     private Font f1, f2;
     private JButton addButton, backButton;
+    BackgroundColor backgroundColor;
 
     ProductEntry(JFrame frame) {
         this.frame = frame;
+        backgroundColor = new BackgroundColor(frame);
         initComponents();
     }
 
     private void initComponents() {
 
-        panel = new JPanel();
+        panel = backgroundColor.setGradientPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(195, 197, 97));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
 
         productId = new JLabel("Product Id : ");
-        productId.setBounds(450, 200, 150, 50);
-        productId.setFont(f1);
-        panel.add(productId);
+        labelPanelAdd(productId, 200);
 
         productName = new JLabel("Product Name : ");
-        productName.setBounds(450, 250, 150, 50);
-        productName.setFont(f1);
-        panel.add(productName);
-
+        labelPanelAdd(productName, 250);
 
 
         tfProductId = new JTextField();
-        tfProductId.setBounds(600, 210, 250, 30);
-        tfProductId.setFont(f1);
-        panel.add(tfProductId);
+        textFieldPanelAdd(tfProductId, 210);
 
         tfProductName = new JTextField();
-        tfProductName.setBounds(600, 260, 250, 30);
-        tfProductName.setFont(f1);
-        panel.add(tfProductName);
-
+        textFieldPanelAdd(tfProductName, 260);
 
 
         backButton = new JButton("Back");
         backButton.setBounds(720, 400, 70, 25);
-        backButton.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(backButton);
         backButton.setFont(f2);
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -71,7 +62,7 @@ public class ProductEntry {
 
         addButton = new JButton("Save");
         addButton.setBounds(620, 400, 70, 25);
-        addButton.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(addButton);
         addButton.setFont(f2);
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -80,28 +71,17 @@ public class ProductEntry {
                     OracleConnection oc = new OracleConnection();
 
                     String sql1 = "insert into PRODUCT (P_ID, NAME, S_NAME) values(?, ?, ?)";
-
-
-
                     PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
 
                     ps1.setInt(1, Integer.parseInt(tfProductId.getText()));
                     ps1.setString(2, tfProductName.getText());
-                    ps1.setString(3,tfProductName.getText());
-                    int x = ps1.executeUpdate();
+                    ps1.setString(3, tfProductName.getText());
+                    ps1.executeUpdate();
 
-                    oc.conn.commit();
+                    resetTextFields();
 
-                    tfProductId.setText("");
-                    tfProductName.setText("");
-
-                    tfProductId.requestFocus();
-
-                    if (x < 0) {
-
-                        JOptionPane.showMessageDialog(frame, "input valid info");
-                    }
                 } catch (Exception d) {
+                    JOptionPane.showMessageDialog(frame, "Product ID Already Exists");
                     System.out.println(d);
                 }
             }
@@ -109,18 +89,26 @@ public class ProductEntry {
         panel.add(addButton);
 
         frame.add(panel);
-        frame.setAlwaysOnTop(true);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Inventory Management");
+        backgroundColor.setScreenSize(frame);
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
+    }
 
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
+    private void resetTextFields() {
+        tfProductId.setText("");
+        tfProductName.setText("");
+        tfProductId.requestFocus();
+    }
 
+    private void textFieldPanelAdd(JTextField textField, int yCoordinate) {
+        textField.setBounds(600, yCoordinate, 250, 30);
+        textField.setFont(f1);
+        panel.add(textField);
+    }
+
+    private void labelPanelAdd(JLabel label, int yCoordinate) {
+        label.setBounds(450, yCoordinate, 150, 50);
+        label.setFont(f1);
+        panel.add(label);
     }
 
 }

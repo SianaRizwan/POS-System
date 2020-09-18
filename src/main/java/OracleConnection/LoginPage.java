@@ -18,23 +18,22 @@ public class LoginPage {
     private JPasswordField passwordField;
     private JButton loginButton;
     private static String uID;
-
+    BackgroundColor backgroundColor;
 
     LoginPage(JFrame frame) {
         this.frame = frame;
+        backgroundColor = new BackgroundColor(frame);
         initComponents();
     }
 
     private void initComponents() {
-        //frame = new JFrame();
 
-        panel = new JPanel();
+        panel = backgroundColor.setGradientPanel();
         panel.setLayout(null);
-        panel.setBackground(Color.lightGray);
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
-        panel.setBackground(new Color(139, 143, 45,180));
+
         userLabel = new JLabel();
         userLabel.setText("Username : ");
         userLabel.setBounds(500, 250, 150, 50);
@@ -58,11 +57,11 @@ public class LoginPage {
         passwordField.setFont(f2);
         panel.add(passwordField);
 
-        loginButton = new JButton("Login");
+        loginButton = new JButton();
+        loginButton.setText("login");
         loginButton.setBounds(630, 360, 80, 30);
-        loginButton.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(loginButton);
         loginButton.setFont(f2);
-        loginButton.setForeground(Color.BLACK);
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -75,11 +74,9 @@ public class LoginPage {
                     ResultSet rs = ps.executeQuery();
                     if (rs.next()) {
                         uID = String.valueOf(rs.getInt("U_ID"));
-                        String designation=rs.getString("designation");
-                        // System.out.println(uID);
+                        String designation = rs.getString("designation");
 
-                        if (designation.equals("admin")||designation.equals("ADMIN")||designation.equals("Admin")) {
-
+                        if (designation.equals("admin")) {
                             new AdminDashboard(frame);
                         } else {
                             new Dashboard(frame);
@@ -87,33 +84,20 @@ public class LoginPage {
                         panel.setVisible(false);
 
                     } else {
-
                         JOptionPane.showMessageDialog(frame, "invalid user id or password");
                         userNameField.setText("");
                         passwordField.setText("");
                         userNameField.requestFocus();
                     }
                 } catch (Exception e1) {
-                    System.out.println(e1);
+                    System.out.println(e1 +" login failed");
                 }
 
             }
         });
         panel.add(loginButton);
-
-
         frame.add(panel);
-        frame.setAlwaysOnTop(true);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Inventory Management");
-
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
+        backgroundColor.setScreenSize(frame);
     }
 
 
@@ -127,26 +111,23 @@ public class LoginPage {
     public static void main(String[] args) {
         int count;
         JFrame frame = new JFrame();
-        try{
-            String sql="select count(u_id) from users";
-            OracleConnection oc=new OracleConnection();
-            PreparedStatement ps=oc.conn.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
-                count=rs.getInt(1);
+        try {
+            String sql = "select count(u_id) from users";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
                 System.out.println(count);
-                if(count==0) {
-
-                    Register register=   new Register(frame);
+                if (count == 0) {
+                    Register register = new Register(frame);
                     register.initComponents();
 
-                }
-                else new LoginPage(frame);
+                } else new LoginPage(frame);
             }
 
-
         } catch (Exception e) {
-            System.out.println(e +"  login drama");
+            System.out.println(e + "  login problem");
         }
     }
 }
