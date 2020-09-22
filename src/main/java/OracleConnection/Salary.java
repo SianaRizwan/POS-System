@@ -22,8 +22,7 @@ public class Salary {
     private DefaultTableModel salaryModel;
     private JScrollPane salaryScrollPane;
 
-    private String[] salaryColumns = {"Id", "Designation", "Amount (taka)"};
-    private String[] salaryRows = new String[3];
+    private String[] salaryColumns = {"Id", "Designation", "Amount (taka)","Number of Employee"};
     private JButton deleteButton;
     BackgroundColor backgroundColor;
 
@@ -266,7 +265,7 @@ public class Salary {
         int n;
         try {
             OracleConnection oc = new OracleConnection();
-            String sql = "select SAL_ID, DESIGNATION, AMOUNT from SALARY order by sal_id";
+            String sql = "select salary.SAL_ID, DESIGNATION, AMOUNT,count(users.u_id) from SALARY,users where users.sal_id=salary.sal_id group by salary.SAL_ID, DESIGNATION, AMOUNT order by sal_id";
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();
@@ -283,6 +282,7 @@ public class Salary {
                     v.add(rs.getInt("SAL_ID"));
                     v.add(rs.getString("DESIGNATION"));
                     v.add(rs.getInt("AMOUNT"));
+                    v.add(rs.getInt(4));
                 }
                 d.addRow(v);
             }

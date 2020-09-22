@@ -2,22 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/BackgroundColor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Invoice.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Invoice.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminInventory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/CreateInvoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/CreateInvoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/LoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/LoginPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/ProductEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/ProductEntry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Salary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +50,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="265" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Projects_Own/Game" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -259,34 +249,34 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="539" y="38" key="CommitChangelistDialog2/0.0.1920.1030@0.0.1920.1030" timestamp="1600319680345" />
-    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1600440530297">
+    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1600508540173">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1600440530297" />
-    <state width="1864" height="204" key="GridCell.Tab.0.bottom" timestamp="1600453880325">
+    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1600508540173" />
+    <state width="1864" height="121" key="GridCell.Tab.0.bottom" timestamp="1600490626062">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="204" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1600453880325" />
-    <state width="1864" height="204" key="GridCell.Tab.0.center" timestamp="1600453880325">
+    <state width="1864" height="121" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1600490626062" />
+    <state width="1864" height="121" key="GridCell.Tab.0.center" timestamp="1600490626062">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="204" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1600453880325" />
-    <state width="1864" height="204" key="GridCell.Tab.0.left" timestamp="1600453880325">
+    <state width="1864" height="121" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1600490626062" />
+    <state width="1864" height="121" key="GridCell.Tab.0.left" timestamp="1600490626061">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="204" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1600453880325" />
-    <state width="1864" height="204" key="GridCell.Tab.0.right" timestamp="1600453880325">
+    <state width="1864" height="121" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1600490626061" />
+    <state width="1864" height="121" key="GridCell.Tab.0.right" timestamp="1600490626062">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="204" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1600453880325" />
+    <state width="1864" height="121" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1600490626062" />
     <state x="311" y="0" key="SettingsEditor" timestamp="1596212933651">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="311" y="0" key="SettingsEditor/0.0.1920.1030@0.0.1920.1030" timestamp="1596212933651" />
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1600433653474">
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1600508531277">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1600433653474" />
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1600508531277" />
     <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600319688558">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>

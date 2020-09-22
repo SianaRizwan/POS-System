@@ -56,7 +56,7 @@ public class Register {
 
         signupLabel = new JLabel();
         signupLabel.setText("SIGN UP");
-        signupLabel.setBounds(630, 150, 150, 50);
+        signupLabel.setBounds(780, 150, 150, 50);
         labelPanelAdd(signupLabel, font2);
 
         welcomeMessageLabel = new JLabel();
@@ -64,99 +64,99 @@ public class Register {
 
         userLabel = new JLabel();
         userLabel.setText("USER ID : ");
-        userLabel.setBounds(500, 250, 150, 50);
+        userLabel.setBounds(650, 250, 150, 50);
         labelPanelAdd(userLabel, font1);
 
         userTextField = new JTextField();
-        userTextField.setBounds(675, 260, 200, 30);
+        userTextField.setBounds(825, 260, 200, 30);
         textFieldPanelAdd(userTextField);
 
         userNameLabel = new JLabel();
         userNameLabel.setText("USER NAME : ");
-        userNameLabel.setBounds(500, 290, 150, 50);
+        userNameLabel.setBounds(650, 290, 150, 50);
         labelPanelAdd(userNameLabel, font1);
 
         userNameTextField = new JTextField();
-        userNameTextField.setBounds(675, 300, 200, 30);
+        userNameTextField.setBounds(825, 300, 200, 30);
         textFieldPanelAdd(userNameTextField);
 
         emailLabel = new JLabel();
         emailLabel.setText("EMAIL : ");
-        emailLabel.setBounds(500, 330, 150, 50);
+        emailLabel.setBounds(650, 330, 150, 50);
         labelPanelAdd(emailLabel, font1);
 
         emailTextField = new JTextField();
-        emailTextField.setBounds(675, 340, 200, 30);
+        emailTextField.setBounds(825, 340, 200, 30);
         textFieldPanelAdd(emailTextField);
 
         passwordLabel = new JLabel();
         passwordLabel.setText("PASSWORD : ");
-        passwordLabel.setBounds(500, 370, 150, 50);
+        passwordLabel.setBounds(650, 370, 150, 50);
         labelPanelAdd(passwordLabel, font1);
 
         passwordField = new JPasswordField();
-        passwordField.setBounds(675, 380, 200, 30);
+        passwordField.setBounds(825, 380, 200, 30);
         textFieldPanelAdd(passwordField);
 
         retypePasswordLabel = new JLabel();
         retypePasswordLabel.setText("RETYPE PASSWORD : ");
-        retypePasswordLabel.setBounds(500, 410, 200, 50);
+        retypePasswordLabel.setBounds(650, 410, 200, 50);
         labelPanelAdd(retypePasswordLabel, font1);
 
         retypePasswordField = new JPasswordField();
-        retypePasswordField.setBounds(675, 420, 200, 30);
+        retypePasswordField.setBounds(825, 420, 200, 30);
         textFieldPanelAdd(retypePasswordField);
 
         designation = new JLabel("DESIGNATION : ");
-        designation.setBounds(500, 450, 150, 50);
+        designation.setBounds(650, 450, 150, 50);
         labelPanelAdd(designation, font1);
 
         salaryComboBox = new JComboBox();
-        salaryComboBox.setBounds(675, 460, 200, 30);
+        salaryComboBox.setBounds(825, 460, 200, 30);
         registerPanel.add(salaryComboBox);
         salaryComboBox.setEditable(false);
 
         designationId = new JLabel("DESIGNATION ID: ");
-        designationId.setBounds(500, 600, 150, 50);
+        designationId.setBounds(650, 600, 150, 50);
         labelPanelAdd(designationId, font1);
 
         designationName = new JLabel("DESIGNATION : ");
-        designationName.setBounds(500, 640, 150, 50);
+        designationName.setBounds(650, 640, 150, 50);
         labelPanelAdd(designationName, font1);
 
         tfDesignationId = new JTextField();
-        tfDesignationId.setBounds(675, 610, 200, 30);
+        tfDesignationId.setBounds(825, 610, 200, 30);
         textFieldPanelAdd(tfDesignationId);
 
         companyNameLabel = new JLabel("COMPANY NAME : ");
-        companyNameLabel.setBounds(500, 450, 150, 50);
+        companyNameLabel.setBounds(650, 450, 150, 50);
         labelPanelAdd(companyNameLabel, font1);
 
         companyNameTextField = new JTextField();
-        companyNameTextField.setBounds(675, 460, 200, 30);
+        companyNameTextField.setBounds(825, 460, 200, 30);
         textFieldPanelAdd(companyNameTextField);
 
 
         companyAddressLabel = new JLabel("ADDRESS : ");
-        companyAddressLabel.setBounds(500, 490, 150, 50);
+        companyAddressLabel.setBounds(650, 490, 150, 50);
         labelPanelAdd(companyAddressLabel, font1);
 
         companyAddressTextArea = new JTextArea();
-        companyAddressTextArea.setBounds(675, 500, 200, 60);
+        companyAddressTextArea.setBounds(825, 500, 200, 60);
         companyAddressTextArea.setFont(font1);
         registerPanel.add(companyAddressTextArea);
 
         contactNumberLabel = new JLabel("CONTACT NO. : ");
-        contactNumberLabel.setBounds(500, 560, 150, 50);
+        contactNumberLabel.setBounds(650, 560, 150, 50);
         labelPanelAdd(contactNumberLabel, font1);
 
         contactNumberTextField = new JTextField();
-        contactNumberTextField.setBounds(675, 570, 200, 30);
+        contactNumberTextField.setBounds(825, 570, 200, 30);
         textFieldPanelAdd(contactNumberTextField);
 
 
         tfDesignationName = new JTextField();
-        tfDesignationName.setBounds(675, 650, 200, 30);
+        tfDesignationName.setBounds(825, 650, 200, 30);
         textFieldPanelAdd(tfDesignationName);
 
         registerButton = new JButton("Register");
@@ -286,15 +286,15 @@ public class Register {
                     showMessage( "Create New Account ");
                     tfDesignationName.setText("Admin");
                     tfDesignationName.setEditable(false);
-                    welcomeMessageLabel.setBounds(615, 180, 300, 50);
-                    registerButton.setBounds(620, 740, 100, 30);
+                    welcomeMessageLabel.setBounds(765, 180, 300, 50);
+                    registerButton.setBounds(770, 740, 100, 30);
 
                 } else {
                     setVisibilityFalse();
                     chooseDesignation();
                     showMessage( "Create Account For Your Employees");
-                    welcomeMessageLabel.setBounds(570, 180, 300, 50);
-                    registerButton.setBounds(620, 520, 100, 30);
+                    welcomeMessageLabel.setBounds(720, 180, 300, 50);
+                    registerButton.setBounds(770, 540, 100, 30);
 
 
                 }

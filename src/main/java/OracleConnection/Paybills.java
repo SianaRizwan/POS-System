@@ -12,6 +12,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.*;
 
+import static java.lang.String.valueOf;
+
 public class Paybills {
 
     private JFrame frame;
@@ -40,7 +42,7 @@ public class Paybills {
 
     Paybills(JFrame frame) {
         this.frame = frame;
-        backgroundColor =new BackgroundColor(frame);
+        backgroundColor = new BackgroundColor(frame);
 
     }
 
@@ -68,10 +70,9 @@ public class Paybills {
                         String sql = "SELECT SUM(AMOUNT) AS TOTAL FROM SALARY, USERS WHERE SALARY.SAL_ID = USERS.SAL_ID";
                         ResultSet rs = st.executeQuery(sql);
                         while (rs.next()) {
-                            tfAmount.setText(String.valueOf(rs.getInt("TOTAL")));
+                            tfAmount.setText(valueOf(rs.getInt("TOTAL")));
                         }
-                    }
-                    else{
+                    } else {
                         tfAmount.setText("");
                     }
 
@@ -117,6 +118,8 @@ public class Paybills {
         tfExpId = new JTextField();
         tfExpId.setBounds(550, 410, 200, 30);
         textFieldPanelAdd(tfExpId);
+        setAutoExpenseId();
+
 
         expTable = new JTable();
         expModel = new DefaultTableModel();
@@ -210,6 +213,23 @@ public class Paybills {
 
         return panelPayBills;
 
+    }
+
+    private void setAutoExpenseId() {
+        try {
+            String sql = "select nvl(max(e_id),0) from expenses";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1) + 1;
+                tfExpId.setText(valueOf(id));
+                tfExpId.setEditable(false);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e + " expense id");
+        }
     }
 
     private void buttonPanelAdd(JButton button) {
