@@ -40,6 +40,7 @@ public class Report {
     private Font f3;
     private JLabel head;
     BackgroundColor backgroundColor;
+    private JTextField monthField;
 
     public Report(JFrame frame) {
         this.frame = frame;
@@ -60,7 +61,7 @@ public class Report {
 
 
         head = new JLabel();
-        showReportLabel( "REPORT");
+        showReportLabel("REPORT");
 
         head.setHorizontalAlignment(SwingConstants.CENTER);
         head.setFont(new Font("Lato Medium", Font.BOLD, 40));
@@ -122,6 +123,34 @@ public class Report {
         netIncomeTF.setBounds(600, 390, 250, 50);
         netIncomeTF.setFont(f2);
 
+        lmonth = new JLabel("Month : ");
+        lmonth.setBounds(710, 120, 150, 50);
+        lmonth.setFont(f1);
+        panel.add(lmonth);
+
+        lyear = new JLabel("Year : ");
+        lyear.setBounds(410, 120, 150, 50);
+        lyear.setFont(f1);
+        panel.add(lyear);
+
+        monthComboBox = new JComboBox(months);
+        monthComboBox.setBounds(770, 130, 200, 30);
+        monthComboBox.setEditable(false);
+        monthComboBox.setFont(f1);
+        panel.add(monthComboBox);
+        monthComboBox.setVisible(false);
+
+        monthField = new JTextField();
+        monthField.setBounds(770, 130, 200, 30);
+        monthField.setEditable(false);
+        panel.add(monthField);
+        monthField.setVisible(true);
+
+        yearComboBox = new JComboBox();
+        yearComboBox.setBounds(470, 130, 200, 30);
+        yearComboBox.setEditable(false);
+        yearComboBox.setFont(f1);
+        panel.add(yearComboBox);
 
         rsales = new JButton("SALES");
         rsales.setBounds(50, 360, 180, 30);
@@ -130,6 +159,7 @@ public class Report {
         rsales.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setMonthComboBox(true);
                 panel.remove(expensesScrollPane);
                 panel.remove(buyScrollPane);
                 panel.updateUI();
@@ -142,7 +172,7 @@ public class Report {
                 setSummaryInfoVisibility(false);
                 setVisibilityTotal(true);
                 totalTextField.setEditable(false);
-                showReportLabel( "SALES REPORT");
+                showReportLabel("SALES REPORT");
 
             }
         });
@@ -156,6 +186,7 @@ public class Report {
         rbuy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setMonthComboBox(true);
                 panel.remove(expensesScrollPane);
                 panel.remove(salesScrollPane);
                 panel.updateUI();
@@ -183,7 +214,7 @@ public class Report {
         rexpenses.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                setMonthComboBox(true);
                 panel.remove(salesScrollPane);
                 panel.remove(buyScrollPane);
                 panel.updateUI();
@@ -194,7 +225,7 @@ public class Report {
                 panel.add(totalLabel);
                 totalTextField.setText(String.valueOf(getTotalPayBill()));
                 setVisibilityTotal(true);
-                showReportLabel( "EXPENSE REPORT");
+                showReportLabel("EXPENSE REPORT");
 
                 totalTextField.setEditable(false);
                 setSummaryInfoVisibility(false);
@@ -210,6 +241,7 @@ public class Report {
         summary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setMonthComboBox(true);
                 panel.remove(expensesScrollPane);
                 panel.remove(buyScrollPane);
                 panel.remove(salesScrollPane);
@@ -225,28 +257,6 @@ public class Report {
         });
         panel.add(summary);
 
-        lmonth = new JLabel("Month : ");
-        lmonth.setBounds(410, 120, 150, 50);
-        lmonth.setFont(f1);
-        panel.add(lmonth);
-
-        lyear = new JLabel("Year : ");
-        lyear.setBounds(710, 120, 150, 50);
-        lyear.setFont(f1);
-        panel.add(lyear);
-
-        monthComboBox = new JComboBox(months);
-        monthComboBox.setBounds(470, 130, 200, 30);
-        monthComboBox.setEditable(false);
-        monthComboBox.setFont(f1);
-        panel.add(monthComboBox);
-
-        yearComboBox = new JComboBox();
-        yearComboBox.setBounds(770, 130, 200, 30);
-        yearComboBox.setEditable(false);
-        yearComboBox.setFont(f1);
-        panel.add(yearComboBox);
-
         frame.add(panel);
 
         return panel;
@@ -254,16 +264,17 @@ public class Report {
 
     }
 
+    private void setMonthComboBox(Boolean status) {
+        monthComboBox.setVisible(status);
+        monthField.setVisible(!status);
+    }
+
     private void reportTableDesign(JTable jTable, JScrollPane jScrollPane) {
-        jTable.setFont(f1);
-        jTable.setBackground(Color.WHITE);
-        jTable.setSelectionBackground(Color.GRAY);
-        jTable.setRowHeight(30);
-        jTable.setAutoCreateRowSorter(true);
+        backgroundColor.setTableDesign(jTable, f1);
         jScrollPane.setBounds(260, 180, 1000, 450);
     }
 
-    private void showReportLabel( String s) {
+    private void showReportLabel(String s) {
         head.setForeground(Color.white);
         head.setText(s);
 
@@ -562,7 +573,6 @@ public class Report {
             while (rs2.next()) {
                 Date d1 = new Date(rs2.getDate(1).getTime());
                 int year = d1.getYear() + 1900;
-
                 arrayList.add(year);
 
             }

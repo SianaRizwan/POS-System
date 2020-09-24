@@ -126,11 +126,7 @@ public class Paybills {
         expScrollPane = new JScrollPane(expTable);
         expModel.setColumnIdentifiers(expenseColumns);
         expTable.setModel(expModel);
-        expTable.setFont(f1);
-        expTable.setBackground(Color.WHITE);
-        expTable.setSelectionBackground(Color.GRAY);
-        expTable.setAutoCreateRowSorter(true);
-        expTable.setRowHeight(30);
+        backgroundColor.setTableDesign(expTable, f1);
         expScrollPane.setBounds(150, 610, 1000, 300);
         panelPayBills.add(expScrollPane);
 
@@ -159,7 +155,7 @@ public class Paybills {
                     tfExpId.setText("");
                     tfDescription.setText("");
                     tfAmount.setText("");
-
+                    setAutoExpenseId();
                     expenseComboBox.requestFocus();
 
                 } catch (Exception eq) {
@@ -215,7 +211,7 @@ public class Paybills {
 
     }
 
-    private void setAutoExpenseId() {
+    public void setAutoExpenseId() {
         try {
             String sql = "select nvl(max(e_id),0) from expenses";
             OracleConnection oc = new OracleConnection();

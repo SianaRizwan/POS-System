@@ -166,12 +166,8 @@ public class Salary {
         salaryScrollPane = new JScrollPane(salaryTable);
         salaryModel.setColumnIdentifiers(salaryColumns);
         salaryTable.setModel(salaryModel);
-        salaryTable.setFont(f1);
-        salaryTable.setBackground(Color.WHITE);
-        salaryTable.setSelectionBackground(Color.GRAY);
-        salaryTable.setRowHeight(30);
+        backgroundColor.setTableDesign(salaryTable, f1);
         salaryTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        salaryTable.setAutoCreateRowSorter(true);
         salaryScrollPane.setBounds(150, 460, 1000, 200);
         panel.add(salaryScrollPane);
 

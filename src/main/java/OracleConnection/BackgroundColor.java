@@ -48,6 +48,12 @@ public class BackgroundColor {
         frame.setSize(xsize, ysize);
         System.out.println(xsize);
     }
-
+    public void setTableDesign(JTable jTable,Font f1){
+        jTable.setFont(f1);
+        jTable.setBackground(new Color(0xB8D0E8));
+        jTable.setSelectionBackground(new Color(0x80B2E3));
+        jTable.setRowHeight(30);
+        jTable.setAutoCreateRowSorter(true);
+    }
 
 }

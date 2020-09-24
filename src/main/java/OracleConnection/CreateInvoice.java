@@ -109,10 +109,8 @@ public class CreateInvoice {
         scrollPane = new JScrollPane(table);
         model.setColumnIdentifiers(columns);
         table.setModel(model);
-        table.setFont(f1);
-        table.setBackground(Color.WHITE);
-        table.setSelectionBackground(Color.GRAY);
-        table.setRowHeight(30);
+        backgroundColor.setTableDesign(table, f1);
+
 
         scrollPane.setBounds(150, 350, 1000, 300);
         mainpanel.add(scrollPane);
