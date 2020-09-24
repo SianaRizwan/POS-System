@@ -3,27 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/BackgroundColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/BackgroundColor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/CreateInvoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/CreateInvoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Salary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/AdminDashboard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/AdminDashboard$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/AdminDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/AdminDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Register.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Salary$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Salary$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Salary$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Salary$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Salary$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Salary$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Salary$designation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Salary$designation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Salary.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Salary.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -277,22 +257,22 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1600508540173" />
-    <state width="1864" height="121" key="GridCell.Tab.0.bottom" timestamp="1600789363691">
+    <state width="1864" height="121" key="GridCell.Tab.0.bottom" timestamp="1600928972793">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="121" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1600789363691" />
-    <state width="1864" height="121" key="GridCell.Tab.0.center" timestamp="1600789363691">
+    <state width="1864" height="121" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1600928972793" />
+    <state width="1864" height="121" key="GridCell.Tab.0.center" timestamp="1600928972792">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="121" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1600789363691" />
-    <state width="1864" height="121" key="GridCell.Tab.0.left" timestamp="1600789363690">
+    <state width="1864" height="121" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1600928972792" />
+    <state width="1864" height="121" key="GridCell.Tab.0.left" timestamp="1600928972792">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="121" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1600789363690" />
-    <state width="1864" height="121" key="GridCell.Tab.0.right" timestamp="1600789363691">
+    <state width="1864" height="121" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1600928972792" />
+    <state width="1864" height="121" key="GridCell.Tab.0.right" timestamp="1600928972793">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="121" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1600789363691" />
+    <state width="1864" height="121" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1600928972793" />
     <state x="311" y="0" key="SettingsEditor" timestamp="1596212933651">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>

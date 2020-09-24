@@ -256,6 +256,7 @@ public class Sell {
             sellModel = new DefaultTableModel();
             sellScrollPane = new JScrollPane(sellTable);
             sellModel.setColumnIdentifiers(sellColumns);
+            sellTable.setModel(sellModel);
             backgroundColor.setTableDesign(sellTable, f1);
             sellScrollPane.setBounds(150, 500, 1200, 300);
             panelSell.add(sellScrollPane);
