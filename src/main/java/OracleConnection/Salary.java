@@ -261,7 +261,14 @@ public class Salary {
         int n;
         try {
             OracleConnection oc = new OracleConnection();
-            String sql = "select salary.SAL_ID, DESIGNATION, AMOUNT,count(users.u_id) from SALARY,users where users.sal_id=salary.sal_id group by salary.SAL_ID, DESIGNATION, AMOUNT order by sal_id";
+            String sql = "select distinct SAL_ID, DESIGNATION, AMOUNT,max(nums) " +
+                    "from( " +
+                    "(select salary.SAL_ID,DESIGNATION, AMOUNT,count(users.u_id) nums from SALARY,users " +
+                    "where users.sal_id=salary.sal_id group by salary.SAL_ID,DESIGNATION, AMOUNT)" +
+                    "union" +
+                    "(select SAL_ID,DESIGNATION, AMOUNT,nvl(0,count(salary.SAL_ID)) nums from SALARY group by SAL_ID,DESIGNATION, AMOUNT)   " +
+                    ")  " +
+                    "group by SAL_ID,DESIGNATION, AMOUNT ";
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();

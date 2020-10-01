@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Salary.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +46,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="265" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ojdbc6.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -252,42 +253,42 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="539" y="38" key="CommitChangelistDialog2/0.0.1920.1030@0.0.1920.1030" timestamp="1600789333958" />
-    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1601261383283">
+    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1601377155188">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1601261383283" />
-    <state width="1864" height="121" key="GridCell.Tab.0.bottom" timestamp="1601261587365">
+    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1601377155188" />
+    <state width="1864" height="120" key="GridCell.Tab.0.bottom" timestamp="1601555408543">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="121" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1601261587365" />
-    <state width="1864" height="121" key="GridCell.Tab.0.center" timestamp="1601261587365">
+    <state width="1864" height="120" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1601555408543" />
+    <state width="1864" height="120" key="GridCell.Tab.0.center" timestamp="1601555408543">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="121" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1601261587365" />
-    <state width="1864" height="121" key="GridCell.Tab.0.left" timestamp="1601261587365">
+    <state width="1864" height="120" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1601555408543" />
+    <state width="1864" height="120" key="GridCell.Tab.0.left" timestamp="1601555408543">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="121" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1601261587365" />
-    <state width="1864" height="121" key="GridCell.Tab.0.right" timestamp="1601261587365">
+    <state width="1864" height="120" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1601555408543" />
+    <state width="1864" height="120" key="GridCell.Tab.0.right" timestamp="1601555408543">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state width="1864" height="121" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1601261587365" />
+    <state width="1864" height="120" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1601555408543" />
     <state x="311" y="0" key="SettingsEditor" timestamp="1601261519998">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="311" y="0" key="SettingsEditor/0.0.1920.1030@0.0.1920.1030" timestamp="1601261519998" />
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1601229711955">
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1601377054103">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1601229711955" />
+    <state x="594" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1030@0.0.1920.1030" timestamp="1601377054103" />
     <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600789347348">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="723" y="410" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1030@0.0.1920.1030" timestamp="1600789347348" />
-    <state x="226" y="80" key="new project wizard" timestamp="1595944663035">
+    <state x="226" y="80" key="new project wizard" timestamp="1601377163350">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
-    <state x="226" y="80" key="new project wizard/0.0.1920.1030@0.0.1920.1030" timestamp="1595944663035" />
+    <state x="226" y="80" key="new project wizard/0.0.1920.1030@0.0.1920.1030" timestamp="1601377163350" />
     <state x="638" y="74" key="refactoring.ChangeSignatureDialog" timestamp="1595795279502">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
